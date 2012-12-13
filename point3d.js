@@ -29,14 +29,34 @@ function Point3D(x,y,z) {
     return new Point3D(newx, newy, newz);
   }
 
-  this.project = function(viewWidth, viewHeight) {
-      var factor, x, y
-      fov = viewWidth 
-      viewDistance = 10
+  this.project = function() {
+      var factor, x, y, viewDistance
+      factor = viewHeight/7;
+      
+      x = this.y * factor + viewWidth  / 2
+      y = -this.z * factor + viewHeight / 2
+      return new Point2D(x, y)
+  }
 
-      factor = fov / (viewDistance - this.z)
-      x = this.x * factor + viewWidth / 2
-      y = this.y * factor + viewHeight / 2
-      return new Point3D(x, y, this.z)
+  this.project_origin = function() {
+      var factor, x, y, viewDistance
+      factor = viewHeight/7;
+      
+      x = this.y * factor
+      y = -this.z * factor
+      return new Point2D(x, y)
+  }
+}
+
+function Point2D(x,y) {
+  this.x = x;
+  this.y = y;
+  this.norm = Math.sqrt(this.x * this.x + this.y * this.y);
+
+  this.distance = function(p2) {
+    var dx = this.x - p2.x;
+    var dy = this.y - p2.y;
+
+    return Math.sqrt(dx*dx + dy*dy);
   }
 }

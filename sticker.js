@@ -1,17 +1,20 @@
-function Sticker(normal, offset, colorArray) {
-  this.stickerSize = 0.95;
+function Sticker(normal, offset, colorArray, size) {
+  this.stickerSize = size;
   this.originalNormal = normal; // must be a normalized vector in an axial direction
   this.offset = offset;
   this.color = "rgb(" + colorArray[0] + "," + colorArray[1] + "," + colorArray[2] + ")"
   
-
   this.normal = normal; // will change when puzzle rotates
 
   var direction111 = new Point3D(1,1,1)
-  direction111.normalize
+  direction111.normalize();
 
   this.spanDirection1 = this.originalNormal.rotate(direction111, Math.PI*2/3);
   this.spanDirection2 = this.originalNormal.rotate(direction111, -Math.PI*2/3);
+
+  this.offset_2d = this.offset.project();
+  this.spanDirection1_2d = this.spanDirection1.project_origin();
+  this.spanDirection2_2d = this.spanDirection2.project_origin();
 
   this.points = new Array();
 
@@ -36,15 +39,14 @@ function Sticker(normal, offset, colorArray) {
     this.offset.y + coef[0] * this.spanDirection1.y * this.stickerSize /2 + coef[1] * this.spanDirection2.y * this.stickerSize /2, 
     this.offset.z + coef[0] * this.spanDirection1.z * this.stickerSize /2 + coef[1] * this.spanDirection2.z * this.stickerSize /2))
 
-  this.draw = function(context, viewWidth,viewHeight) {
-    if (this.normal.z < 0.1) return;
-
+  this.draw = function() {
+    if (this.normal.x < 0) return;
 
     context.fillStyle = this.color;
     context.beginPath();
-    context.moveTo(this.points[0].project(viewWidth,viewHeight).x,this.points[0].project(viewWidth,viewHeight).y);
+    context.moveTo(this.points[0].project().x,this.points[0].project().y);
     for (var i = 1; i<4; i++) {
-      context.lineTo(this.points[i].project(viewWidth,viewHeight).x,this.points[i].project(viewWidth,viewHeight).y);
+      context.lineTo(this.points[i].project().x,this.points[i].project().y);
     }
     context.closePath()
     context.fill()
@@ -52,8 +54,46 @@ function Sticker(normal, offset, colorArray) {
 
   this.rotate = function(axis, angle) {
     this.normal = this.normal.rotate(axis, angle);
+    this.offset = this.offset.rotate(axis, angle);
+    this.spanDirection1 = this.spanDirection1.rotate(axis, angle);
+    this.spanDirection2 = this.spanDirection2.rotate(axis, angle);
     for (var i=0; i<4; i++){
       this.points[i] = this.points[i].rotate(axis, angle);
     }
+    this.offset_2d = this.offset.project();
+    this.spanDirection1_2d = this.spanDirection1.project_origin();
+    this.spanDirection2_2d = this.spanDirection2.project_origin();
+
   }
+
+  this.contains = function() {
+
+    if (this.normal.x < 0) return false;
+
+    var mx = mousePos.x - this.offset_2d.x;
+    var my = mousePos.y - this.offset_2d.y;
+    var d1x = this.spanDirection1_2d.x;
+    var d1y = this.spanDirection1_2d.y;
+    var d2x = this.spanDirection2_2d.x;
+    var d2y = this.spanDirection2_2d.y;
+
+    // going to solve: d1 k1 + d2 k2 = m
+
+    var delta = (d1x * d2y - d1y * d2x)
+    if (Math.abs(delta)<0.001) return false;
+    var k1 = (d2y*mx-d2x*my)/delta;
+    var k2 = (d1x*my-d1y*mx)/delta;
+
+    // console.log("color = "+this.color +"mx = "+mx+" my = "+my);
+    // console.log("color = "+this.color +"d1x = "+d1x+" d1y = "+d1y);
+    // console.log("color = "+this.color +"d2x = "+d2x+" d2y = "+d2y);
+    // console.log(this.spanDirection1);
+    // console.log("color = "+this.color +" k1 = "+k1+" k2 = "+k2);
+
+    // if (mousePos.distance(this.offset_2d) < 60 ) return true;
+
+    return (Math.abs(k1)<this.stickerSize/2.0 && Math.abs(k2)<this.stickerSize/2.0)
+
+  }
+
 }

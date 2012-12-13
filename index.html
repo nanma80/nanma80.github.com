@@ -2,14 +2,17 @@
 <html>
 <head>
 <title>Reflection on the Rubik's Cube </title>
-
+<script src="permutation.js"></script>
 <script src="point3d.js"></script>
 <script src="sticker.js"></script>
 <script src="puzzle.js"></script>
+<script src="mouse.js"></script>
+
+
 </head>
 <body>
 
-<canvas id="canvas" width="600" height="400" style="border:1px solid #c3c3c3;">
+<canvas id="canvas" width="500" height="500" style="border:1px solid #c3c3c3;" oncontextmenu="return false;">
 Your browser does not support the HTML5 canvas tag.
 </canvas>
 
@@ -22,7 +25,7 @@ var viewWidth = canvas.width;
 
 
 var p = new Point3D(1,2,3);
-var puzzle = new Puzzle();
+var puzzle = new Puzzle("rubik");
 
 function redraw() {
   puzzle.draw(context, viewWidth, viewHeight);
@@ -30,15 +33,18 @@ function redraw() {
 
 puzzle.initializeState();
 
-puzzle.rotate(new Point3D(1,0,0), 0.3)
-puzzle.rotate(new Point3D(1,2,3), 0.7)
-
-
 redraw();
+
+canvas.addEventListener("mousedown", mouseDown, false);
+canvas.addEventListener("mousemove", mouseMove, false);
+canvas.addEventListener("mouseover", mouseOver, false);
+canvas.addEventListener("mouseout", mouseOut, false);
+
+
+document.body.addEventListener("mouseup", mouseUp, false);
 
 </script>
 
-<script src="mouse.js"></script>
 
 </body>
 </html>

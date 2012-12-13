@@ -1,80 +1,100 @@
-function Mouse() {
+// assuming the instance of Puzzle is puzzle
+mouseInRegion = false;
+mouseIsDown = false;
+mousePos = new Point2D(0,0);
+dragging = false;
+snapIndex = [];
+currentSnapIndex = [];
 
-  // assuming canvas object is called canvas
-  this.mouseInRegion = false;
-  this.mouseIsDown = false;
-  this.mousePos = {
-    x: 0,
-    y: 0
-  };
-  this.dragging = false;
+mouseDown = function(e){
+  mouseIsDown = true;
+  findMouse(e);
+  dragging = false;
+}
 
-  mousedown = function(e){
-    this.mouseIsDown = true;
-    this.findMouse(e);
-    this.dragging = false;
+mouseUp = function(e){
+  mouseIsDown = false;
+  if (!dragging && mouseInRegion) {
+    click(e);
+  }
+  dragging = false;
+  resnap(e);
+}
+
+click = function(e){
+
+  if (e.ctrlKey) return;
+  findMouse(e);
+
+  resnap(e);
+  if (snapIndex.length > 0) {
+    puzzle.twist(e.button == 2);
   }
 
-  mouseup = function(e){
-    mouseIsDown = false;
-    
-    if (!dragging) {
-      click(e);
-    }
-    dragging = false;
+  redraw();
+
+}
+
+mouseDrag = function(e){
+  dragging = true;
+  var old = new Point2D(mousePos.x, mousePos.y)
+  findMouse(e);
+  var delta  = new Point2D(mousePos.x - old.x, mousePos.y - old.y)
+  puzzle.rotate(new Point3D(0, delta.y,  delta.x), delta.norm/100);
+  redraw();
+}
+
+contextMenu = function(e){
+  findMouse(e);
+  // code goes here
+  return false;
+}
+
+mouseOut = function(e){
+  mouseInRegion = false;
+}
+
+mouseOver = function(e){
+  
+  mouseInRegion = true;
+
+  findMouse(e);
+  //code goes here
+}
+
+mouseMove = function(e) {
+  if (mouseIsDown) {
+    mouseDrag(e);
   }
-
-  click = function(e){
-    console.log('onclick');
-
-    if (e.ctrlKey) return;
-    findMouse(e);
-    puzzle.rotate(new Point3D(1,0,0), Math.PI/10);
-    redraw();
-
-  }
-
-  onmousedrag = function(e){
-    dragging = true;
-    var oldX = mousePos.x;
-    var oldY = mousePos.y;
-    findMouse(e);
-    var deltaX = mousePos.x - oldX;
-    var deltaY = mousePos.y - oldY;
-    puzzle.rotate(new Point3D(1,0,0), -deltaY/100);
-    puzzle.rotate(new Point3D(0,1,0), deltaX/100);
-    redraw();
-  }
-
-  canvas.oncontextmenu = function(e){
-    findMouse(e);
-    // code goes here
-    return false;
-  }
-
-  canvas.onmouseout = function(e){
-    mouseInRegion = false;
-  }
-
-  canvas.onmouseover = function(e){
-    
-    mouseInRegion = true;
-
-    findMouse(e);
-    //code goes here
-  }
-
-  canvas.onmousemove = function(e) {
-    if (mouseIsDown) {
-      onmousedrag(e);
-    }
-    else {
-      findMouse(e);  
-    }
-  }
-
-  function findMouse(e) {
-    mousePos.x = e.pageX - canvas.offsetLeft;
-    mousePos.y = e.pageY - canvas.offsetTop;
+  else {
+    resnap(e);
   }
 }
+
+findMouse = function (e) {
+  mousePos.x = e.pageX - canvas.offsetLeft;
+  mousePos.y = e.pageY - canvas.offsetTop;
+}
+
+resnap = function(e) {
+  findMouse(e);
+  snapIndex = puzzle.snap(mousePos);
+
+  if (snapIndex.toString() != currentSnapIndex.toString()) {
+    // snap object is changed
+
+    if (snapIndex.length > 0) {
+      puzzle.state[snapIndex[0]][snapIndex[1]][snapIndex[2]].color = "rgb(128,128,128)";
+    }
+
+    if (currentSnapIndex.length > 0) {
+      puzzle.state[currentSnapIndex[0]][currentSnapIndex[1]][currentSnapIndex[2]].color = "rgb(0,0,0)";
+    }
+
+    currentSnapIndex = snapIndex.slice(0);
+    redraw();
+
+  }
+
+}
+
