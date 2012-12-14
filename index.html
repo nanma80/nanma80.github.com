@@ -34,6 +34,10 @@ function redraw() {
 
 puzzle.initializeState();
 
+// initial orientation
+puzzle.rotate(new Point3D(1,2,-1), 0.6);
+puzzle.rotate(new Point3D(1,0,0), -0.3);
+
 redraw();
 
 canvas.addEventListener("mousedown", mouseDown, false);
