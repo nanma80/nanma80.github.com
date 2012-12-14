@@ -2,8 +2,8 @@ function Sticker(normal, offset, colorArray, size) {
   this.stickerSize = size;
   this.originalNormal = normal; // must be a normalized vector in an axial direction
   this.offset = offset;
-  this.color = "rgb(" + colorArray[0] + "," + colorArray[1] + "," + colorArray[2] + ")"
-  
+  this.colorArray = colorArray;
+
   this.normal = normal; // will change when puzzle rotates
 
   var direction111 = new Point3D(1,1,1)
@@ -42,7 +42,7 @@ function Sticker(normal, offset, colorArray, size) {
   this.draw = function() {
     if (this.normal.x < 0) return;
 
-    context.fillStyle = this.color;
+    context.fillStyle = "rgb(" + this.colorArray[0] + "," + this.colorArray[1] + "," + this.colorArray[2] + ")";
     context.beginPath();
     context.moveTo(this.points[0].project().x,this.points[0].project().y);
     for (var i = 1; i<4; i++) {
@@ -83,6 +83,11 @@ function Sticker(normal, offset, colorArray, size) {
     if (Math.abs(delta)<0.001) return false;
     var k1 = (d2y*mx-d2x*my)/delta;
     var k2 = (d1x*my-d1y*mx)/delta;
+
+    var l1 = (k1+k2)/Math.sqrt(2);
+    var l2 = (k1-k2)/Math.sqrt(2);
+    
+
 
     // console.log("color = "+this.color +"mx = "+mx+" my = "+my);
     // console.log("color = "+this.color +"d1x = "+d1x+" d1y = "+d1y);

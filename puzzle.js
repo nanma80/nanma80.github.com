@@ -92,21 +92,23 @@ function Puzzle(type) {
 
   this.snap = function() {
 
-    if (this.type == "rubik") {
-      // go through all the faces
-      for (var i=1; i<4; i++) {
-        for (var j=1; j<4; j++) {
-          for (var k=1; k<4; k++) {
+    // go through all the faces
+    for (var i=1; i<4; i++) {
+      for (var j=1; j<4; j++) {
+        for (var k=1; k<4; k++) {
 
-            if (typeof (this.state[i][j][k]) == "undefined") continue;
+          if (typeof (this.state[i][j][k]) == "undefined") continue;
 
-            if ( this.state[i][j][k].contains() ) {
-              
-              return [i,j,k];
-              
-            }
+            if (this.type == "rubik") {
 
+
+          if ( this.state[i][j][k].contains() ) {
+            
+            return [i,j,k];
+        
+            }    
           }
+
         }
       }
     }
@@ -127,7 +129,7 @@ function Puzzle(type) {
       for (var j=0; j<5; j++) {
         for (var k=0; k<5; k++) {
           if (typeof (this.state[i][j][k]) == "undefined") continue;
-          this.cloneState[i][j][k] = this.state[i][j][k].color;
+          this.cloneState[i][j][k] = this.state[i][j][k].colorArray;
         }
       }
     } 
@@ -138,7 +140,7 @@ function Puzzle(type) {
       for (var j=0; j<5; j++) {
         for (var k=0; k<5; k++) {
           if (typeof (this.state[i][j][k]) == "undefined") continue;
-          this.state[i][j][k].color = this.cloneState[i][j][k];          
+          this.state[i][j][k].colorArray = this.cloneState[i][j][k];          
         }
       }
     }  
@@ -163,9 +165,9 @@ function Puzzle(type) {
             for (var k=0; k<5; k++) {
               if (typeof (this.state[i][j][k]) == "undefined") continue;              
               if (direction == (faceIndex == 1)) {
-                this.cloneState[i][j][k] = this.state[i][4-k][j].color;
+                this.cloneState[i][j][k] = this.state[i][4-k][j].colorArray;
               } else {
-                this.cloneState[i][j][k] = this.state[i][k][4-j].color;
+                this.cloneState[i][j][k] = this.state[i][k][4-j].colorArray;
               }
             }
           }
@@ -179,9 +181,9 @@ function Puzzle(type) {
             for (var k=0; k<5; k++) {
               if (typeof (this.state[k][i][j]) == "undefined") continue;              
               if (direction == (faceIndex == 1)) {
-                this.cloneState[k][i][j] = this.state[j][i][4-k].color;
+                this.cloneState[k][i][j] = this.state[j][i][4-k].colorArray;
               } else {
-                this.cloneState[k][i][j] = this.state[4-j][i][k].color;
+                this.cloneState[k][i][j] = this.state[4-j][i][k].colorArray;
               }
             }
           }
@@ -195,9 +197,9 @@ function Puzzle(type) {
             for (var k=0; k<5; k++) {
               if (typeof (this.state[j][k][i]) == "undefined") continue;              
               if (direction == (faceIndex == 1)) {
-                this.cloneState[j][k][i] = this.state[4-k][j][i].color;
+                this.cloneState[j][k][i] = this.state[4-k][j][i].colorArray;
               } else {
-                this.cloneState[j][k][i] = this.state[k][4-j][i].color;
+                this.cloneState[j][k][i] = this.state[k][4-j][i].colorArray;
               }
             }
           }
