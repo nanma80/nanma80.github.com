@@ -42,8 +42,8 @@ function Point3D(x,y,z) {
       var factor, x, y, viewDistance
       factor = viewHeight/7;
       
-      x = this.y * factor
-      y = -this.z * factor
+      x = this.y * factor;
+      y = -this.z * factor;
       return new Point2D(x, y)
   }
 }

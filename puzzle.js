@@ -18,7 +18,9 @@ function Puzzle(type) {
     [255,0,0],//right
     [255,255,255],//down
     [255,255,0], //up
-    [0,0,0] // plastic
+    [0,0,0], // plastic
+    [80, 80, 80], //highlighted plastic
+    [160,92,240]
   ]; // initial color: background, back, front, left, right, down, up
 
   this.stickerSize = 0.92;
@@ -46,7 +48,7 @@ function Puzzle(type) {
   this.state[2][2][1] = new Sticker(new Point3D(0,0,-1), new Point3D(0,0,-1.5), this.colorArray[7],this.faceSize); // down
   this.state[2][2][3] = new Sticker(new Point3D(0,0, 1), new Point3D(0,0, 1.5), this.colorArray[7],this.faceSize); // up
 
-  this.draw = function(context, viewWidth, viewHeight) {
+  this.draw = function() {
     context.fillStyle = "rgb(" + this.colorArray[0][0] + "," + this.colorArray[0][1] + "," + this.colorArray[0][2] + ")";
     context.fillRect(0,0,viewWidth,viewHeight);
 
@@ -57,11 +59,18 @@ function Puzzle(type) {
         for (var k=1; k<4; k++) {
 
           if (typeof (this.state[i][j][k]) == "undefined") continue;
-          this.state[i][j][k].draw(context,viewWidth, viewHeight);
+          this.state[i][j][k].draw();
 
         }
       }
     }
+
+    if ((this.type == 'rubik') && (snapIndex.length > 0)) {
+      this.state[snapIndex[0]][snapIndex[1]][snapIndex[2]].colorArray = this.colorArray[8];
+      this.state[snapIndex[0]][snapIndex[1]][snapIndex[2]].draw();
+      this.state[snapIndex[0]][snapIndex[1]][snapIndex[2]].colorArray = this.colorArray[7];
+    }
+
 
     //draw stickers
 
@@ -71,11 +80,45 @@ function Puzzle(type) {
 
           if (typeof (this.state[i][j][k]) == "undefined") continue;
           if (this.state[i][j][k].stickerSize > 1) continue;
-          this.state[i][j][k].draw(context,viewWidth, viewHeight);
+          this.state[i][j][k].draw();
 
         }
       }
     }
+
+    // draw twist illustration: arrows etc
+    if (snapIndex.length > 0) this.drawArrows();
+
+  }
+
+  this.drawArrows = function() {
+    if (this.type == "mirror+") {
+      var snapIndexMinusTwo = snapIndex.map(function(x){return Math.abs(x-2);});
+      var primary_dir = snapIndexMinusTwo.indexOf(2);
+      var secondary_dir = snapIndexMinusTwo.indexOf(1);
+      var newIndex = [2,2,2];
+      newIndex[primary_dir] = (2+snapIndex[primary_dir])/2;
+      var arrowDirection = (secondary_dir - primary_dir + 3)%3 -1; // 0 or 1
+      
+      // this.state[newIndex[0]][newIndex[1]][newIndex[2]].draw();
+      this.state[newIndex[0]][newIndex[1]][newIndex[2]].drawArrows(arrowDirection,this.type);
+    } else if (this.type == "mirrorX") {
+      var snapIndexMinusTwo = snapIndex.map(function(x){return Math.abs(x-2);});
+      var primary_dir = snapIndexMinusTwo.indexOf(2);
+      var newIndex = [2,2,2];
+      newIndex[primary_dir] = (2+snapIndex[primary_dir])/2;
+      
+      var arrowDirection;
+
+      if (snapIndex[(primary_dir+1)%3] == snapIndex[(primary_dir+2)%3]) arrowDirection = 1;
+      else arrowDirection = 0;
+      
+      this.state[newIndex[0]][newIndex[1]][newIndex[2]].drawArrows(arrowDirection,this.type);
+
+    }
+
+
+
   }
 
   this.rotate = function(axis, angle) {
@@ -116,7 +159,16 @@ function Puzzle(type) {
             newIndex[(twist_dir + contains_return)%3] += faceIndex;
             return newIndex;
           }
-      
+
+          if (this.type == "mirrorX") {
+
+            var newIndex = [i,j,k].map(function(x){return x+faceIndex;});
+            if (contains_return == 1) {
+              newIndex[(twist_dir + 1)%3] = 4-newIndex[(twist_dir + 1)%3];
+            }
+            return newIndex;
+          }
+
         }
       }
     }
@@ -235,6 +287,48 @@ function Puzzle(type) {
             
             if (typeof (this.state[flyingIndex[0]][flyingIndex[1]][flyingIndex[2]]) == "undefined") continue;
 
+            this.cloneState[flyingIndex[0]][flyingIndex[1]][flyingIndex[2]] = this.state[mirrorIndex[0]][mirrorIndex[1]][mirrorIndex[2]].colorArray;
+          }
+        }
+      }
+
+      this.reverseClone();
+
+    } else if (this.type == 'mirrorX') {
+
+      var snapIndexMinusTwo = snapIndex.map(function(x){return Math.abs(x-2);});
+      var primary_dir = snapIndexMinusTwo.indexOf(2);
+      var secondary_dir = (primary_dir+1)%3;
+      var tertiary_dir = (primary_dir+2)%3;
+      
+      // console.log("primary_dir: "+primary_dir+", should be 0 or 1 or 2");
+      // console.log("tertiary_dir: "+tertiary_dir+", should be 0 or 1 or 2");
+      var faceIndex = (snapIndex[primary_dir]-2)/2; //distinguishing F and B
+      // console.log("faceIndex: "+tertiary_dir+", should be -1 or 1");
+      this.duplicateState();
+
+
+      for (var primary_index = snapIndex[primary_dir]-faceIndex; primary_index!=snapIndex[primary_dir] + faceIndex; primary_index += faceIndex) {
+        // console.log("primary_index: "+primary_index+", should in 0 to 4");
+        for (var secondary_index = 0; secondary_index <5; secondary_index ++) {
+          for (var tertiary_index = 0; tertiary_index < 5; tertiary_index ++) {
+            var flyingIndex = [0,0,0];
+            flyingIndex[primary_dir] = primary_index;
+            flyingIndex[secondary_dir] = secondary_index;
+            flyingIndex[tertiary_dir] = tertiary_index;
+
+            var mirrorIndex = [0,0,0];
+            if (snapIndex[(primary_dir+1)%3] == snapIndex[(primary_dir+2)%3] ) {
+              mirrorIndex[primary_dir] = primary_index;
+              mirrorIndex[secondary_dir] = tertiary_index;
+              mirrorIndex[tertiary_dir] = secondary_index;
+            } else {
+              mirrorIndex[primary_dir] = primary_index;
+              mirrorIndex[secondary_dir] = 4- tertiary_index;
+              mirrorIndex[tertiary_dir] = 4- secondary_index;
+            }
+            
+            if (typeof (this.state[flyingIndex[0]][flyingIndex[1]][flyingIndex[2]]) == "undefined") continue;
             this.cloneState[flyingIndex[0]][flyingIndex[1]][flyingIndex[2]] = this.state[mirrorIndex[0]][mirrorIndex[1]][mirrorIndex[2]].colorArray;
           }
         }

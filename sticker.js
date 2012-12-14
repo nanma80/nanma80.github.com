@@ -2,7 +2,7 @@ function Sticker(normal, offset, colorArray, size) {
   this.stickerSize = size;
   this.originalNormal = normal; // must be a normalized vector in an axial direction
   this.offset = offset;
-  this.colorArray = colorArray;
+  this.colorArray = colorArray.slice(0);
 
   this.normal = normal; // will change when puzzle rotates
 
@@ -52,6 +52,238 @@ function Sticker(normal, offset, colorArray, size) {
     context.fill()
   }
 
+  this.drawArrows = function(arrowDirection,type){
+
+    if (type == 'mirror+') {
+      var arrow_vectors = [this.spanDirection1_2d, this.spanDirection2_2d];
+
+
+      context.strokeStyle = "rgb(" + puzzle.colorArray[9][0] + "," + puzzle.colorArray[9][1] + "," + puzzle.colorArray[9][2] + ")";
+      context.lineWidth=3;
+      context.beginPath();
+
+      var coef, px, py;
+
+      var arrowLong = 0.46;
+      var arrowShort = 1.0/6.0;
+      var arrowHeadLong = 0.05;
+      var arrowHeadShort = 0.015;
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort + arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.moveTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort - arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      arrowLong *= -1;
+      arrowHeadLong *= -1;
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort + arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort - arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      arrowShort *= -1;
+      arrowLong *= -1;
+      arrowHeadLong *= -1;
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort + arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.moveTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort - arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      arrowLong *= -1;
+      arrowHeadLong *= -1;
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort + arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort - arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      context.stroke();
+    } else if (type == 'mirrorX') {
+      
+      var arrow_vectors = [new Point2D(this.spanDirection1_2d.x,this.spanDirection1_2d.y), 
+      new Point2D(this.spanDirection2_2d.x * (arrowDirection *2 -1),this.spanDirection2_2d.y * (arrowDirection *2 -1))];
+
+      context.strokeStyle = "rgb(" + puzzle.colorArray[9][0] + "," + puzzle.colorArray[9][1] + "," + puzzle.colorArray[9][2] + ")";
+      context.lineWidth=3;
+      context.beginPath();
+
+      var coef, px, py;
+
+      var arrowLong = 0.45;
+      var arrowShort = 0.0;
+      var arrowHeadLong = 0.05;
+      var arrowHeadShort = 0.01;
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong - arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong - arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.moveTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong + arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong + arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      var t = arrowLong;
+      arrowLong = arrowShort;
+      arrowShort = t;
+      arrowHeadLong *=-1;
+      arrowHeadShort*=-1;
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong + arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong + arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong - arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong - arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      t = arrowLong;
+      arrowLong = arrowShort;
+      arrowShort = t;
+
+      arrowLong *= -1;
+      arrowShort *= -1;
+      
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong - arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong - arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.moveTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong + arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong + arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      var t = arrowLong;
+      arrowLong = arrowShort;
+      arrowShort = t;
+      arrowHeadLong *=-1;
+      arrowHeadShort*=-1;
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong + arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong + arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      coef = [this.stickerSize * (arrowLong - arrowHeadLong - arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong - arrowHeadShort)];
+      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
+      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
+      context.lineTo(px,py);
+
+      context.stroke();
+    }
+
+
+
+
+  }
+
+
   this.rotate = function(axis, angle) {
     this.normal = this.normal.rotate(axis, angle);
     this.offset = this.offset.rotate(axis, angle);
@@ -65,6 +297,8 @@ function Sticker(normal, offset, colorArray, size) {
     this.spanDirection2_2d = this.spanDirection2.project_origin();
 
   }
+
+
 
   this.contains = function(type) {
 

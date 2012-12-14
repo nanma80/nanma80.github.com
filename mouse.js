@@ -66,9 +66,9 @@ mouseMove = function(e) {
   if (mouseIsDown) {
     mouseDrag(e);
   }
-  else {
-    resnap(e);
-  }
+  
+  resnap(e);
+  
 }
 
 findMouse = function (e) {
@@ -82,17 +82,6 @@ resnap = function(e) {
 
   if (snapIndex.toString() != currentSnapIndex.toString()) {
     // snap object is changed
-
-    if (puzzle.type == 'rubik') {
-      if (snapIndex.length > 0) {
-        puzzle.state[snapIndex[0]][snapIndex[1]][snapIndex[2]].colorArray = [128,128,128];
-      }
-
-      if (currentSnapIndex.length > 0) {
-        puzzle.state[currentSnapIndex[0]][currentSnapIndex[1]][currentSnapIndex[2]].colorArray = [0,0,0];
-      }
-    }
-
     currentSnapIndex = snapIndex.slice(0);
     // console.log(snapIndex);
     redraw();
