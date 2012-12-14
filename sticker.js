@@ -66,7 +66,7 @@ function Sticker(normal, offset, colorArray, size) {
 
   }
 
-  this.contains = function() {
+  this.contains = function(type) {
 
     if (this.normal.x < 0) return false;
 
@@ -80,24 +80,38 @@ function Sticker(normal, offset, colorArray, size) {
     // going to solve: d1 k1 + d2 k2 = m
 
     var delta = (d1x * d2y - d1y * d2x)
-    if (Math.abs(delta)<0.001) return false;
+    if (Math.abs(delta)<0.001) return false; //bad direction
+    
     var k1 = (d2y*mx-d2x*my)/delta;
     var k2 = (d1x*my-d1y*mx)/delta;
-
-    var l1 = (k1+k2)/Math.sqrt(2);
-    var l2 = (k1-k2)/Math.sqrt(2);
     
+    if ((Math.abs(k1)<this.stickerSize/2.0 && Math.abs(k2)<this.stickerSize/2.0) == false) return false; // mouse not in this face
+    
+    if (type == 'rubik') return true; // for rubik's cube, nothing else to handle
 
+    var l1 = (k1 + k2);
+    var l2 = (k1 - k2);
 
-    // console.log("color = "+this.color +"mx = "+mx+" my = "+my);
-    // console.log("color = "+this.color +"d1x = "+d1x+" d1y = "+d1y);
-    // console.log("color = "+this.color +"d2x = "+d2x+" d2y = "+d2y);
-    // console.log(this.spanDirection1);
-    // console.log("color = "+this.color +" k1 = "+k1+" k2 = "+k2);
+    if (type == 'mirror+') {
+      
+      var perp_direction = 2;
 
-    // if (mousePos.distance(this.offset_2d) < 60 ) return true;
+      if ((l1 > 0) == (l2 > 0))
+        perp_direction = 1;
 
-    return (Math.abs(k1)<this.stickerSize/2.0 && Math.abs(k2)<this.stickerSize/2.0)
+      return perp_direction;
+    }
+
+    if (type == 'mirrorX') {
+      var perp_direction = 1;
+
+      if ((k1 > 0) == (k2 > 0))
+        perp_direction = 2;
+
+      return perp_direction;
+    }
+
+    console.log("Type "+type + " is not supported.");
 
   }
 

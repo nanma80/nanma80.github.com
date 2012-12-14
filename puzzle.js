@@ -99,16 +99,24 @@ function Puzzle(type) {
 
           if (typeof (this.state[i][j][k]) == "undefined") continue;
 
-            if (this.type == "rubik") {
+          contains_return = this.state[i][j][k].contains(this.type);
 
+          if (contains_return == false) continue;
 
-          if ( this.state[i][j][k].contains() ) {
-            
-            return [i,j,k];
-        
-            }    
+          // now this face must contains mouse
+
+          if (this.type == "rubik") return [i,j,k];
+
+          var twist_dir = [Math.abs(i-2), Math.abs(j-2), Math.abs(k-2)].indexOf(1);
+          var faceIndex = [i,j,k][twist_dir] - 2;
+
+          if (this.type == "mirror+") {
+            var newIndex = [i,j,k];
+            newIndex[twist_dir] += faceIndex;
+            newIndex[(twist_dir + contains_return)%3] += faceIndex;
+            return newIndex;
           }
-
+      
         }
       }
     }
@@ -148,18 +156,14 @@ function Puzzle(type) {
 
   this.twist = function(direction) {
     if (this.type == "rubik") {
-      console.log("snapIndex: "+snapIndex +"  direction: "+direction);
-      var twist_dir = 0;
-      for (; twist_dir < 3; twist_dir++) {
-        if (snapIndex[twist_dir]!=2) break;
-      }
+      var snapIndexMinusTwo = snapIndex.map(function(x){return Math.abs(x-2);});
+      var twist_dir = snapIndexMinusTwo.indexOf(1);
+      var faceIndex = snapIndex[twist_dir]-2;
 
       this.duplicateState();
 
       if (twist_dir == 0) {
         // turn F or B
-        faceIndex = snapIndex[twist_dir]-2;
-
         for (var i=snapIndex[twist_dir]; i!=snapIndex[twist_dir] + 2*faceIndex; i+= faceIndex) {
           for (var j=0; j<5; j++) {
             for (var k=0; k<5; k++) {
@@ -174,8 +178,6 @@ function Puzzle(type) {
         }
       } else if (twist_dir == 1) {
         // turn L or R
-        faceIndex = snapIndex[twist_dir]-2;
-
         for (var i=snapIndex[twist_dir]; i!=snapIndex[twist_dir] + 2*faceIndex; i+= faceIndex) {
           for (var j=0; j<5; j++) {
             for (var k=0; k<5; k++) {
@@ -190,8 +192,6 @@ function Puzzle(type) {
         }
       } else if (twist_dir == 2) {
         // turn U or D
-        faceIndex = snapIndex[twist_dir]-2;
-
         for (var i=snapIndex[twist_dir]; i!=snapIndex[twist_dir] + 2*faceIndex; i+= faceIndex) {
           for (var j=0; j<5; j++) {
             for (var k=0; k<5; k++) {
@@ -206,12 +206,44 @@ function Puzzle(type) {
         }
       } else {
         console.log("Error: twist_dir = "+twist_dir);
-        exit;
       }
       this.reverseClone();
+    } else if (this.type == 'mirror+') {
 
+      var snapIndexMinusTwo = snapIndex.map(function(x){return Math.abs(x-2);});
+      var primary_dir = snapIndexMinusTwo.indexOf(2);
+      var secondary_dir = snapIndexMinusTwo.indexOf(1);
+      var tertiary_dir = 3 - primary_dir - secondary_dir;
+      // console.log("tertiary_dir: "+tertiary_dir+", should be 0 or 1 or 2");
+      var faceIndex = (snapIndex[primary_dir]-2)/2; //distinguishing F and B
+      // console.log("faceIndex: "+tertiary_dir+", should be -1 or 1");
+      this.duplicateState();
+
+      for (var primary_index = snapIndex[primary_dir]-faceIndex; primary_index!=snapIndex[primary_dir] + faceIndex; primary_index += faceIndex) {
+        // console.log("primary_index: "+primary_index+", should in 0 to 4");
+        for (var secondary_index = 0; secondary_index <5; secondary_index ++) {
+          for (var tertiary_index = 0; tertiary_index < 5; tertiary_index ++) {
+            var flyingIndex = [0,0,0];
+            flyingIndex[primary_dir] = primary_index;
+            flyingIndex[secondary_dir] = secondary_index;
+            flyingIndex[tertiary_dir] = tertiary_index;
+
+            var mirrorIndex = [0,0,0];
+            mirrorIndex[primary_dir] = primary_index;
+            mirrorIndex[secondary_dir] = 4 - secondary_index;
+            mirrorIndex[tertiary_dir] = tertiary_index;
+            
+            if (typeof (this.state[flyingIndex[0]][flyingIndex[1]][flyingIndex[2]]) == "undefined") continue;
+
+            this.cloneState[flyingIndex[0]][flyingIndex[1]][flyingIndex[2]] = this.state[mirrorIndex[0]][mirrorIndex[1]][mirrorIndex[2]].colorArray;
+          }
+        }
+      }
+
+      this.reverseClone();
 
     }
+
 
 
   }
