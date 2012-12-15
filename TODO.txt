@@ -10,3 +10,4 @@ scramble function
 add my name and date
 short instruction
 
+disable selecting text on document.body
