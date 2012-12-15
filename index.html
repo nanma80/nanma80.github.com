@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Reflection on the Rubik's Cube </title>
+<script src="lib/snap.js"></script>
 <script src="lib/point3d.js"></script>
 <script src="lib/sticker.js"></script>
 <script src="lib/puzzle.js"></script>
@@ -9,10 +10,14 @@
 </head>
 <body>
 
+
+<input type="radio" name="type" value="mirror+" onclick = "onRadioButton();" checked>mirror +<br>
+<input type="radio" name="type" value="mirrorX" onclick = "onRadioButton();">mirror X<br>
+<input type="radio" name="type" value="rubik" onclick = "onRadioButton();">Rubik's Cube<br>
+
 <canvas id="canvas" width="500" height="500" style="border:1px solid #c3c3c3;" oncontextmenu="return false;">
 Your browser does not support the HTML5 canvas tag.
 </canvas>
-
 
 <script type="text/javascript">
 var canvas = document.getElementById("canvas");
@@ -20,29 +25,16 @@ var context = canvas.getContext("2d");
 var viewHeight = canvas.height;
 var viewWidth = canvas.width;
 
+var snap = new Snap();
+var puzzle = new Puzzle();
 
-var p = new Point3D(1,2,3);
-var puzzle = new Puzzle("rubik");
-// var puzzle = new Puzzle("mirror+");
-// var puzzle = new Puzzle("mirrorX");
-
-function redraw() {
-  puzzle.draw(context, viewWidth, viewHeight);
-}
-
-puzzle.initializeState();
-
-// initial orientation
-puzzle.rotate(new Point3D(1,2,-1), 0.6);
-puzzle.rotate(new Point3D(1,0,0), -0.3);
-
-redraw();
+onRadioButton();
+puzzle.resetState();
 
 canvas.addEventListener("mousedown", mouseDown, false);
 canvas.addEventListener("mousemove", mouseMove, false);
 canvas.addEventListener("mouseover", mouseOver, false);
 canvas.addEventListener("mouseout", mouseOut, false);
-
 
 document.body.addEventListener("mouseup", mouseUp, false);
 
