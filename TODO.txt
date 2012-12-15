@@ -1,13 +1,3 @@
 TODO:
 
-lighting: calculate cosine, update colors
 draw proper oval
-layout of the whole page, left & right column
-reset button
-scramble button
-scramble function
-
-add my name and date
-short instruction
-
-disable selecting text on document.body
