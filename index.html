@@ -2,21 +2,27 @@
 <html>
 <head>
 <title>Reflection on the Rubik's Cube </title>
-
 <script src="lib/point3d.js"></script>
 <script src="lib/sticker.js"></script>
 <script src="lib/puzzle.js"></script>
 <script src="lib/snap.js"></script>
 <script src="lib/mouse.js"></script>
+<style type = "text/css">
+  button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height:30px; 
+    width:90px;
+  } 
+</style>
 </head>
 <body onselectstart='return false;'>
 
-
-<h1 style="margin-bottom:0;font-family:Arial, Helvetica, sans-serif;"> <img src="images/icon.png" alt="mirror" style = "vertical-align: middle;"> A Reflection on the Rubik's Cube 
+<h1 style="margin-top:0;margin-bottom:0;font-family:Arial, Helvetica, sans-serif;"> <img src="images/icon.png" alt="mirror" style = "vertical-align: middle;"> A Reflection on the Rubik's Cube 
  </h1>
 
-<div id="content" style="height:500px;width:500px;float:left;font-family:Arial, Helvetica, sans-serif">
-<canvas id="canvas" width="500" height="500" style="border:1px solid #c3c3c3;" oncontextmenu="return false;">
+<div id="content" style="height:550px;width:550px;float:left;font-family:Arial, Helvetica, sans-serif">
+<canvas id="canvas" width="550" height="550" style="border:1px solid #c3c3c3;" oncontextmenu="return false;" onselectstart='return false;'>
 Your browser does not support the HTML5 canvas tag.
 </canvas>
 </div>
@@ -26,21 +32,22 @@ Your browser does not support the HTML5 canvas tag.
 <input type="radio" name="type" value="mirror+" onclick = "onRadioButton();" checked>Mirror +<br>
 <input type="radio" name="type" value="mirrorX" onclick = "onRadioButton();">Mirror X<br>
 <input type="radio" name="type" value="rubik" onclick = "onRadioButton();">Rubik's Cube<br>
+<input type="radio" name="type" value="halfturn" onclick = "onRadioButton();">Half turn cube<br>
 <input type="radio" name="type" value="full" onclick = "onRadioButton();">Mirror & twist<br>
 </div>
 
 <div id="control" style="height:100px;width:200px;float:left;font-family:Arial, Helvetica, sans-serif;">
-<button type="button" style="height:30px; width:90px;" onclick = "puzzle.resetState();">Reset</button><br>
-<button type="button" style="margin-top:15px;height:30px; width:90px;" onclick = "puzzle.scramble();">Scramble</button>
+<button type="button" onclick = "puzzle.resetState();">Reset</button><br>
+<button type="button" onclick = "puzzle.scramble();">Scramble</button>
 </div>
 
-
 <div id="instruction" style="height:200px;width:300px;float:left;font-size:small;font-family:Arial, Helvetica, sans-serif;line-height: 20px;">
-On the Rubik's Cube you may twist a layer. But on "Mirror +" you may mirror a layer to swap opposite edges; on "Mirror X" you may mirror a layer diagonally to swap a pair of corners. When you are really ready, check out the last puzzle allowing all kinds of moves! 
-<br><br>
-If you can solve them, try different scrambles to make sure you haven't missed the <a href="exotic.html">exotic phenomena (spoiler alert!!)</a> that are forbidden on the Rubik's Cube.
-<br><br>
-Nan Ma, 12/15/2012
+<p>
+On the Rubik's Cube you may twist a layer. But on "Mirror +" you may mirror a layer to swap opposite edges; on "Mirror X" you may mirror a layer diagonally to swap a pair of corners. "Half turn cube" is just like the Rubik's Cube, but you can only turn a layer by 180 degrees. When you are really ready, check out the last puzzle allowing all kinds of moves! </p>
+<p>
+If you can solve them, try different scrambles to make sure you haven't missed the <a href="exotic.html">exotic phenomena (spoiler alert!!)</a> that are forbidden on the Rubik's Cube.</p>
+<p>
+Nan Ma, 12/15/2012</p>
 </div>
 </div>
 
@@ -64,6 +71,11 @@ canvas.addEventListener("mousemove", mouseMove, false);
 canvas.addEventListener("mouseover", mouseOver, false);
 canvas.addEventListener("mouseout", mouseOut, false);
 document.body.addEventListener("mouseup", mouseUp, false);
+
+canvas.addEventListener("touchstart", touchDown, false);
+canvas.addEventListener("touchmove", touchXY, true);
+canvas.addEventListener("touchend", touchUp, false);
+document.body.addEventListener("touchcancel", touchUp, false);
 
 </script>
 
