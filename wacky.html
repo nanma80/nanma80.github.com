@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Wacky things to see</title>
+<style type = "text/css">
+  table {
+    border: 1px solid gray;
+    text-align: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  } 
+  td {
+    border: 1px solid gray;
+    text-align: right;
+    padding-right: 10px;
+    padding-left: 10px;
+  } 
+</style>
+
+</head>
+<body>
+
+<h1 style="margin-top:0;margin-bottom:0;font-family:Arial, Helvetica, sans-serif;"> <img src="images/icon.png" alt="mirror" style = "vertical-align: middle;"> RefleCube: 
+  <span style="font-size:0.77em"> a reflection on the Rubik's Cube </span>
+</h1>
+
+<div id="content" style="margin-top:30px;font-family:Arial, Helvetica, sans-serif;">
+Solvers of the Rubik's Cube are used to the parity constraints, for example, the impossibility of twisting one corner by itself. But the mirror moves here allow us to do more.
+<h2>Gallery of wacky phenomena</h2>
+<h4>On "Mirror +":</h4> You may swap a pair of edge pieces, for example, yellow/blue <=> yellow/green: (front/back view)
+<br>
+<img src="images/mirror+1.png" alt="mirror" style = "vertical-align: middle;" height = 250>
+<img src="images/mirror+2.png" alt="mirror" style = "vertical-align: middle;" height = 250>
+
+<h4> On "Mirror X":</h4> You may swap a pair of corner pieces, for example, yellow/blue/red <=> yellow/green/orange: (front/back view)
+<br>
+<img src="images/mirrorX4.png" alt="mirror" style = "vertical-align: middle;" height = 250>
+<img src="images/mirrorX5.png" alt="mirror" style = "vertical-align: middle;" height = 250>
+<br>
+or mirror a pair of corner pieces, for example, yellow/blue/red <=> yellow/green/orange: (front/back view)
+<br>
+<img src="images/mirrorX1.png" alt="mirror" style = "vertical-align: middle;" height = 250>
+<img src="images/mirrorX2.png" alt="mirror" style = "vertical-align: middle;" height = 250>
+<br>
+or even twist a corner by itself, for example, yellow/blue/red:
+<br>
+<img src="images/mirrorX3.png" alt="mirror" style = "vertical-align: middle;" height = 250>
+
+<h4>On "Mirror & twist":</h4> You may, naturally, do all of the above things. In addition, you may mirror swap a pair of adjacent corners, which is not even possible on "Mirror X": (front/back view)
+<br>
+<img src="images/full1.png" alt="mirror" style = "vertical-align: middle;" height = 250>
+<img src="images/full2.png" alt="mirror" style = "vertical-align: middle;" height = 250>
+
+<h2>Number of permutations</h2>
+I understand the number of permutations (states) of a puzzle has almost nothing to do with its difficulty. But just in case you are curious, here are the number of permutations of these puzzles.
+<table>
+    <tr><td style="text-align: left;">Half turn cube:</td> <td>663552</td><td>Subgroup of all the other puzzles here</td></tr>
+  <tr><td style="text-align: left;">Mirror +:</td> <td>18579456</td><td></td></tr>
+  <tr><td style="text-align: left;">Rubik's Cube:</td> <td>43252003274489856000</td><td></td></tr>
+  <tr><td style="text-align: left;">Mirror X:</td> <td>118634066124315033600</td><td>     (96/35=2.74 times that of the Rubik's cube)</td></tr>
+  <tr><td style="text-align: left;">Mirror & twist:</td> <td>33217538514808209408000</td><td>     768 times that of the Rubik's cube</td></tr>
+</table>
+<p>The half turn cube is a subgroup of everything else, because mirroring across perpendicular directions turns a layer by 180 degrees. The group of Mirror X is even larger than that of the Rubik's Cube. </p>
+<p>
+<a href="gap_calc.g">Here</a> is the <a href="http://www.gap-system.org/">GAP</a> code I used to compute these numbers. They provide insights when exploring the possible transforms.
+</p>
+
+<p>
+<a href="index.html">Back to the puzzle</a>
+</p>
+</div>
+
+
+</body>
+</html>
