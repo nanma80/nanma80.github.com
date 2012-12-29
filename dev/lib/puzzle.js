@@ -36,13 +36,17 @@ function Puzzle() {
     // set the state to the original state, and original orientation
     this.nTurns = 0;
 
-    this.state = [
-      [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
-      [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
-      [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
-      [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
-      [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)]
-    ];
+    this.state = new Array(this.sizeOfStateArray);
+    for (var i = 0; i < this.sizeOfStateArray; i++) {
+      this.state[i] = new Array(this.sizeOfStateArray);
+    }
+
+    for (var i = 0; i < this.sizeOfStateArray; i++) {
+      for (var j = 0; j < this.sizeOfStateArray; j++) {
+        this.state[i][j] = new Array(this.sizeOfStateArray);
+      }
+    }
+
 
     for (var i = 1; i < 1 + this.layers; i++) {
       for (var j = 1; j < 1 + this.layers; j++) {
@@ -122,9 +126,9 @@ function Puzzle() {
 
     // draw plastic
     
-    for (var i=1; i<4; i++) {
-      for (var j=1; j<4; j++) {
-        for (var k=1; k<4; k++) {
+    for (var i=1; i<1+this.layers; i++) {
+      for (var j=1; j<1+this.layers; j++) {
+        for (var k=1; k<1+this.layers; k++) {
 
           if (typeof (this.state[i][j][k]) == "undefined") continue;
           this.state[i][j][k].draw();
@@ -135,9 +139,9 @@ function Puzzle() {
 
     //draw stickers
 
-    for (var i=0; i<5; i++) {
-      for (var j=0; j<5; j++) {
-        for (var k=0; k<5; k++) {
+    for (var i=0; i<2+this.layers; i++) {
+      for (var j=0; j<2+this.layers; j++) {
+        for (var k=0; k<2+this.layers; k++) {
 
           if (typeof (this.state[i][j][k]) == "undefined") continue;
           if (this.state[i][j][k].stickerSize > 1) continue;
@@ -161,9 +165,9 @@ function Puzzle() {
   this.rotate = function(axis, angle) {
     setRotationMatrix(axis, angle);
 
-    for (var i=0; i<5; i++) {
-      for (var j=0; j<5; j++) {
-        for (var k=0; k<5; k++) {
+    for (var i=0; i<2+this.layers; i++) {
+      for (var j=0; j<2+this.layers; j++) {
+        for (var k=0; k<2+this.layers; k++) {
           if (typeof (this.state[i][j][k]) == "undefined") continue;
 
           this.state[i][j][k].rotate(axis, angle);
@@ -177,9 +181,9 @@ function Puzzle() {
   this.snap = function() {
     if (this.type!="full") {
     // go through all the plastic faces
-      for (var i=1; i<4; i++) {
-        for (var j=1; j<4; j++) {
-          for (var k=1; k<4; k++) {
+      for (var i=1; i<1+this.layers; i++) {
+        for (var j=1; j<1+this.layers; j++) {
+          for (var k=1; k<1+this.layers; k++) {
 
             if (typeof (this.state[i][j][k]) == "undefined") continue;
 
@@ -208,9 +212,9 @@ function Puzzle() {
       }
 
     } else { //full, go through all stickers
-      for (var i=0; i<5; i++) {
-        for (var j=0; j<5; j++) {
-          for (var k=0; k<5; k++) {
+      for (var i=0; i<2+this.layers; i++) {
+        for (var j=0; j<2+this.layers; j++) {
+          for (var k=0; k<2+this.layers; k++) {
             if (typeof (this.state[i][j][k]) == "undefined") continue;
             if (this.state[i][j][k].stickerSize > 1) continue;
 
@@ -234,17 +238,29 @@ function Puzzle() {
   this.duplicateState = function() {
     // preparing a clone state to store the color arrays, for twisting
 
-    this.cloneState = [
-      [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
-      [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
-      [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
-      [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
-      [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)]
-    ];
+    // this.cloneState = [
+    //   [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
+    //   [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
+    //   [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
+    //   [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)],
+    //   [new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray),new Array(this.sizeOfStateArray)]
+    // ];
 
-    for (var i=0; i<5; i++) {
-      for (var j=0; j<5; j++) {
-        for (var k=0; k<5; k++) {
+
+    this.cloneState = new Array(this.sizeOfStateArray);
+    for (var i = 0; i < this.sizeOfStateArray; i++) {
+      this.cloneState[i] = new Array(this.sizeOfStateArray);
+    }
+
+    for (var i = 0; i < this.sizeOfStateArray; i++) {
+      for (var j = 0; j < this.sizeOfStateArray; j++) {
+        this.cloneState[i][j] = new Array(this.sizeOfStateArray);
+      }
+    }
+
+    for (var i=0; i<2+this.layers; i++) {
+      for (var j=0; j<2+this.layers; j++) {
+        for (var k=0; k<2+this.layers; k++) {
           if (typeof (this.state[i][j][k]) == "undefined") continue;
           this.cloneState[i][j][k] = this.state[i][j][k].colorArray;
         }
@@ -254,14 +270,14 @@ function Puzzle() {
 
   this.reverseClone = function() {
     // from clone state back to state
-    for (var i=0; i<5; i++) {
-      for (var j=0; j<5; j++) {
-        for (var k=0; k<5; k++) {
+    for (var i=0; i<2+this.layers; i++) {
+      for (var j=0; j<2+this.layers; j++) {
+        for (var k=0; k<2+this.layers; k++) {
           if (typeof (this.state[i][j][k]) == "undefined") continue;
           this.state[i][j][k].colorArray = this.cloneState[i][j][k];          
         }
       }
-    }  
+    } 
   }
 
 
@@ -295,8 +311,8 @@ function Puzzle() {
     
 
     for (var index0 = snap.index[snap.dir[0]]-faceIndex; index0!=snap.index[snap.dir[0]] + faceIndex; index0 += faceIndex) {
-      for (var index1 = 0; index1 <5; index1 ++) {
-        for (var index2 = 0; index2 < 5; index2 ++) {
+      for (var index1 = 0; index1 <2+this.layers; index1 ++) {
+        for (var index2 = 0; index2 < 2+this.layers; index2 ++) {
           var flyingIndex = [0,0,0];
           flyingIndex[snap.dir[0]] = index0;
           flyingIndex[snap.dir[1]] = index1;
@@ -310,27 +326,27 @@ function Puzzle() {
           if (snap.snapType == "rubik" && (this.type == 'rubik' || this.type == "full")) {
             mirrorIndex[snap.dir[0]] = index0;
             if (direction == (faceIndex > 0)) {
-              mirrorIndex[snap.dir[1]] = 4-index2;
+              mirrorIndex[snap.dir[1]] = 1+this.layers-index2;
               mirrorIndex[snap.dir[2]] = index1;
             } else {
               mirrorIndex[snap.dir[1]] = index2;
-              mirrorIndex[snap.dir[2]] = 4- index1;
+              mirrorIndex[snap.dir[2]] = 1+this.layers- index1;
             }
           } else if (snap.snapType == "rubik" && this.type == 'halfturn') {
             mirrorIndex[snap.dir[0]] = index0;
-            mirrorIndex[snap.dir[1]] = 4-index1;
-            mirrorIndex[snap.dir[2]] = 4-index2;
+            mirrorIndex[snap.dir[1]] = 1+this.layers-index1;
+            mirrorIndex[snap.dir[2]] = 1+this.layers-index2;
           } else if (snap.snapType == "mirror+") {
             
             mirrorIndex[snap.dir[0]] = index0;
-            mirrorIndex[snap.dir[1]] = 4 - index1;
+            mirrorIndex[snap.dir[1]] = 1+this.layers - index1;
             mirrorIndex[snap.dir[2]] = index2;
 
           } else if (snap.snapType == "mirrorX") {
             if (snap.auxiliary == invertMirrorX) {
               mirrorIndex[snap.dir[0]] = index0;
-              mirrorIndex[snap.dir[1]] = 4- index2;
-              mirrorIndex[snap.dir[2]] = 4- index1;
+              mirrorIndex[snap.dir[1]] = 1+this.layers- index2;
+              mirrorIndex[snap.dir[2]] = 1+this.layers- index1;
             } else {
               mirrorIndex[snap.dir[0]] = index0;
               mirrorIndex[snap.dir[1]] = index2;
