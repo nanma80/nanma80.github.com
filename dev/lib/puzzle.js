@@ -124,14 +124,16 @@ function Puzzle() {
 
 
     // create state stickers for control of mirror and twist
-    for (var i=1; i<4; i++) {
-      for (var j=1; j<4; j++) {
-        this.state[0][i][j] = new Sticker(new Point3D(-1,0,0), new Point3D(-1.5,i-2,j-2), this.colorArray[7],this.stateSize); // back
-        this.state[4][i][j] = new Sticker(new Point3D( 1,0,0), new Point3D( 1.5,i-2,j-2), this.colorArray[7],this.stateSize); // front
-        this.state[i][0][j] = new Sticker(new Point3D(0,-1,0), new Point3D(i-2,-1.5,j-2), this.colorArray[7],this.stateSize); // left
-        this.state[i][4][j] = new Sticker(new Point3D(0, 1,0), new Point3D(i-2, 1.5,j-2), this.colorArray[7],this.stateSize); // right
-        this.state[i][j][0] = new Sticker(new Point3D(0,0,-1), new Point3D(i-2,j-2,-1.5), this.colorArray[7],this.stateSize); // down
-        this.state[i][j][4] = new Sticker(new Point3D(0,0, 1), new Point3D(i-2,j-2, 1.5), this.colorArray[7],this.stateSize); // up
+    if (this.type == "full") {
+      for (var i=1; i<4; i++) {
+        for (var j=1; j<4; j++) {
+          this.state[0][i][j] = new Sticker(new Point3D(-1,0,0), new Point3D(-1.5,i-2,j-2), this.colorArray[7],this.stateSize); // back
+          this.state[4][i][j] = new Sticker(new Point3D( 1,0,0), new Point3D( 1.5,i-2,j-2), this.colorArray[7],this.stateSize); // front
+          this.state[i][0][j] = new Sticker(new Point3D(0,-1,0), new Point3D(i-2,-1.5,j-2), this.colorArray[7],this.stateSize); // left
+          this.state[i][4][j] = new Sticker(new Point3D(0, 1,0), new Point3D(i-2, 1.5,j-2), this.colorArray[7],this.stateSize); // right
+          this.state[i][j][0] = new Sticker(new Point3D(0,0,-1), new Point3D(i-2,j-2,-1.5), this.colorArray[7],this.stateSize); // down
+          this.state[i][j][4] = new Sticker(new Point3D(0,0, 1), new Point3D(i-2,j-2, 1.5), this.colorArray[7],this.stateSize); // up
+        }
       }
     }
     // set the plastic faces for control of mirror +, mirror X, Rubik and half turn
