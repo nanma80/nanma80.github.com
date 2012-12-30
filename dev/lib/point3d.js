@@ -67,7 +67,7 @@ function Point3D(x,y,z) {
   this.project_origin = function() {
     // project this 3D point to 2D, viewed from the +x direction, 3D origin -> 2D origin
     var factor, x, y, viewDistance
-    factor = viewHeight * 0.18 * 3 / puzzle.layers;
+    factor = viewHeight * 0.18;
     
     x = this.y * factor;
     y = -this.z * factor;
