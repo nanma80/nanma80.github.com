@@ -26,7 +26,7 @@ Your browser does not support the HTML5 canvas tag.
 </canvas>
 </div>
 
-<div id="info" style="margin-left:10px;height:560px;width:350px;float:left;font-family:Arial, Helvetica, sans-serif;line-height: 30px;">
+<div id="info" style="margin-left:10px;height:600px;width:350px;float:left;font-family:Arial, Helvetica, sans-serif;line-height: 30px;">
 <div id="types" style="font-size:large;height:150px;width:150px;float:left;">
 <input type="radio" name="type" value="mirror+" onclick = "onRadioButton();" checked>Mirror +<br>
 <input type="radio" name="type" value="mirrorX" onclick = "onRadioButton();">Mirror X<br>
@@ -36,13 +36,13 @@ Your browser does not support the HTML5 canvas tag.
 </div>
 
 <div id="layers" style="font-size:large;height:150px;width:200px;float:right;">
-<input type="radio" name="layers" value=2 onclick = "onRadioButton();">2 layers<br>
-<input type="radio" name="layers" value=3 onclick = "onRadioButton();" checked >3 layers<br>
-<input type="radio" name="layers" value=4 onclick = "onRadioButton();">4 layers<br>
-<input type="radio" name="layers" value=5 onclick = "onRadioButton();">5 layers<br>
+<input type="radio" name="layers" value=2 onclick = "onRadioButton();">2x2x2<br>
+<input type="radio" name="layers" value=3 onclick = "onRadioButton();" checked >3x3x3<br>
+<input type="radio" name="layers" value=4 onclick = "onRadioButton();">4x4x4<br>
+<input type="radio" name="layers" value=5 onclick = "onRadioButton();">5x5x5<br>
 </div>
 
-<div id="control" style="margin-top:20px;margin-bottom:20px;height:50px;width:300px;float:left;font-family:Arial, Helvetica, sans-serif;">
+<div id="control" style="margin-top:10px;margin-bottom:10px;height:50px;width:300px;float:left;font-family:Arial, Helvetica, sans-serif;">
 <button type="button" onclick = "puzzle.resetState();">Reset</button> 
 <button type="button" onclick = "puzzle.scramble();">Scramble</button>
 </div>
@@ -51,10 +51,11 @@ Your browser does not support the HTML5 canvas tag.
 On the Rubik's Cube you may twist a layer. But now
 <ul>
 <li>on "Mirror +" you may mirror a layer to swap opposite edges</li> 
-<li>on "Mirror X" you may mirror a layer diagonally to swap a pair of corners</li> 
+<li>on "Mirror X" you may mirror a layer diagonally to swap a pair of corner  s</li> 
 <li>"Half turn cube" is just like the Rubik's Cube, but you can only turn a layer by 180 degrees. </li>
-<li>When you are really ready, check out the last puzzle allowing all kinds of moves!</li>
-<li>Shift + click mirrors two layers; Alt + click mirrors only the second layer. </li>
+<li>When you are really ready, check out the puzzle allowing mirroring and twisting, or puzzles with more layers!</li>
+<li>Mouse click mirrors the outmost layer; Alt + click moves only the second layer; 
+  Shift + click mirrors two layers; Alt + Shift + click mirrors three layers. </li>
 </ul>
 <p>
 If you can solve them, try different scrambles to make sure you haven't missed the <a href="wacky.html">wacky phenomena (spoiler alert!!)</a> that are forbidden on the Rubik's Cube.</p>
