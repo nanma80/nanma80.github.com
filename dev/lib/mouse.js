@@ -25,7 +25,10 @@ click = function(e){
   if (e.ctrlKey) return;
   // resnap(e);
   if (snap.index.length > 0) {
-    puzzle.twist(e.button == 2);
+    var layer = 1;
+    if (e.altKey) layer = 2;
+    if (e.shiftKey) layer = 3;
+    puzzle.twist(e.button == 2, layer);
   }
   puzzle.draw();
 }

@@ -319,7 +319,7 @@ function Puzzle() {
     
     for (var scrambleIndex = 0; scrambleIndex < scrambleLength; scrambleIndex++) {
       snap.setRandom(this.type); //set snap object to a random state
-      this.twist((Math.random()>0.5));
+      this.twist((Math.random()>0.5), (Math.random()>0.5) ? 1 : 2);
     }
 
     this.nTurns = 0;
@@ -330,21 +330,49 @@ function Puzzle() {
 
   }
 
-  this.twist = function(direction) {
+  this.twist = function(direction, whichLayer) {
 
     if (snap.index.length < 1) return;
 
     var faceIndex = snap.faceIndex;
+    var index0_start, index0_end, index0_step;
+
     this.duplicateState();
 
-    for (var index0 = snap.index[snap.dir[0]]-faceIndex; index0!=snap.index[snap.dir[0]] + faceIndex; index0 += faceIndex) {
+    if (this.layers == 2) {
+      if (whichLayer == 1) {
+        index0_start = this.center * (1+faceIndex) - faceIndex;
+        index0_end = this.center * (1+faceIndex) + faceIndex;
+      } else if (whichLayer == 2){
+        index0_start = this.center * (1+faceIndex) - faceIndex*3;
+        index0_end = this.center * (1+faceIndex) - faceIndex;
+      } else {
+        index0_start = this.center * (1+faceIndex) - faceIndex*3;
+        index0_end = this.center * (1+faceIndex) + faceIndex;
+      }
+    } else {
+      if (whichLayer == 1) {
+        index0_start = this.center * (1+faceIndex) - faceIndex;
+        index0_end = this.center * (1+faceIndex) + faceIndex;
+      } else if (whichLayer == 2){
+        index0_start = this.center * (1+faceIndex) - faceIndex*2;
+        index0_end = this.center * (1+faceIndex) - faceIndex;
+      } else {
+        index0_start = this.center * (1+faceIndex) - faceIndex*2;
+        index0_end = this.center * (1+faceIndex) + faceIndex;
+      }
+    }
+
+
+    index0_step = (index0_start < index0_end) ? 1 : -1;
+
+    for (var index0 = index0_start; index0 != index0_end; index0 += index0_step) {
       for (var index1 = 0; index1 <2+this.layers; index1 ++) {
         for (var index2 = 0; index2 < 2+this.layers; index2 ++) {
           var flyingIndex = [0,0,0];
           flyingIndex[snap.dir[0]] = index0;
           flyingIndex[snap.dir[1]] = index1;
           flyingIndex[snap.dir[2]] = index2;
-
 
           if (typeof (this.stickers[flyingIndex[0]][flyingIndex[1]][flyingIndex[2]]) == "undefined") continue;
 
