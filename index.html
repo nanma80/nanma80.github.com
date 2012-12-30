@@ -26,7 +26,7 @@ Your browser does not support the HTML5 canvas tag.
 </canvas>
 </div>
 
-<div id="info" style="margin-left:10px;height:600px;width:350px;float:left;font-family:Arial, Helvetica, sans-serif;line-height: 30px;">
+<div id="info" style="margin-left:10px;height:560px;width:350px;float:left;font-family:Arial, Helvetica, sans-serif;line-height: 30px;">
 <div id="types" style="font-size:large;height:150px;width:150px;float:left;">
 <input type="radio" name="type" value="mirror+" onclick = "onRadioButton();" checked>Mirror +<br>
 <input type="radio" name="type" value="mirrorX" onclick = "onRadioButton();">Mirror X<br>
@@ -54,15 +54,21 @@ On the Rubik's Cube you may twist a layer. But now
 <li>on "Mirror X" you may mirror a layer diagonally to swap a pair of corner  s</li> 
 <li>"Half turn cube" is just like the Rubik's Cube, but you can only turn a layer by 180 degrees. </li>
 <li>When you are really ready, check out the puzzle allowing mirroring and twisting, or puzzles with more layers!</li>
-<li>Mouse click mirrors the outmost layer; Alt + click moves only the second layer; 
-  Shift + click mirrors two layers; Alt + Shift + click mirrors three layers. </li>
 </ul>
-<p>
-If you can solve them, try different scrambles to make sure you haven't missed the <a href="wacky.html">wacky phenomena (spoiler alert!!)</a> that are forbidden on the Rubik's Cube.</p>
+
+<ul style="font-weight:bold">
+<li>Mouse click mirrors the outmost layer</li>
+<li>Alt + click mirrors only the second layer</li>
+<li>Shift + click mirrors two layers</li>
+<li>Alt + Shift + click mirrors three layers</li>
+</ul>
 </div>
 </div>
 
-<div id="content" style="font-size:small;height:20px;width:850px;float:bottom;font-family:Arial, Helvetica, sans-serif">
+<div id="content" style="font-size:small;height:20px;width:900px;float:bottom;font-family:Arial, Helvetica, sans-serif">
+<p>
+If you can solve them, try different scrambles to make sure you haven't missed the <a href="wacky.html">wacky phenomena (spoiler alert!!)</a> that are forbidden on the Rubik's Cube.</p>
+
 <p>This puzzle is inspired by <a href="http://www.superliminal.com/cube/mc2d.html">Magic Cube 2D</a> and the discussion about it in the <a href="http://games.groups.yahoo.com/group/4D_Cubing/">Yahoo group</a>. I also emulated this puzzle using <a href="http://www.superliminal.com/cube/cube.htm">MC4D</a> and <a href="http://astr73.narod.ru/MPUlt/MPUlt.html">MPUlt</a> before implementing it.</p>
 
 <p>The puzzle uses html5 canvas, which is not supported directly by IE 8 or lower. I also apologize if the animation is jumpy on some browsers. Try using the latest version of Chrome for the best experience.</p>
