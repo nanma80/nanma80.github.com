@@ -21,9 +21,9 @@ function Puzzle() {
   
   // type is changed by onRadioButton()
   // this.type = type;
+  this.type = "rubik";
 
-  this.setParameters = function(type, layers) {
-    this.type = type;
+  this.setParameters = function(layers) {
     this.layers = layers;
     this.stickerSize = 0.92 * 3/this.layers;
 
@@ -122,20 +122,6 @@ function Puzzle() {
       }
     }
 
-
-    // create state stickers for control of mirror and twist
-    if (this.type == "full") {
-      for (var i=1; i<4; i++) {
-        for (var j=1; j<4; j++) {
-          this.state[0][i][j] = new Sticker(new Point3D(-1,0,0), new Point3D(-1.5,i-2,j-2), this.colorArray[7],this.stateSize); // back
-          this.state[4][i][j] = new Sticker(new Point3D( 1,0,0), new Point3D( 1.5,i-2,j-2), this.colorArray[7],this.stateSize); // front
-          this.state[i][0][j] = new Sticker(new Point3D(0,-1,0), new Point3D(i-2,-1.5,j-2), this.colorArray[7],this.stateSize); // left
-          this.state[i][4][j] = new Sticker(new Point3D(0, 1,0), new Point3D(i-2, 1.5,j-2), this.colorArray[7],this.stateSize); // right
-          this.state[i][j][0] = new Sticker(new Point3D(0,0,-1), new Point3D(i-2,j-2,-1.5), this.colorArray[7],this.stateSize); // down
-          this.state[i][j][4] = new Sticker(new Point3D(0,0, 1), new Point3D(i-2,j-2, 1.5), this.colorArray[7],this.stateSize); // up
-        }
-      }
-    }
     // set the plastic faces for control of mirror +, mirror X, Rubik and half turn
     this.state[1][2][2] = new Sticker(new Point3D(-1,0,0), new Point3D(-1.5,0,0), this.colorArray[7],this.faceSize); // back
     this.state[3][2][2] = new Sticker(new Point3D( 1,0,0), new Point3D( 1.5,0,0), this.colorArray[7],this.faceSize); // front
@@ -221,53 +207,32 @@ function Puzzle() {
   }
 
   this.snap = function() {
-    if (this.type!="full") {
     // go through all the plastic faces
-      for (var i=1; i<1+this.stateLayers; i++) {
-        for (var j=1; j<1+this.stateLayers; j++) {
-          for (var k=1; k<1+this.stateLayers; k++) {
+    for (var i=1; i<1+this.stateLayers; i++) {
+      for (var j=1; j<1+this.stateLayers; j++) {
+        for (var k=1; k<1+this.stateLayers; k++) {
 
-            if (typeof (this.state[i][j][k]) == "undefined") continue;
+          if (typeof (this.state[i][j][k]) == "undefined") continue;
 
-            contains_return = this.state[i][j][k].contains(this.type);
-            if (contains_return == false) continue;
+          contains_return = this.state[i][j][k].contains();
+          if (contains_return == false) continue;
 
-            // now this face must contains mouse
-            snap.setPrimaryByPlastic([i,j,k]);
+          // now this face must contains mouse
+          snap.setPrimaryByPlastic([i,j,k]);
 
-            if (this.type == "rubik" || this.type =='halfturn') {
-              snap.setIndexToFace();
-              return;
-            }
-
-            if (this.type == "mirror+") {
-              snap.setIndexToEdge(contains_return);
-              return;
-            }
-
-            if (this.type == "mirrorX") {
-              snap.setIndexToVertex(contains_return);
-              return;
-            }
-          }
-        }
-      }
-
-    } else { //full, go through all stickers
-      for (var i=0; i<2+this.stateLayers; i++) {
-        for (var j=0; j<2+this.stateLayers; j++) {
-          for (var k=0; k<2+this.stateLayers; k++) {
-            if (typeof (this.state[i][j][k]) == "undefined") continue;
-            if (this.state[i][j][k].stickerSize > 1) continue;
-
-            contains_return = this.state[i][j][k].contains("rubik");
-            
-            if (contains_return == false) continue;
-
-            snap.setByFull([i,j,k]);
-
+          if (this.type == "rubik" || this.type =='halfturn') {
+            snap.setIndexToFace();
             return;
-            
+          }
+
+          if (this.type == "mirror+") {
+            snap.setIndexToEdge(contains_return);
+            return;
+          }
+
+          if (this.type == "mirrorX") {
+            snap.setIndexToVertex(contains_return);
+            return;
           }
         }
       }
@@ -332,56 +297,30 @@ function Puzzle() {
 
   }
 
-  this.twist = function(direction, whichLayer) {
+  this.twistLayer = function(direction, layer, degree) {
+    // turn the layer-th layer by 90*degree degrees
 
-    if (snap.index.length < 1) return;
+    if (degree == 3) {
+      direction = !direction;
+      degree = 1;
+    }
 
     var faceIndex = snap.faceIndex;
     var index0_start, index0_end, index0_step;
 
-    this.duplicateState();
-
-    if (this.layers == 2) {
-      if (whichLayer == 1) {
-        index0_start = this.center * (1+faceIndex) - faceIndex;
-        index0_end = this.center * (1+faceIndex) + faceIndex;
-      } else if (whichLayer == 2){
-        index0_start = this.center * (1+faceIndex) - faceIndex*3;
-        index0_end = this.center * (1+faceIndex) - faceIndex;
-      } else { // whichLayer may be 12 or 123
-        index0_start = this.center * (1+faceIndex) - faceIndex*3;
-        index0_end = this.center * (1+faceIndex) + faceIndex;
-      }
-    } else if (this.layers == 3) {
-      if (whichLayer == 1) {
-        index0_start = this.center * (1+faceIndex) - faceIndex;
-        index0_end = this.center * (1+faceIndex) + faceIndex;
-      } else if (whichLayer == 2){
-        index0_start = this.center * (1+faceIndex) - faceIndex*2;
-        index0_end = this.center * (1+faceIndex) - faceIndex;
-      } else if (whichLayer == 12){
-        index0_start = this.center * (1+faceIndex) - faceIndex*2;
-        index0_end = this.center * (1+faceIndex) + faceIndex;
-      } else { // whichLayer == 123
-        index0_start = this.center * (1+faceIndex) - faceIndex*4;
-        index0_end = this.center * (1+faceIndex) + faceIndex;
-      }
-    } else { //this.layers == 4 or 5
-      if (whichLayer == 1) {
-        index0_start = this.center * (1+faceIndex) - faceIndex;
-        index0_end = this.center * (1+faceIndex) + faceIndex;
-      } else if (whichLayer == 2){
-        index0_start = this.center * (1+faceIndex) - faceIndex*2;
-        index0_end = this.center * (1+faceIndex) - faceIndex;
-      } else if (whichLayer == 12){
-        index0_start = this.center * (1+faceIndex) - faceIndex*2;
-        index0_end = this.center * (1+faceIndex) + faceIndex;
-      } else { // whichLayer == 123
-        index0_start = this.center * (1+faceIndex) - faceIndex*3;
-        index0_end = this.center * (1+faceIndex) + faceIndex;
-      }
+    // turning outer layer
+    if (layer == 1) {
+      index0_start = this.center * (1+faceIndex) - faceIndex;
+      index0_end = this.center * (1+faceIndex) + faceIndex;
+    } else if (layer == this.layers) {
+      index0_start = this.center * (1+faceIndex) - faceIndex*(1+layer);
+      index0_end = this.center * (1+faceIndex) - faceIndex*(1+layer-2);
+    } else if (layer>1 && layer <this.layers) {
+      index0_start = this.center * (1+faceIndex) - faceIndex*(layer);
+      index0_end = this.center * (1+faceIndex) - faceIndex*(1+layer);
+    } else {
+      return;
     }
-
 
     index0_step = (index0_start < index0_end) ? 1 : -1;
 
@@ -397,7 +336,7 @@ function Puzzle() {
 
           var mirrorIndex = [0,0,0];
 
-          if (snap.snapType == "rubik" && (this.type == 'rubik' || this.type == "full")) {
+          if (degree == 1) {
             mirrorIndex[snap.dir[0]] = index0;
             if (direction == (faceIndex > 0)) {
               mirrorIndex[snap.dir[1]] = 1+this.layers-index2;
@@ -406,34 +345,41 @@ function Puzzle() {
               mirrorIndex[snap.dir[1]] = index2;
               mirrorIndex[snap.dir[2]] = 1+this.layers- index1;
             }
-          } else if (snap.snapType == "rubik" && this.type == 'halfturn') {
+          } else if (degree == 2) {
             mirrorIndex[snap.dir[0]] = index0;
             mirrorIndex[snap.dir[1]] = 1+this.layers-index1;
             mirrorIndex[snap.dir[2]] = 1+this.layers-index2;
-          } else if (snap.snapType == "mirror+") {
-            
-            mirrorIndex[snap.dir[0]] = index0;
-            mirrorIndex[snap.dir[1]] = 1+this.layers - index1;
-            mirrorIndex[snap.dir[2]] = index2;
-
-          } else if (snap.snapType == "mirrorX") {
-            if (snap.auxiliary == invertMirrorX) {
-              mirrorIndex[snap.dir[0]] = index0;
-              mirrorIndex[snap.dir[1]] = 1+this.layers- index2;
-              mirrorIndex[snap.dir[2]] = 1+this.layers- index1;
-            } else {
-              mirrorIndex[snap.dir[0]] = index0;
-              mirrorIndex[snap.dir[1]] = index2;
-              mirrorIndex[snap.dir[2]] = index1;
-            }
+          } else {
+            console.log("degree "+degree +" is not supported.");
           }
           this.cloneSticker[flyingIndex[0]][flyingIndex[1]][flyingIndex[2]] = this.stickers[mirrorIndex[0]][mirrorIndex[1]][mirrorIndex[2]].colorArray;
         }
       }
     }
+  }
 
-  this.reverseClone();
-  this.nTurns ++;
+  this.twist = function(direction) {
+
+    if (snap.index.length < 1) return;
+
+
+    this.duplicateState();
+
+    if (this.layers == 3) {
+      this.twistLayer(direction, 1, 2);
+      this.twistLayer(direction, 2, 1);
+    } else if (this.layers == 4) {
+      this.twistLayer(direction, 1, 1);
+      this.twistLayer(direction, 2, 2);
+      this.twistLayer(direction, 3, 3);
+    } else if (this.layers == 5) {
+      this.twistLayer(direction, 2, 1);
+      this.twistLayer(direction, 3, 2);
+      this.twistLayer(direction, 4, 3);
+    }
+
+    this.reverseClone();
+    this.nTurns ++;
 
   }
 

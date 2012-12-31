@@ -107,312 +107,44 @@ function Sticker(normal, offset, colorArray, size) {
   }
 
   this.drawArrows = function(){
-    if (snap.snapType == 'mirror+') {
-      var arrowDirection = snap.auxiliary ? 0 : 1;
 
-      var arrow_vectors = [this.spanDirection1_2d, this.spanDirection2_2d];
-
-      context.strokeStyle = "rgb(" + puzzle.colorArray[9][0] + "," + puzzle.colorArray[9][1] + "," + puzzle.colorArray[9][2] + ")";
-      context.lineWidth=3;
-      context.beginPath();
-
-      var coef, px, py;
-
-      var arrowLong = 0.46;
-      var arrowShort = 1.0/6.0;
-      var arrowHeadLong = 0.07;
-      var arrowHeadShort = 0.02;
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort + arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.moveTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort - arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      arrowLong *= -1;
-      arrowHeadLong *= -1;
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort + arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort - arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      arrowShort *= -1;
-      arrowLong *= -1;
-      arrowHeadLong *= -1;
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort + arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.moveTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort - arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      arrowLong *= -1;
-      arrowHeadLong *= -1;
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort + arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong), this.stickerSize * (arrowShort - arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-      context.stroke();
-
-
-      initDashing(context) ;
-      context.dashStyle = [10,5,2,5] ;
-      context.beginPath();
-      
-      var axisLength = 0.45;
-
-      coef = [this.stickerSize * (0), this.stickerSize * (axisLength)];
-      p1x = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      p1y = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      
-      coef = [this.stickerSize * (0), this.stickerSize * (- axisLength)];
-      p2x = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      p2y = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-
-      context.dashedLine(p1x,p1y,p2x,p2y) ;
-
-      context.closePath();
-      context.stroke();
-
-
-
-    } else if (snap.snapType == 'mirrorX') {
-
-      var arrowDirection = (snap.auxiliary==invertMirrorX) ? 0 : 1;
-      
-      var arrow_vectors = [new Point2D(this.spanDirection1_2d.x,this.spanDirection1_2d.y), 
-      new Point2D(this.spanDirection2_2d.x * (arrowDirection *2 -1),this.spanDirection2_2d.y * (arrowDirection *2 -1))];
-
-      context.strokeStyle = "rgb(" + puzzle.colorArray[9][0] + "," + puzzle.colorArray[9][1] + "," + puzzle.colorArray[9][2] + ")";
-      context.lineWidth=3;
-      context.beginPath();
-
-      var coef, px, py;
-
-      var arrowLong = 0.39;
-      var arrowShort = -0.06;
-      var arrowHeadLong = 0.05;
-      var arrowHeadShort = 0.013;
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong - arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong - arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.moveTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong + arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong + arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      var t = arrowLong;
-      arrowLong = arrowShort;
-      arrowShort = t;
-      arrowHeadLong *=-1;
-      arrowHeadShort*=-1;
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong + arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong + arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong - arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong - arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      t = arrowLong;
-      arrowLong = arrowShort;
-      arrowShort = t;
-
-      arrowLong *= -1;
-      arrowShort *= -1;
-      
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong - arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong - arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.moveTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong + arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong + arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      var t = arrowLong;
-      arrowLong = arrowShort;
-      arrowShort = t;
-      arrowHeadLong *=-1;
-      arrowHeadShort*=-1;
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong + arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong + arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong), this.stickerSize * (arrowShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-
-      coef = [this.stickerSize * (arrowLong - arrowHeadLong - arrowHeadShort), this.stickerSize * (arrowShort + arrowHeadLong - arrowHeadShort)];
-      px = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      py = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      context.lineTo(px,py);
-      context.stroke();
-
-
-      initDashing(context) ;
-      context.dashStyle = [10,5,2,5] ;
-      context.beginPath();
-      
-      var axisLength = 0.35;
-
-      coef = [this.stickerSize * (-axisLength), this.stickerSize * (-axisLength)];
-      p1x = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      p1y = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-      
-      coef = [this.stickerSize * (axisLength), this.stickerSize * (axisLength)];
-      p2x = this.offset_2d.x + coef[0] * arrow_vectors[arrowDirection].x + coef[1] * arrow_vectors[1-arrowDirection].x;
-      p2y = this.offset_2d.y + coef[0] * arrow_vectors[arrowDirection].y + coef[1] * arrow_vectors[1-arrowDirection].y;
-   
-      context.dashedLine(p1x,p1y,p2x,p2y) ;
-
-      context.closePath();
-      context.stroke();
-
-    } else if (snap.snapType == 'rubik') {
-
-      var arrow_vectors = [this.spanDirection1_2d, this.spanDirection2_2d];
-
-      var theta = 0.5 * Math.atan( (2 * arrow_vectors[0].x *arrow_vectors[1].x + 2 * arrow_vectors[0].y *arrow_vectors[1].y)/
-        (arrow_vectors[0].x * arrow_vectors[0].x + arrow_vectors[0].y*arrow_vectors[0].y -arrow_vectors[1].x * arrow_vectors[1].x - arrow_vectors[1].y*arrow_vectors[1].y)
-         );
-      
-      var shortAxis = new Point2D(arrow_vectors[0].x * Math.cos(theta) + arrow_vectors[1].x * Math.sin(theta), 
-                                 arrow_vectors[0].y * Math.cos(theta) + arrow_vectors[1].y * Math.sin(theta));
-
-      var longAxis = new Point2D(arrow_vectors[0].x * Math.cos(theta + Math.PI/2) + arrow_vectors[1].x * Math.sin(theta + Math.PI/2), 
-                                  arrow_vectors[0].y * Math.cos(theta + Math.PI/2) + arrow_vectors[1].y * Math.sin(theta + Math.PI/2));
-
-      var angle = Math.atan(longAxis.y/longAxis.x);
-
-      // draw oval
-      var px = this.offset_2d.x;
-      var py = this.offset_2d.y;
-      var radiusx = longAxis.norm * 0.02;
-      var radiusy = shortAxis.norm * 0.02;
-
-      context.strokeStyle = "rgb(" + puzzle.colorArray[9][0] + "," + puzzle.colorArray[9][1] + "," + puzzle.colorArray[9][2] + ")";
-      context.lineWidth=3;
-
-      context.save();
-      context.translate(px,py);
-      context.rotate(angle);
-      context.scale(radiusx, radiusy);
-      
-      context.beginPath();
-      context.arc(0, 0, viewWidth * 0.025, 0, Math.PI*2, false);
-      context.stroke();
-      context.closePath();
-      context.restore();
-    }
+    var arrow_vectors = [this.spanDirection1_2d, this.spanDirection2_2d];
+
+    var theta = 0.5 * Math.atan( (2 * arrow_vectors[0].x *arrow_vectors[1].x + 2 * arrow_vectors[0].y *arrow_vectors[1].y)/
+      (arrow_vectors[0].x * arrow_vectors[0].x + arrow_vectors[0].y*arrow_vectors[0].y -arrow_vectors[1].x * arrow_vectors[1].x - arrow_vectors[1].y*arrow_vectors[1].y)
+       );
+    
+    var shortAxis = new Point2D(arrow_vectors[0].x * Math.cos(theta) + arrow_vectors[1].x * Math.sin(theta), 
+                               arrow_vectors[0].y * Math.cos(theta) + arrow_vectors[1].y * Math.sin(theta));
+
+    var longAxis = new Point2D(arrow_vectors[0].x * Math.cos(theta + Math.PI/2) + arrow_vectors[1].x * Math.sin(theta + Math.PI/2), 
+                                arrow_vectors[0].y * Math.cos(theta + Math.PI/2) + arrow_vectors[1].y * Math.sin(theta + Math.PI/2));
+
+    var angle = Math.atan(longAxis.y/longAxis.x);
+
+    // draw oval
+    var px = this.offset_2d.x;
+    var py = this.offset_2d.y;
+    var radiusx = longAxis.norm * 0.02;
+    var radiusy = shortAxis.norm * 0.02;
+
+    context.strokeStyle = "rgb(" + puzzle.colorArray[9][0] + "," + puzzle.colorArray[9][1] + "," + puzzle.colorArray[9][2] + ")";
+    context.lineWidth=3;
+
+    context.save();
+    context.translate(px,py);
+    context.rotate(angle);
+    context.scale(radiusx, radiusy);
+    
+    context.beginPath();
+    context.arc(0, 0, viewWidth * 0.025, 0, Math.PI*2, false);
+    context.stroke();
+    context.closePath();
+    context.restore();
+    
   }
 
-  this.contains = function(type) {
+  this.contains = function() {
 
     if (this.normal.x < 0) return false;
 
@@ -431,62 +163,6 @@ function Sticker(normal, offset, colorArray, size) {
     var k1 = (d2y*mx-d2x*my)/delta;
     var k2 = (d1x*my-d1y*mx)/delta;
     
-    if ((Math.abs(k1)<this.stickerSize/2.0 && Math.abs(k2)<this.stickerSize/2.0) == false) return false; // mouse not in this face
-    
-    if (type == 'rubik' || type == 'halfturn') return true; // for rubik's cube, nothing else to handle
-
-    var l1 = (k1 + k2);
-    var l2 = (k1 - k2);
-
-    if (type == 'mirror+') {
-
-      if ((l1 > 0) == (l2 > 0)) return 1;
-      else return 2;
-    }
-
-    if (type == 'mirrorX') {
-      if ((k1 > 0) == (k2 > 0)) return 2;
-      else return 1;
-    }
-
-    console.log("Type "+type + " is not supported.");
-
+    return (Math.abs(k1)<this.stickerSize/2.0 && Math.abs(k2)<this.stickerSize/2.0);
   }
-
 }
-
-
-
-// http://semanticvector.blogspot.com/2011/08/dashed-lines-in-html5-canvas.html
-
-var initDashing = function(ctx) {
- if (!ctx.dashLine) {
-  ctx.dashStyle=[3,2] ;
-  ctx.dashedLine = function(x1,y1,x2,y2) {
-   var dashStyle = ctx.dashStyle,
-    dashCount = dashStyle.length,
-    sign = x2>=x1 ? 1 : -1,
-       dx = x2-x1,
-       dy = y2-y1,
-       m = dy/dx,
-       xsteps = dashStyle.map(function(len){return sign*Math.sqrt((len*len)/(1 + (m*m)));}),
-       dRem =  Math.sqrt( dx*dx + dy*dy ),
-       dIndex=0,
-       draw=true;
-   this.moveTo(x1,y1) ;
-   while (dRem>=0.1){
-         var dLen = dashStyle[dIndex],
-             xStep = xsteps[dIndex];
-         if (dLen > dRem) {
-          xStep =  Math.sqrt(dRem*dRem/(1+m*m));
-         }
-         x1 += xStep ;
-         y1 += m*xStep;
-         this[draw ? 'lineTo' : 'moveTo'](x1,y1);
-         dRem -= dLen;
-         draw = !draw;
-         dIndex = (dIndex+1) % dashCount ;
-   }
-  };
- };
-};

@@ -25,12 +25,7 @@ click = function(e){
   if (e.ctrlKey) return;
   // resnap(e);
   if (snap.index.length > 0) {
-    var layer;
-    if (!(e.altKey) && !(e.shiftKey)) layer = 1;
-    else if (e.altKey && !(e.shiftKey)) layer = 2;
-    else if (e.shiftKey && !(e.altKey)) layer = 12;
-    else layer = 123;
-    puzzle.twist(e.button == 2, layer);
+    puzzle.twist(e.button == 2);
   }
   puzzle.draw();
 }
@@ -93,16 +88,8 @@ resnap = function(e) {
 
 onRadioButton = function() {
   var needUpdate = false;
-  var typeElements = document.getElementsByName('type');
   var layersElements = document.getElementsByName('layers');
-  var i, j;
-
-  for (i=0; i < typeElements.length; i++) {
-    if (typeElements[i].checked) {
-      if (!(typeElements[i].value == puzzle.type)) needUpdate = true;
-      break;
-    }
-  }
+  var j;
 
   for (j=0; j < layersElements.length; j++) {
     if (layersElements[j].checked) {
@@ -112,7 +99,7 @@ onRadioButton = function() {
   }
 
   if (needUpdate) {
-    puzzle.setParameters(typeElements[i].value, eval(layersElements[j].value));
+    puzzle.setParameters(eval(layersElements[j].value));
     puzzle.resetState();
   }
 }
