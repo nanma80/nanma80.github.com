@@ -283,10 +283,10 @@ function Puzzle() {
 
     var scrambleLength = 50;
     scrambleLength += Math.round(Math.random());
-    
+
     for (var scrambleIndex = 0; scrambleIndex < scrambleLength; scrambleIndex++) {
       snap.setRandom(this.type); //set snap object to a random state
-      this.twist((Math.random()>0.5), (Math.random()>0.5) ? 1 : 2);
+      this.twist((Math.random()>0.5));
     }
 
     this.nTurns = 0;
