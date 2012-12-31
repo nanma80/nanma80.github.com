@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>RefleCube</title>
+<script src="lib/point3d.js"></script>
+<script src="lib/sticker.js"></script>
+<script src="lib/puzzle.js"></script>
+<script src="lib/snap.js"></script>
+<script src="lib/mouse.js"></script>
+<style type = "text/css">
+  button {
+    margin: 10px;
+    height:30px; 
+    width:90px;
+  } 
+</style>
+</head>
+<body onselectstart='return false;'>
+
+<h1 style="margin-top:0;margin-bottom:0;font-family:Arial, Helvetica, sans-serif;"> <img src="images/icon.png" alt="mirror" style = "vertical-align: middle;"> RefleCube: <span style="font-size:0.77em"> a reflection on the Rubik's Cube </span>
+</h1>
+
+<div id="content" style="height:550px;width:550px;float:left;">
+<canvas id="canvas" width="550" height="550" style="border:1px solid #c3c3c3;" oncontextmenu="return false;" onselectstart='return false;'>
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+</div>
+
+<div id="info" style="margin-left:10px;width:330px;float:left;font-family:Arial, Helvetica, sans-serif;">
+<div id="types" style="font-size:large;height:160px;width:160px;float:left;background-color:rgb(240,240,255);line-height:30px;">
+<input type="radio" name="type" value="mirror+" onclick = "onRadioButton();" checked>Mirror +<br>
+<input type="radio" name="type" value="mirrorX" onclick = "onRadioButton();">Mirror X<br>
+<input type="radio" name="type" value="rubik" onclick = "onRadioButton();">Rubik's Cube<br>
+<input type="radio" name="type" value="halfturn" onclick = "onRadioButton();">Half turn cube<br>
+<input type="radio" name="type" value="full" onclick = "onRadioButton();">Mirror & twist<br>
+</div>
+
+<div id="layers" style="margin-left:5px;font-size:large;height:160px;width:160px;float:right;background-color:rgb(240,240,255);line-height:38px;">
+<input type="radio" name="layers" value=2 onclick = "onRadioButton();">2x2x2<br>
+<input type="radio" name="layers" value=3 onclick = "onRadioButton();" checked >3x3x3<br>
+<input type="radio" name="layers" value=4 onclick = "onRadioButton();">4x4x4<br>
+<input type="radio" name="layers" value=5 onclick = "onRadioButton();">5x5x5<br>
+</div>
+
+<div id="control" style="margin-left:53px;margin-top:10px;margin-bottom:10px;height:50px;width:300px;float:left;font-family:Arial, Helvetica, sans-serif;">
+<button type="button" onclick = "puzzle.resetState();">Reset</button> 
+<button type="button" onclick = "puzzle.scramble();">Scramble</button>
+</div>
+
+<div id="instruction" style="width:330px;float:left;font-size:small;font-family:Arial, Helvetica, sans-serif;line-height: 20px;">
+On the Rubik's Cube you may twist a layer. But now
+<ul style = "background-color:rgb(240,255,240);">
+<li>on "Mirror +" you may mirror a layer to swap opposite edges</li> 
+<li>on "Mirror X" you may mirror a layer diagonally to swap a pair of corner  s</li> 
+<li>"Half turn cube" is just like the Rubik's Cube, but you can only turn a layer by 180 degrees. </li>
+<li>When you are really ready, check out the puzzle allowing mirroring and twisting, or puzzles with more layers!</li>
+</ul>
+
+<ul style="font-weight:bold;background-color:rgb(255,240,240);">
+<li>Mouse click mirrors the outmost layer</li>
+<li>Alt + click mirrors only the second layer</li>
+<li>Shift + click mirrors two layers</li>
+<li>Alt + Shift + click mirrors three layers</li>
+</ul>
+</div>
+</div>
+
+<div id="content" style="font-size:small;float:left;font-family:Arial, Helvetica, sans-serif">
+<p>
+If you can solve them, try different scrambles to make sure you haven't missed the <a href="wacky.html">wacky phenomena (spoiler alert!!)</a> that are forbidden on the Rubik's Cube.</p>
+
+<p>This puzzle is inspired by <a href="http://www.superliminal.com/cube/mc2d.html">Magic Cube 2D</a> and the discussion about it in the <a href="http://games.groups.yahoo.com/group/4D_Cubing/">Yahoo group</a>. I also emulated this puzzle using <a href="http://www.superliminal.com/cube/cube.htm">MC4D</a> and <a href="http://astr73.narod.ru/MPUlt/MPUlt.html">MPUlt</a> before implementing it.</p>
+
+<p>The puzzle uses html5 canvas, which is not supported directly by IE 8 or lower. I also apologize if the animation is jumpy on some browsers. Try using the latest version of Chrome for the best experience.</p>
+<p>Nan Ma, 12/29/2012</p>
+</div>
+
+<script type="text/javascript">
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
+var viewHeight = canvas.height;
+var viewWidth = canvas.width;
+
+var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
+
+var snap = new Snap();
+var puzzle = new Puzzle();
+
+onRadioButton();
+
+canvas.addEventListener("mousedown", mouseDown, false);
+canvas.addEventListener("mousemove", mouseMove, false);
+canvas.addEventListener("mouseover", mouseOver, false);
+canvas.addEventListener("mouseout", mouseOut, false);
+document.body.addEventListener("mouseup", mouseUp, false);
+
+</script>
+
+
+</body>
+</html>
