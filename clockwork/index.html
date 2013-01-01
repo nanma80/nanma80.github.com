@@ -27,9 +27,9 @@ Your browser does not support the HTML5 canvas tag.
 </div>
 
 <div id="info" style="margin-left:10px;width:330px;float:left;font-family:Arial, Helvetica, sans-serif;">
-  <div id="layers" style="margin-left:5px;font-size:large;height:160px;width:160px;float:left;background-color:rgb(240,240,255);line-height:38px;">
-  <input type="radio" name="layers" value=3 onclick = "onRadioButton();" checked >3x3x3<br>
-  <input type="radio" name="layers" value=4 onclick = "onRadioButton();">4x4x4<br>
+  <div id="layers" style="margin-left:5px;font-size:large;width:160px;float:left;background-color:rgb(240,240,255);line-height:38px;">
+  <input type="radio" name="layers" value=3 onclick = "onRadioButton();">3x3x3<br>
+  <input type="radio" name="layers" value=4 onclick = "onRadioButton();" checked>4x4x4<br>
   <input type="radio" name="layers" value=5 onclick = "onRadioButton();">5x5x5<br>
   </div>
 
@@ -38,8 +38,13 @@ Your browser does not support the HTML5 canvas tag.
   <button type="button" onclick = "puzzle.scramble();">Scramble</button>
   </div>
 
-  <div id="instruction" style="width:330px;float:left;font-size:small;font-family:Arial, Helvetica, sans-serif;line-height: 20px;">
-  The 4x4x4 version was created by Timur and published <a href="http://twistypuzzles.com/forum/viewtopic.php?f=15&p=291930">here</a>. 
+  <div id="instruction" style="width:250px;float:left;font-size:small;font-family:Arial, Helvetica, sans-serif;line-height: 20px;">
+  <b>How it works:</b>
+  <p> When you click a face, the opposite face doesn't move. The second layer next to the opposite face turns by 90 degrees; the third by 180 degrees; the fourth by 270 degrees and so on.</p>
+  <b>Acknowledgment:</b>
+  <p>The physical version of 4x4x4 was created by Timur at twistypuzzles.com and published <a href="http://twistypuzzles.com/forum/viewtopic.php?f=15&p=291930">here</a>.</p>
+
+
   </div>
 </div>
 
