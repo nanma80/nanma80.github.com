@@ -54,7 +54,7 @@ function Sticker(normal, offset, colorArray, size) {
     this.offset.z + coef[0] * this.spanDirection1.z * this.stickerSize /2 + coef[1] * this.spanDirection2.z * this.stickerSize /2))
 
   this.draw = function() {
-    if (this.normal.x < 0.07) return;
+    if (this.normal.x < 0.09) return;
 
     // compute lighting
     var innerProd = this.normal.innerProd(lighting); // between -1 and 1
