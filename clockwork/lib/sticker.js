@@ -53,8 +53,11 @@ function Sticker(normal, offset, colorArray, size) {
     this.offset.y + coef[0] * this.spanDirection1.y * this.stickerSize /2 + coef[1] * this.spanDirection2.y * this.stickerSize /2, 
     this.offset.z + coef[0] * this.spanDirection1.z * this.stickerSize /2 + coef[1] * this.spanDirection2.z * this.stickerSize /2))
 
+  if (this.normal.x + this.normal.y + this.normal.z < 0 ) this.points.reverse();
+
   this.draw = function() {
-    if (this.normal.x < 0.09) return;
+    // if (this.normal.z < 0.09) return;
+    if (area(this.points[0].project(), this.points[1].project(), this.points[2].project()) < 0 ) return;
 
     // compute lighting
     var innerProd = this.normal.innerProd(lighting); // between -1 and 1
@@ -146,23 +149,11 @@ function Sticker(normal, offset, colorArray, size) {
 
   this.contains = function() {
 
-    if (this.normal.x < 0) return false;
+    for(var index = 0; index < 4; index++) {
+      if (area(this.points[index].project(), this.points[(index+1) % 4].project(), mousePos) < 0 ) 
+        return false;
+    }
 
-    var mx = mousePos.x - this.offset_2d.x;
-    var my = mousePos.y - this.offset_2d.y;
-    var d1x = this.spanDirection1_2d.x;
-    var d1y = this.spanDirection1_2d.y;
-    var d2x = this.spanDirection2_2d.x;
-    var d2y = this.spanDirection2_2d.y;
-
-    // going to solve: d1 k1 + d2 k2 = m
-
-    var delta = (d1x * d2y - d1y * d2x)
-    if (Math.abs(delta)<0.001) return false; //bad direction
-    
-    var k1 = (d2y*mx-d2x*my)/delta;
-    var k2 = (d1x*my-d1y*mx)/delta;
-    
-    return (Math.abs(k1)<this.stickerSize/2.0 && Math.abs(k2)<this.stickerSize/2.0);
+    return true;
   }
 }
