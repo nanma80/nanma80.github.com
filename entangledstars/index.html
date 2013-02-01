@@ -24,6 +24,9 @@
     line-height:38px;
   }
 </style>
+
+<script src="lib/canvases.js"></script>
+
 </head>
 <body onselectstart='return false;'>
 
@@ -38,44 +41,36 @@
 
 
 
-<div id="content" style="float:up;">
-  <canvas id="canvas00" width="200" height="200" oncontextmenu="return false;" onselectstart='return false;'>
-  Your browser does not support the HTML5 canvas tag.
-  </canvas>
-
-  <canvas id="canvas01" width="200" height="200" oncontextmenu="return false;" onselectstart='return false;'>
-  Your browser does not support the HTML5 canvas tag.
-  </canvas>
-
-  <canvas id="canvas02" width="200" height="200" oncontextmenu="return false;" onselectstart='return false;'>
-  Your browser does not support the HTML5 canvas tag.
-  </canvas>
-
-  <canvas id="canvas03" width="200" height="200" oncontextmenu="return false;" onselectstart='return false;'>
-  Your browser does not support the HTML5 canvas tag.
-  </canvas>
+<div id="canvasDiv" style="float:up;">
 </div>
 
 
 
 <script type="text/javascript">
-var canvas = document.getElementById("canvas00");
-var context = canvas.getContext("2d");
-var viewHeight = canvas.height;
-var viewWidth = canvas.width;
+var canvases = [];
+var contexts = [];
+var canvasSize = 150;
 
-var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
+createCanvas(13);
 
-var snap = new Snap();
-var puzzle = new Puzzle();
 
-onRadioButton();
+// var canvas = document.getElementById("canvas00");
+// var context = canvas.getContext("2d");
+// var viewHeight = canvas.height;
+// var viewWidth = canvas.width;
 
-canvas.addEventListener("mousedown", mouseDown, false);
-canvas.addEventListener("mousemove", mouseMove, false);
-canvas.addEventListener("mouseover", mouseOver, false);
-canvas.addEventListener("mouseout", mouseOut, false);
-document.body.addEventListener("mouseup", mouseUp, false);
+// var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
+
+// var snap = new Snap();
+// var puzzle = new Puzzle();
+
+// onRadioButton();
+
+// canvas.addEventListener("mousedown", mouseDown, false);
+// canvas.addEventListener("mousemove", mouseMove, false);
+// canvas.addEventListener("mouseover", mouseOver, false);
+// canvas.addEventListener("mouseout", mouseOut, false);
+// document.body.addEventListener("mouseup", mouseUp, false);
 
 </script>
 
