@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Entangled Stars</title>
+<style type = "text/css">
+  button {
+    margin: 10px;
+    height:30px; 
+    width:90px;
+  }
+  h1 {
+    margin-top:0;
+    margin-bottom:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background-color:rgb(230,230,255);
+  }
+  canvas {
+    border:1px solid #c3c3c3;
+  }
+  #layers {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:large;
+    background-color:rgb(240,240,255);
+    line-height:38px;
+  }
+</style>
+</head>
+<body onselectstart='return false;'>
+
+<h1> Entangled Stars </h1>
+
+<div id="layers">
+  <input type="radio" name="layers" value=3 onclick = "onRadioButton();" checked > 3-pointed 
+  <input type="radio" name="layers" value=4 onclick = "onRadioButton();"> 4-pointed 
+  <input type="radio" name="layers" value=5 onclick = "onRadioButton();"> 5-pointed 
+  <input type="radio" name="layers" value=6 onclick = "onRadioButton();"> 6-pointed 
+</div>
+
+
+
+<div id="content" style="float:up;">
+  <canvas id="canvas00" width="200" height="200" oncontextmenu="return false;" onselectstart='return false;'>
+  Your browser does not support the HTML5 canvas tag.
+  </canvas>
+
+  <canvas id="canvas01" width="200" height="200" oncontextmenu="return false;" onselectstart='return false;'>
+  Your browser does not support the HTML5 canvas tag.
+  </canvas>
+
+  <canvas id="canvas02" width="200" height="200" oncontextmenu="return false;" onselectstart='return false;'>
+  Your browser does not support the HTML5 canvas tag.
+  </canvas>
+
+  <canvas id="canvas03" width="200" height="200" oncontextmenu="return false;" onselectstart='return false;'>
+  Your browser does not support the HTML5 canvas tag.
+  </canvas>
+</div>
+
+
+
+<script type="text/javascript">
+var canvas = document.getElementById("canvas00");
+var context = canvas.getContext("2d");
+var viewHeight = canvas.height;
+var viewWidth = canvas.width;
+
+var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
+
+var snap = new Snap();
+var puzzle = new Puzzle();
+
+onRadioButton();
+
+canvas.addEventListener("mousedown", mouseDown, false);
+canvas.addEventListener("mousemove", mouseMove, false);
+canvas.addEventListener("mouseover", mouseOver, false);
+canvas.addEventListener("mouseout", mouseOut, false);
+document.body.addEventListener("mouseup", mouseUp, false);
+
+</script>
+
+
+</body>
+</html>
