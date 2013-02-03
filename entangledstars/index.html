@@ -25,7 +25,10 @@
   }
 </style>
 
+
+<script src="lib/puzzle.js"></script>
 <script src="lib/canvases.js"></script>
+<script src="lib/onRadioButton.js"></script>
 
 </head>
 <body onselectstart='return false;'>
@@ -33,10 +36,10 @@
 <h1> Entangled Stars </h1>
 
 <div id="layers">
-  <input type="radio" name="layers" value=3 onclick = "onRadioButton();" checked > 3-pointed 
-  <input type="radio" name="layers" value=4 onclick = "onRadioButton();"> 4-pointed 
-  <input type="radio" name="layers" value=5 onclick = "onRadioButton();"> 5-pointed 
-  <input type="radio" name="layers" value=6 onclick = "onRadioButton();"> 6-pointed 
+  <input type="radio" name="order" value=3 onclick = "onRadioButton();" checked > 3-pointed 
+  <input type="radio" name="order" value=4 onclick = "onRadioButton();"> 4-pointed 
+  <input type="radio" name="order" value=5 onclick = "onRadioButton();"> 5-pointed 
+  <input type="radio" name="order" value=6 onclick = "onRadioButton();"> 6-pointed 
 </div>
 
 
@@ -51,7 +54,8 @@ var canvases = [];
 var contexts = [];
 var canvasSize = 150;
 
-createCanvas(13);
+var puzzle = new Puzzle( 10 );
+onRadioButton();
 
 
 // var canvas = document.getElementById("canvas00");

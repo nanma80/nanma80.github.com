@@ -1,5 +1,6 @@
 function createCanvas(numberOfCanvases) {
   var canvasDiv = document.getElementById('canvasDiv');
+  canvasDiv.innerHTML = "";
   
   for(var i = 0; i < numberOfCanvases; i++ ) {
     canvasDiv.innerHTML += '<canvas id = "canvas'+ pad(i,2) +'" width="' + canvasSize +'" height="' + canvasSize +'" oncontextmenu="return false;" onselectstart="return false;">  Your browser does not support the HTML5 canvas tag.  </canvas>';
