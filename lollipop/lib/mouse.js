@@ -1,4 +1,3 @@
-
 mouseInRegion = false;
 mouseIsDown = false;
 mousePos = new Point2D(0,0);
@@ -39,6 +38,8 @@ mouseOut = function(e){
   mouseInRegion = false;
   if (dragging) {
     dragging = false;
+    snap.update(e);
+  } else {
     snap.update(e);
   }
 }

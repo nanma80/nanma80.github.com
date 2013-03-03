@@ -12,6 +12,7 @@ function Puzzle() {
     this.order = order;
     this.layerSize = this.totalSize / configuration[this.order].layer;
     this.angleSize = Math.PI / this.order;
+    this.turnability = configuration[this.order].turnability;
   }
 
   this.draw = function() {
@@ -32,8 +33,18 @@ function Puzzle() {
 
     // draw stickers
     for (var i=0; i < this.layers.length; i++) {
+      var turnability_layer = this.turnability[i];
       for (var j=0; j< 2 * this.order; j++) {
-        this.layers[i][j].draw();
+        if (snap.index >= 0) {
+          var jOffset = (j - 2 * snap.index + 2 * this.order) % (2 * this.order);
+          this.layers[i][j].highlighted = (turnability_layer.indexOf(jOffset) >= 0);
+
+          this.layers[i][j].draw();
+          
+        } else {
+          this.layers[i][j].highlighted = false;          
+          this.layers[i][j].draw(); // draw normal stickers
+        }
       }
     }
   }
@@ -66,11 +77,8 @@ function Puzzle() {
   }
 
   this.copyBackHue = function(snapIndex) {
-    this.turnability = configuration[this.order].turnability;
-
     for(var i=0; i<this.layers.length; i++) {
       var turnability_layer = this.turnability[i];
-
       for(var j=0; j< 2*this.order; j++) {
         var jOffset = (j - 2 * snapIndex + 2 * this.order) % (2 * this.order);
         if ( turnability_layer.indexOf(jOffset) >= 0 ) {

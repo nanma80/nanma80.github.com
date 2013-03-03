@@ -6,8 +6,8 @@ function Sticker(minRadius, maxRadius, minAngle, maxAngle) {
   this.hue_original = Math.floor((this.minAngle + this.maxAngle)/2 /Math.PI * 180);
   this.hue_original = Math.floor(this.minAngle /Math.PI * 180);
   this.saturation = '90%';
-  this.lighting_original = '50%';
-  this.lighting_highlighted = '75%';
+  this.lighting_original = '48%';
+  this.lighting_highlighted = '70%';
 
   this.hue = this.hue_original;
   this.highlighted = false;
