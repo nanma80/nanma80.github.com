@@ -1,159 +1,22 @@
-function Sticker(normal, offset, colorArray, size) {
-  this.stickerSize = size;
-  this.originalNormal = normal; // must be a normalized vector in an axial direction
-  this.offset = offset;
-  this.colorArray = colorArray.slice(0);
+function Sticker(minRadius, maxRadius, minAngle, maxAngle) {
+  this.minRadius = minRadius;
+  this.maxRadius = maxRadius;
+  this.minAngle = minAngle;
+  this.maxAngle = maxAngle;
 
-  this.normal = normal; // will change when puzzle rotates
-
-  var direction111 = new Point3D(1,1,1)
-  direction111.normalize();
-
-  var lighting = new Point3D(1,0.4,0.2)
-  lighting.normalize();
-
-  // this.spanDirection1 = this.originalNormal.rotate(direction111, Math.PI*2/3);
-  // this.spanDirection2 = this.originalNormal.rotate(direction111, -Math.PI*2/3);
-
-  this.spanDirection1 = this.originalNormal.clone();
-  this.spanDirection2 = this.originalNormal.clone();
-  // this.spanDirection1.rotate(direction111, Math.PI*2/3);
-  // this.spanDirection2.rotate(direction111, -Math.PI*2/3);
-
-  setRotationMatrix(direction111, Math.PI*2/3);
-  this.spanDirection1.rotate();
-  setRotationMatrix(direction111, -Math.PI*2/3);
-  this.spanDirection2.rotate();
-
-
-  this.offset_2d = this.offset.project();
-  this.spanDirection1_2d = this.spanDirection1.project_origin();
-  this.spanDirection2_2d = this.spanDirection2.project_origin();
-
-  this.points = new Array();
-
-  var coef = [1,1];
-  this.points.push(new Point3D(
-    this.offset.x + coef[0] * this.spanDirection1.x * this.stickerSize /2 + coef[1] * this.spanDirection2.x * this.stickerSize /2, 
-    this.offset.y + coef[0] * this.spanDirection1.y * this.stickerSize /2 + coef[1] * this.spanDirection2.y * this.stickerSize /2, 
-    this.offset.z + coef[0] * this.spanDirection1.z * this.stickerSize /2 + coef[1] * this.spanDirection2.z * this.stickerSize /2))
-  coef = [1,-1];
-  this.points.push(new Point3D(
-    this.offset.x + coef[0] * this.spanDirection1.x * this.stickerSize /2 + coef[1] * this.spanDirection2.x * this.stickerSize /2, 
-    this.offset.y + coef[0] * this.spanDirection1.y * this.stickerSize /2 + coef[1] * this.spanDirection2.y * this.stickerSize /2, 
-    this.offset.z + coef[0] * this.spanDirection1.z * this.stickerSize /2 + coef[1] * this.spanDirection2.z * this.stickerSize /2))
-  coef = [-1,-1];
-  this.points.push(new Point3D(
-    this.offset.x + coef[0] * this.spanDirection1.x * this.stickerSize /2 + coef[1] * this.spanDirection2.x * this.stickerSize /2, 
-    this.offset.y + coef[0] * this.spanDirection1.y * this.stickerSize /2 + coef[1] * this.spanDirection2.y * this.stickerSize /2, 
-    this.offset.z + coef[0] * this.spanDirection1.z * this.stickerSize /2 + coef[1] * this.spanDirection2.z * this.stickerSize /2))
-  coef = [-1,1];
-  this.points.push(new Point3D(
-    this.offset.x + coef[0] * this.spanDirection1.x * this.stickerSize /2 + coef[1] * this.spanDirection2.x * this.stickerSize /2, 
-    this.offset.y + coef[0] * this.spanDirection1.y * this.stickerSize /2 + coef[1] * this.spanDirection2.y * this.stickerSize /2, 
-    this.offset.z + coef[0] * this.spanDirection1.z * this.stickerSize /2 + coef[1] * this.spanDirection2.z * this.stickerSize /2))
-
-  if (this.normal.x + this.normal.y + this.normal.z < 0 ) this.points.reverse();
+  this.color = 'hsl('+ ((this.minAngle + this.maxAngle)/2 /Math.PI * 180).toString() +', 90%, 50%)';
 
   this.draw = function() {
-    // if (this.normal.z < 0.09) return;
-    if (area(this.points[0].project(), this.points[1].project(), this.points[2].project()) < 0 ) return;
+    var counterClockwise = ((maxAngle - minAngle) > Math.PI);
 
-    // compute lighting
-    var innerProd = this.normal.innerProd(lighting); // between -1 and 1
-    
-    var displayColor = this.colorArray.slice(0);
-    displayColor = displayColor.map(function(x){return Math.floor(x * (0.8 + innerProd * 0.2 ))  });
-
-    displayColor = displayColor.map(function(x){return Math.max(0,Math.min(255,x))  });
-
-    context.fillStyle = "rgb(" + displayColor[0] + "," + displayColor[1] + "," + displayColor[2] + ")";
     context.beginPath();
-    context.moveTo(this.points[0].project().x,this.points[0].project().y);
-    for (var i = 1; i<4; i++) {
-      context.lineTo(this.points[i].project().x,this.points[i].project().y);
-    }
-    context.closePath()
-    context.fill()
-  }
+    context.arc(canvasCenter.x, canvasCenter.y, (minRadius + maxRadius)/2, minAngle + Math.PI/2+0.0001, maxAngle + Math.PI/2-0.0001, counterClockwise);
+    context.lineWidth = (maxRadius - minRadius) * 0.95;
 
-  this.rotate = function(axis, angle) {
-    // this.normal = this.normal.rotate(axis, angle);
-    // this.offset = this.offset.rotate(axis, angle);
-    // this.spanDirection1 = this.spanDirection1.rotate(axis, angle);
-    // this.spanDirection2 = this.spanDirection2.rotate(axis, angle);
-    // for (var i=0; i<4; i++){
-    //   this.points[i] = this.points[i].rotate(axis, angle);
-    // }
-
-    // this.normal.rotate(axis, angle);
-    // this.offset.rotate(axis, angle);
-    // this.spanDirection1.rotate(axis, angle);
-    // this.spanDirection2.rotate(axis, angle);
-    // for (var i=0; i<4; i++){
-    //   this.points[i].rotate(axis, angle);
-    // }
-
-    this.normal.rotate();
-    this.offset.rotate();
-    this.spanDirection1.rotate();
-    this.spanDirection2.rotate();
-    for (var i=0; i<4; i++){
-      this.points[i].rotate();
-    }
-
-
-    this.offset_2d = this.offset.project();
-    this.spanDirection1_2d = this.spanDirection1.project_origin();
-    this.spanDirection2_2d = this.spanDirection2.project_origin();
-
-  }
-
-  this.drawArrows = function(){
-
-    var arrow_vectors = [this.spanDirection1_2d, this.spanDirection2_2d];
-
-    var theta = 0.5 * Math.atan( (2 * arrow_vectors[0].x *arrow_vectors[1].x + 2 * arrow_vectors[0].y *arrow_vectors[1].y)/
-      (arrow_vectors[0].x * arrow_vectors[0].x + arrow_vectors[0].y*arrow_vectors[0].y -arrow_vectors[1].x * arrow_vectors[1].x - arrow_vectors[1].y*arrow_vectors[1].y)
-       );
-    
-    var shortAxis = new Point2D(arrow_vectors[0].x * Math.cos(theta) + arrow_vectors[1].x * Math.sin(theta), 
-                               arrow_vectors[0].y * Math.cos(theta) + arrow_vectors[1].y * Math.sin(theta));
-
-    var longAxis = new Point2D(arrow_vectors[0].x * Math.cos(theta + Math.PI/2) + arrow_vectors[1].x * Math.sin(theta + Math.PI/2), 
-                                arrow_vectors[0].y * Math.cos(theta + Math.PI/2) + arrow_vectors[1].y * Math.sin(theta + Math.PI/2));
-
-    var angle = Math.atan(longAxis.y/longAxis.x);
-
-    // draw oval
-    var px = this.offset_2d.x;
-    var py = this.offset_2d.y;
-    var radiusx = longAxis.norm * 0.02;
-    var radiusy = shortAxis.norm * 0.02;
-
-    context.strokeStyle = "rgb(" + puzzle.colorArray[9][0] + "," + puzzle.colorArray[9][1] + "," + puzzle.colorArray[9][2] + ")";
-    context.lineWidth=3;
-
-    context.save();
-    context.translate(px,py);
-    context.rotate(angle);
-    context.scale(radiusx, radiusy);
-    
-    context.beginPath();
-    context.arc(0, 0, viewWidth * 0.025, 0, Math.PI*2, false);
+    // line color
+    context.strokeStyle = this.color;
     context.stroke();
-    context.closePath();
-    context.restore();
-    
-  }
 
-  this.contains = function() {
-
-    for(var index = 0; index < 4; index++) {
-      if (area(this.points[index].project(), this.points[(index+1) % 4].project(), mousePos) < 0 ) 
-        return false;
-    }
-
-    return true;
+    return;
   }
 }

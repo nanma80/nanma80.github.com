@@ -18,27 +18,25 @@
     border:1px solid #c3c3c3;
   }
   #layers {
-    font-family:Arial, Helvetica, sans-serif;
     font-size:large;
     background-color:rgb(240,240,255);
     line-height:38px;
   }
 </style>
 
-<script src="lib/point3d.js"></script>
-<script src="lib/sticker.js"></script>
-<script src="lib/puzzle.js"></script>
-<script src="lib/snap.js"></script>
+<script src="lib/point2d.js"></script>
 <script src="lib/mouse.js"></script>
+<script src="lib/puzzle.js"></script>
+<script src="lib/sticker.js"></script>
 
 </head>
-<body onselectstart='return false;'>
+<body onselectstart='return false;' style="font-family:Arial, Helvetica, sans-serif;">
 
 <h1>Lollipop</h1>
 
-<div id="layers">
-  <input type="radio" name="order" value=3 onclick = "onRadioButton();" checked > 3-axis 
-  <input type="radio" name="order" value=4 onclick = "onRadioButton();"> 4-axis
+<div id="order">
+  <input type="radio" name="order" value=3 onclick = "onRadioButton();"> 3-axis 
+  <input type="radio" name="order" value=4 onclick = "onRadioButton();" checked> 4-axis
   <input type="radio" name="order" value=5 onclick = "onRadioButton();"> 5-axis
   <input type="radio" name="order" value=6 onclick = "onRadioButton();"> 6-axis
 </div>
@@ -55,20 +53,8 @@ var context = canvas.getContext("2d");
 var viewHeight = canvas.height;
 var viewWidth = canvas.width;
 
-var x = canvas.width / 2;
-var y = canvas.height / 2;
-var radius = 75;
-var startAngle = 0 * Math.PI;
-var endAngle = 0.3 * Math.PI;
-var counterClockwise = true;
+var canvasCenter = new Point2D(viewHeight/2, viewWidth/2);
 
-context.beginPath();
-context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
-context.lineWidth = 142;
-
-// line color
-context.strokeStyle = 'green';
-context.stroke();
 
 // context.beginPath();
 // context.arc(x, y, radius + 16, startAngle, endAngle, counterClockwise);
@@ -77,16 +63,15 @@ context.stroke();
 
 
 
-var snap = new Snap();
+// var snap = new Snap();
 var puzzle = new Puzzle();
-
 onRadioButton();
 
-canvas.addEventListener("mousedown", mouseDown, false);
-canvas.addEventListener("mousemove", mouseMove, false);
-canvas.addEventListener("mouseover", mouseOver, false);
-canvas.addEventListener("mouseout", mouseOut, false);
-document.body.addEventListener("mouseup", mouseUp, false);
+// canvas.addEventListener("mousedown", mouseDown, false);
+// canvas.addEventListener("mousemove", mouseMove, false);
+// canvas.addEventListener("mouseover", mouseOver, false);
+// canvas.addEventListener("mouseout", mouseOut, false);
+// document.body.addEventListener("mouseup", mouseUp, false);
 
 </script>
 
