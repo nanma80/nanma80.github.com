@@ -1,90 +1,71 @@
-// assuming the instance of Puzzle is puzzle
-// mouseInRegion = false;
-// mouseIsDown = false;
-// mousePos = new Point2D(0,0);
-// dragging = false;
-// snapIndex = [];
-// currentSnapIndex = [];
 
-// mouseDown = function(e){
-//   mouseIsDown = true;
-//   findMouse(e);
-//   dragging = false;
-// }
+mouseInRegion = false;
+mouseIsDown = false;
+mousePos = new Point2D(0,0);
+dragging = false;
 
-// mouseUp = function(e){
-//   mouseIsDown = false;
-//   if (!dragging && mouseInRegion) {
-//     click(e);
-//   }
-//   dragging = false;
-//   snap.update(e);
-// }
+mouseDown = function(e){
+  mouseIsDown = true;
+  findMouse(e);
+  dragging = false;
+}
 
-// click = function(e){
-//   if (e.ctrlKey) return;
-//   // resnap(e);
-//   if (snap.index.length > 0) {
-//     puzzle.twist(e.button == 2);
-//   }
-//   puzzle.draw();
-// }
+mouseUp = function(e){
+  mouseIsDown = false;
+  if (!dragging && mouseInRegion) {
+    click(e);
+  }
+  dragging = false;
+  snap.update(e);
+}
 
-// mouseDrag = function(e){
-//   dragging = true;
-//   var old = new Point2D(mousePos.x, mousePos.y)
-//   findMouse(e);
-//   var delta  = new Point2D(mousePos.x - old.x, mousePos.y - old.y)
-//   puzzle.rotate(new Point3D(delta.y,  delta.x, 0), delta.norm/100); // 100: speed of dragging
-//   puzzle.draw();
-// }
+click = function(e){
+  if (snap.index >= 0) {
+    puzzle.twist(snap.index);
+    puzzle.draw();
+  }
+}
 
-// mouseOut = function(e){
-//   mouseInRegion = false;
-//   if (dragging) {
-//     dragging = false;
-//     snap.update(e);
-//   }
-// }
+mouseDrag = function(e){
+  dragging = true;
+  // var old = new Point2D(mousePos.x, mousePos.y)
+  // findMouse(e);
+  // var delta  = new Point2D(mousePos.x - old.x, mousePos.y - old.y)
+  // puzzle.rotate(new Point3D(delta.y,  delta.x, 0), delta.norm/100); // 100: speed of dragging
+  // puzzle.draw();
+}
 
-// mouseOver = function(e){
-//   mouseInRegion = true;
-//   if (!mouseIsDown) { dragging = false; }
-//   findMouse(e);
-// }
+mouseOut = function(e){
+  mouseInRegion = false;
+  if (dragging) {
+    dragging = false;
+    snap.update(e);
+  }
+}
 
-// mouseMove = function(e) {
+mouseOver = function(e){
+  mouseInRegion = true;
+  if (!mouseIsDown) { dragging = false; }
+  findMouse(e);
+}
 
-//   startTime = new Date().getTime();
-
-//   if (mouseIsDown && mouseInRegion) {
-//     if (snap.index.length > 1) snap.reset();
-//     mouseDrag(e);
-//   } else {
-//    snap.update(e); 
-//   }
-
-//   duration = new Date().getTime() - startTime;
-//   // console.log(duration);
-// }
+mouseMove = function(e) {
+  // startTime = new Date().getTime();
+  if (mouseIsDown && mouseInRegion) {
+    // if (snap.index.length > 1) snap.reset();
+    mouseDrag(e);
+  } else {
+   snap.update(e); 
+  }
+  // duration = new Date().getTime() - startTime;
+  // console.log(duration);
+}
 
 
-// findMouse = function (e) {
-//   mousePos.x = e.pageX - canvas.offsetLeft;
-//   mousePos.y = e.pageY - canvas.offsetTop;
-// }
-
-
-// resnap = function(e) {
-//   findMouse(e);
-//   snapIndex = puzzle.snap(mousePos);
-
-//   if (snapIndex.toString() != currentSnapIndex.toString()) {
-//     // snap object is changed
-//     currentSnapIndex = snapIndex.slice(0);
-//     puzzle.draw();
-//   }
-// }
+findMouse = function (e) {
+  mousePos.x = e.pageX - canvas.offsetLeft;
+  mousePos.y = e.pageY - canvas.offsetTop;
+}
 
 
 ///////// onRadioButton: 

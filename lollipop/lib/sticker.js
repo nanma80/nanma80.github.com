@@ -3,20 +3,32 @@ function Sticker(minRadius, maxRadius, minAngle, maxAngle) {
   this.maxRadius = maxRadius;
   this.minAngle = minAngle;
   this.maxAngle = maxAngle;
+  this.hue_original = Math.floor((this.minAngle + this.maxAngle)/2 /Math.PI * 180);
+  this.hue_original = Math.floor(this.minAngle /Math.PI * 180);
+  this.saturation = '90%';
+  this.lighting_original = '50%';
+  this.lighting_highlighted = '75%';
 
-  this.color = 'hsl('+ ((this.minAngle + this.maxAngle)/2 /Math.PI * 180).toString() +', 90%, 50%)';
+  this.hue = this.hue_original;
+  this.highlighted = false;
 
   this.draw = function() {
-    var counterClockwise = ((maxAngle - minAngle) > Math.PI);
+    var counterClockwise = ( ((maxAngle - minAngle + 2 * Math.PI) % (2 * Math.PI)) < Math.PI);
 
     context.beginPath();
-    context.arc(canvasCenter.x, canvasCenter.y, (minRadius + maxRadius)/2, minAngle + Math.PI/2+0.0001, maxAngle + Math.PI/2-0.0001, counterClockwise);
-    context.lineWidth = (maxRadius - minRadius) * 0.95;
+    context.arc(
+      canvasCenter.x, 
+      canvasCenter.y, 
+      (minRadius + maxRadius)/2, 
+      -minAngle - Math.PI/2 -0.0001, 
+      -maxAngle - Math.PI/2 + 0.0001, 
+      counterClockwise
+    );
 
-    // line color
-    context.strokeStyle = this.color;
+    context.lineWidth = (maxRadius - minRadius) - 2;
+
+    var lighting = (this.highlighted) ? (this.lighting_highlighted) : (this.lighting_original);
+    context.strokeStyle = 'hsl('+ this.hue.toString() +','+ this.saturation + ','+ lighting +')';
     context.stroke();
-
-    return;
   }
 }

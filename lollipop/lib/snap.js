@@ -1,26 +1,24 @@
 function Snap() {
 
-  this.reset = function () {
-    this.index = [];
-    this.oldIndex = [];
-    this.plasticIndex = [];
-    this.dir = [0,1,2]; // directions representing the turn, old names: primary, secondary and tertiary
-    this.faceIndex = 1; // distinguishing F and B
-    this.snapType = ""; // snap type. Fully determined by index
-    this.auxiliary = false;
+  this.initialize = function () {
+    this.index = -1;
   }
 
-  this.reset();
 
   this.update = function(e) {
     findMouse(e);
-    puzzle.snap(mousePos);
 
-    if (this.index.toString() != this.oldIndex.toString()) {
-      // snap object is changed
-      this.oldIndex = this.index.slice(0);
+    var snapPos = new Point2D( - mousePos.y + canvasCenter.y, - mousePos.x + canvasCenter.x);
+
+    var angle = snapPos.angle();
+
+    var newIndex = Math.floor(((angle + Math.PI / puzzle.order) % (Math.PI * 2)) / (Math.PI * 2) * puzzle.order);
+
+    if (newIndex != this.index) {
+      this.index = newIndex;
       puzzle.draw();
     }
   }
 
+  this.initialize();
 }
