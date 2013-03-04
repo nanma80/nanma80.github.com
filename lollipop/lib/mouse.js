@@ -26,6 +26,7 @@ mouseUp = function(e){
   dragging = false;
   dragAngle = 0;
   snap.update(e);
+  puzzle.draw();
 }
 
 click = function(e){
