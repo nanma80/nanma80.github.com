@@ -76,7 +76,7 @@ function Puzzle() {
     }
   }
 
-  this.copyBackHue = function(snapIndex) {
+  this.copyBackTwist = function(snapIndex) {
     for(var i=0; i<this.layers.length; i++) {
       var turnability_layer = this.turnability[i];
       for(var j=0; j< 2*this.order; j++) {
@@ -92,13 +92,28 @@ function Puzzle() {
     }
   }
 
+  this.copyBackReorient = function(reorientation) {
+    for(var i=0; i<this.layers.length; i++) {
+      for(var j=0; j< 2*this.order; j++) {
+        var jNew = (j + reorientation * 2) % (2 * this.order);
+        this.layers[i][jNew].hue = this.duplicateHue[i][j];
+      }
+    }
+  }
+
   this.twist = function(snapIndex) {
     // console.log("Turning Axis " + snapIndex.toString());
     this.copyHue();
-    this.copyBackHue(snapIndex);
+    this.copyBackTwist(snapIndex);
   }
 
-
+  this.reorient = function(reorientation) {
+    if (reorientation == 0) {
+      return;
+    }
+    this.copyHue();
+    this.copyBackReorient(reorientation);
+  }
 
   this.initialize();
 }

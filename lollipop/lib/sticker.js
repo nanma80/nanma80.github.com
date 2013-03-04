@@ -20,8 +20,8 @@ function Sticker(minRadius, maxRadius, minAngle, maxAngle) {
       canvasCenter.x, 
       canvasCenter.y, 
       (minRadius + maxRadius)/2, 
-      -minAngle - Math.PI/2 -0.0001, 
-      -maxAngle - Math.PI/2 + 0.0001, 
+      -minAngle - dragAngle - Math.PI/2 -0.0001, 
+      -maxAngle - dragAngle - Math.PI/2 + 0.0001, 
       counterClockwise
     );
 

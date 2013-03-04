@@ -9,13 +9,19 @@ mouseDown = function(e){
   mouseIsDown = true;
   findMouse(e);
   dragging = false;
-  dragStartAngle = mousePos.angle();
+
+  var relativeMousePos = new Point2D( - mousePos.y + canvasCenter.y, - mousePos.x + canvasCenter.x);
+
+  dragStartAngle = relativeMousePos.angle();
 }
 
 mouseUp = function(e){
   mouseIsDown = false;
   if (!dragging && mouseInRegion) {
     click(e);
+  } else if (dragging && mouseInRegion) {
+    var reorientation = Math.round(dragAngle/(2 * Math.PI) * puzzle.order);
+    puzzle.reorient(reorientation);
   }
   dragging = false;
   dragAngle = 0;
@@ -34,12 +40,12 @@ mouseDrag = function(e){
 
   findMouse(e);
 
-  var dragNewAngle = mousePos.angle();
-  
+  var relativeMousePos = new Point2D( - mousePos.y + canvasCenter.y, - mousePos.x + canvasCenter.x);
 
-  // var delta  = new Point2D(mousePos.x - old.x, mousePos.y - old.y)
-  // puzzle.rotate(new Point3D(delta.y,  delta.x, 0), delta.norm/100); // 100: speed of dragging
-  // puzzle.draw();
+  var dragNewAngle = relativeMousePos.angle();
+  dragAngle = (dragNewAngle - dragStartAngle + 2 * Math.PI) % (2 * Math.PI);
+
+  puzzle.draw();
 }
 
 mouseOut = function(e){
