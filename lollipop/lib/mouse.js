@@ -2,11 +2,14 @@ mouseInRegion = false;
 mouseIsDown = false;
 mousePos = new Point2D(0,0);
 dragging = false;
+dragAngle = 0;
+dragStartAngle = 0;
 
 mouseDown = function(e){
   mouseIsDown = true;
   findMouse(e);
   dragging = false;
+  dragStartAngle = mousePos.angle();
 }
 
 mouseUp = function(e){
@@ -15,6 +18,7 @@ mouseUp = function(e){
     click(e);
   }
   dragging = false;
+  dragAngle = 0;
   snap.update(e);
 }
 
@@ -27,8 +31,12 @@ click = function(e){
 
 mouseDrag = function(e){
   dragging = true;
-  // var old = new Point2D(mousePos.x, mousePos.y)
-  // findMouse(e);
+
+  findMouse(e);
+
+  var dragNewAngle = mousePos.angle();
+  
+
   // var delta  = new Point2D(mousePos.x - old.x, mousePos.y - old.y)
   // puzzle.rotate(new Point3D(delta.y,  delta.x, 0), delta.norm/100); // 100: speed of dragging
   // puzzle.draw();
