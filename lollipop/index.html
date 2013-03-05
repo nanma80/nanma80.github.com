@@ -14,6 +14,10 @@
     font-family:Arial, Helvetica, sans-serif;
     background-color:rgb(230,230,255);
   }
+
+  h3 {
+    margin: 10px;
+  }
   canvas {
     border:1px solid #c3c3c3;
   }
@@ -29,6 +33,7 @@
 <script src="lib/snap.js"></script>
 <script src="lib/point2d.js"></script>
 <script src="lib/mouse.js"></script>
+<script src="lib/webpagecontrol.js"></script>
 <script src="lib/puzzle.js"></script>
 <script src="lib/sticker.js"></script>
 
@@ -37,39 +42,82 @@
 
 <h1>Lollipop</h1>
 
-<div id="order">
-  <input type="radio" name="order" value=3 onclick = "onRadioButton();" checked> 3-axis 
-  <input type="radio" name="order" value=4 onclick = "onRadioButton();"> 4-axis
-  <input type="radio" name="order" value=5 onclick = "onRadioButton();"> 5-axis
-  <input type="radio" name="order" value=6 onclick = "onRadioButton();"> 6-axis
-</div>
 
-<div id="canvasDiv" style="float:up;">
-  <canvas id="canvas" width="550" height="550" style="border:1px solid #c3c3c3;" oncontextmenu="return false;" onselectstart='return false;'>
+<div id="canvasDiv" style="float:left;">
+  <canvas id="canvas" width="550" height="550" style="border:1px solid #e3e3e3;" oncontextmenu="return false;" onselectstart='return false;'>
   Your browser does not support the HTML5 canvas tag.
   </canvas>
 </div>
 
+
+<div id = "sidebar" style = "float:left;">
+  <h3>Number of axes</h3>
+  <div id="order">
+    <input type="radio" name="order" value=3 onclick = "onRadioButton();" checked> 3 &nbsp;
+    <input type="radio" name="order" value=4 onclick = "onRadioButton();"> 4 &nbsp;
+    <input type="radio" name="order" value=5 onclick = "onRadioButton();"> 5 &nbsp;
+    <input type="radio" name="order" value=6 onclick = "onRadioButton();"> 6 &nbsp;
+  </div>
+
+  <div id="control" style="margin:10px;height:50px;width:300px;">
+    <button type="button" onclick = "puzzle.resetState(); puzzle.draw();">Reset</button> 
+    <button type="button" onclick = "puzzle.scramble();">Scramble</button>
+  </div>
+
+  <div id="textboxes">
+    <h3>Batch Input</h3>
+    <textarea id="batchExecuteBox" rows="4" cols="30" style="resize:none;" placeholder = "Enter a sequence to execute. Example: 12123232LR"></textarea>
+    <br>
+    <button type="button" onclick = "textInput.execute();">Execute</button> 
+    <h3>History</h3>
+    <textarea readonly onselectstart ="return false;"  id="historyBox" rows="8" cols="30" style="resize:none;" placeholder = "History of twists"></textarea>
+  </div>
+</div>
+
+<div id="intro" style="float:left;background-color:rgb(240,255,240);">
+  <h3>Introduction</h3>
+  <ul style = "line-height:25px;">
+    <li>There are 3, 4, 5, or 6 axes that can flip around.</li>
+    <li>Each piece on the disk is flipped by a subset of axes. Also, <b>all</b> the pieces corresponding to <b>all</b> possible subsets can be found on the disk.</li>
+    <li>Different bands on the disk contain pieces that are flipped by different types of axes. For example:
+      <ul>
+        <li>The outmost band never moves or flips.</li>
+        <li>Each piece in the second band can be flipped by one axis.</li>
+        <li>Each piece in the third band can be flipped by two adjacent axes.</li>
+        <li>... ... ...</li>
+        <li>The smallest band around the core can be flipped by all but one axes.</li>
+        <li>The core can be flipped all the axes.</li>
+      </ul>
+    </li>
+    <li>The whole disk can be rotated by dragging. </li>
+    <li>This puzzle is inspired by Complex 3x3x3 and related puzzles, which were proposed and discussed on the Twistypuzzles.com forum. The main contributers are Matt Galla, Carl Hoff, Andreas Nortmann, and others. Related posts include <a href="http://twistypuzzles.com/forum/viewtopic.php?p=191376">this</a>, <a href="http://twistypuzzles.com/forum/viewtopic.php?f=1&t=18470">this</a>, and <a href="http://twistypuzzles.com/forum/viewtopic.php?f=1&t=22353">this</a>.
+    </li>
+    <li> The puzzle uses html5 canvas, which is not supported directly by IE 8 or lower. Try using the latest version of Chrome for the best experience. </li>
+  </ul>
+</div>
+
 <script type="text/javascript">
-var canvas = document.getElementById("canvas");
-var context = canvas.getContext("2d");
-var viewHeight = canvas.height;
-var viewWidth = canvas.width;
+  var canvas = document.getElementById("canvas");
+  var context = canvas.getContext("2d");
+  var viewHeight = canvas.height;
+  var viewWidth = canvas.width;
 
-var canvasCenter = new Point2D(viewHeight/2, viewWidth/2);
+  var canvasCenter = new Point2D(viewHeight/2, viewWidth/2);
 
-var snap = new Snap();
-var puzzle = new Puzzle();
-onRadioButton();
+  var snap = new Snap();
+  var puzzle = new Puzzle();
+  var textInput = new TextInput();
 
-canvas.addEventListener("mousedown", mouseDown, false);
-canvas.addEventListener("mousemove", mouseMove, false);
-canvas.addEventListener("mouseover", mouseOver, false);
-canvas.addEventListener("mouseout", mouseOut, false);
-document.body.addEventListener("mouseup", mouseUp, false);
+  puzzle.draw();
+  onRadioButton();
 
+
+  canvas.addEventListener("mousedown", mouseDown, false);
+  canvas.addEventListener("mousemove", mouseMove, false);
+  canvas.addEventListener("mouseover", mouseOver, false);
+  canvas.addEventListener("mouseout", mouseOut, false);
+  document.body.addEventListener("mouseup", mouseUp, false);
 </script>
-
 
 </body>
 </html>

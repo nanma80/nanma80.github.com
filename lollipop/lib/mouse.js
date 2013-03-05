@@ -38,6 +38,10 @@ mouseUp = function(e){
         if( animationDragFrameIndex >= animationDragFrames ) {
           animatingDrag = false;
           puzzle.reorient(reorientation);
+
+          if (reorientation == 1) document.getElementById('historyBox').value += 'L';
+          else if (reorientation == puzzle.order - 1) document.getElementById('historyBox').value += 'R';
+
           dragging = false;
           dragAngle = 0;
           snap.update(e);
@@ -53,6 +57,8 @@ mouseUp = function(e){
 click = function(e){
   if (snap.index >= 0) {
     puzzle.twist(snap.index);
+    document.getElementById('historyBox').value += (snap.index + 1).toString();
+
     puzzle.draw();
   }
 }
@@ -102,26 +108,3 @@ findMouse = function (e) {
   mousePos.x = e.pageX - canvas.offsetLeft;
   mousePos.y = e.pageY - canvas.offsetTop;
 }
-
-///////// onRadioButton: 
-
-onRadioButton = function() {
-  var needUpdate = false;
-  var layersElements = document.getElementsByName('order');
-  var j;
-
-  for (j=0; j < layersElements.length; j++) {
-    if (layersElements[j].checked) {
-      if (!(eval(layersElements[j].value) == puzzle.layers)) needUpdate = true;
-        break;
-    }
-  }
-
-  if (needUpdate) {
-    puzzle.setOrder(eval(layersElements[j].value));
-    puzzle.resetState();
-    puzzle.draw();
-  }
-}
-
-

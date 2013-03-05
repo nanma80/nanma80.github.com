@@ -67,6 +67,7 @@ function Puzzle() {
         this.duplicateHue[i][j] = 0;
       }
     }
+    document.getElementById('historyBox').value = '';
   }
 
   this.copyHue = function() {
@@ -128,6 +129,18 @@ function Puzzle() {
     }
     this.copyHue();
     this.copyBackReorient(reorientation);
+  }
+
+  this.scramble = function() {
+    var scrambleLength = 10;
+    scrambleLength += Math.round(Math.random());
+
+    for (var scrambleIndex = 0; scrambleIndex < scrambleLength; scrambleIndex++) {
+      this.twist( Math.floor(Math.random() * 100) % this.order );
+    }
+    snap.update();
+    this.draw();
+    document.getElementById('historyBox').value = '';
   }
 
   this.initialize();
