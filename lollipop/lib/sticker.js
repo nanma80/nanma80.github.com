@@ -13,19 +13,42 @@ function Sticker(minRadius, maxRadius, minAngle, maxAngle) {
   this.highlighted = false;
 
   this.draw = function() {
-    var counterClockwise = ( ((maxAngle - minAngle + 2 * Math.PI) % (2 * Math.PI)) < Math.PI);
+    var angle = - 2 * Math.PI * snap.index / puzzle.order;
+
+    var radiusx = 0.5;
+    var radiusy = 1;
+
+    if (this.highlighted) {
+      context.save();
+      context.translate(canvasCenter.x,canvasCenter.y);
+      context.rotate(angle);
+      context.scale(radiusx, radiusy);
+      context.rotate(- angle);
+      context.translate(- canvasCenter.x,- canvasCenter.y);
+
+      this.drawArc();
+
+      context.restore();
+    } else {
+      this.drawArc();
+    }
+
+  }
+
+  this.drawArc = function() {
+    var counterClockwise = (((this.maxAngle - this.minAngle + 2 * Math.PI) % (2 * Math.PI)) < Math.PI);
 
     context.beginPath();
     context.arc(
       canvasCenter.x, 
       canvasCenter.y, 
-      (minRadius + maxRadius)/2, 
-      -minAngle - dragAngle - Math.PI/2 -0.0001, 
-      -maxAngle - dragAngle - Math.PI/2 + 0.0001, 
+      (this.minRadius + this.maxRadius)/2, 
+      -this.minAngle - dragAngle - Math.PI/2 -0.0001, 
+      -this.maxAngle - dragAngle - Math.PI/2 + 0.0001, 
       counterClockwise
     );
 
-    context.lineWidth = (maxRadius - minRadius) - 2;
+    context.lineWidth = (this.maxRadius - this.minRadius) - 2;
 
     var lighting = (this.highlighted) ? (this.lighting_highlighted) : (this.lighting_original);
     context.strokeStyle = 'hsl('+ this.hue.toString() +','+ this.saturation + ','+ lighting +')';

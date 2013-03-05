@@ -3,8 +3,8 @@ function Puzzle() {
     // initial values
     this.totalSize = viewHeight * 0.4;
     this.backgroundColor = 'white';
-
     this.setOrder(3);
+
     this.resetState();
   }
 
@@ -18,7 +18,7 @@ function Puzzle() {
   this.draw = function() {
     // draw background
     context.fillStyle = this.backgroundColor;
-    context.fillRect(0,0,viewWidth,viewHeight);
+    context.fillRect(0, 0, viewWidth, viewHeight);
 
     // draw axis
     for (var i=0; i< this.order; i++) {
@@ -28,13 +28,14 @@ function Puzzle() {
 
       context.font = '30pt Arial';
       context.fillStyle = 'blue';
+      // displayed axis number is the internal index plus one. Counting from 1
       context.fillText((i+1).toString(), canvasCenter.x + textPosition.x, canvasCenter.y + textPosition.y);
     }
 
     // draw stickers
-    for (var i=0; i < this.layers.length; i++) {
+    for (var i = this.layers.length -1 ; i >= 0 ; i--) {
       var turnability_layer = this.turnability[i];
-      for (var j=0; j< 2 * this.order; j++) {
+      for (var j=0; j < 2 * this.order; j++) {
         if (snap.index >= 0) {
           var jOffset = (j - 2 * snap.index + 2 * this.order) % (2 * this.order);
           this.layers[i][j].highlighted = (turnability_layer.indexOf(jOffset) >= 0);
