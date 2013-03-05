@@ -13,12 +13,11 @@ function Sticker(minRadius, maxRadius, minAngle, maxAngle) {
   this.highlighted = false;
 
   this.draw = function() {
-    var angle = - 2 * Math.PI * snap.index / puzzle.order;
+    if (this.highlighted && animatingTwist) {
+      var angle = - 2 * Math.PI * snap.index / puzzle.order;
+      var radiusx = - Math.cos( Math.PI * animationTwistFrameIndex/animationTwistFrames );
+      var radiusy = 1;
 
-    var radiusx = 0.5;
-    var radiusy = 1;
-
-    if (this.highlighted) {
       context.save();
       context.translate(canvasCenter.x,canvasCenter.y);
       context.rotate(angle);

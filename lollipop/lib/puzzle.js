@@ -104,6 +104,20 @@ function Puzzle() {
 
   this.twist = function(snapIndex) {
     // console.log("Turning Axis " + snapIndex.toString());
+    animationTwistFrameIndex = 0;
+    animatingTwist = true;
+
+    var animationTwistInterval = setInterval(
+      function() {
+        animationTwistFrameIndex ++;
+        puzzle.draw();
+        if( animationTwistFrameIndex >= animationTwistFrames ) {
+          animatingTwist = false;
+          clearInterval(animationTwistInterval);
+        }
+      }
+    , animationTwistDuration / animationTwistFrames);
+
     this.copyHue();
     this.copyBackTwist(snapIndex);
   }
