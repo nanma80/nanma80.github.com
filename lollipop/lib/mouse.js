@@ -39,8 +39,20 @@ mouseUp = function(e){
           animatingDrag = false;
           puzzle.reorient(reorientation);
 
-          if (reorientation == 1) document.getElementById('historyBox').value += 'L';
-          else if (reorientation == puzzle.order - 1) document.getElementById('historyBox').value += 'R';
+          var reorientationString = "";
+          if (reorientation >=1 && reorientation <= puzzle.order/2) {
+            for (var i=1; i<=reorientation; i++) {
+              reorientationString += "L";
+            }
+          }
+          else if (reorientation > puzzle.order/2 && reorientation <= puzzle.order - 1) {
+            for (var i = puzzle.order - 1; i >= reorientation; i--) {
+              reorientationString += "R";
+            }
+          }
+
+          document.getElementById('historyBox').value += reorientationString;
+
 
           dragging = false;
           dragAngle = 0;
