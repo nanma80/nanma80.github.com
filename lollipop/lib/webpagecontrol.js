@@ -58,7 +58,7 @@ function TextInput() {
     }
 
     var historyLength = document.getElementById('historyBox').value.length;
-    if (document.getElementById('historyBox').value[historyLength-1] != "\n") {
+    if (historyLength> 0 && document.getElementById('historyBox').value[historyLength-1] != "\n") {
       document.getElementById('historyBox').value += "\n"
     }
     
