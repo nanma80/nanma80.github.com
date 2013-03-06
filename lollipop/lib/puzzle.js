@@ -2,7 +2,7 @@ function Puzzle() {
   this.initialize = function () {
     // initial values
     this.totalSize = viewHeight * 0.4;
-    this.backgroundColor = 'white';
+    this.backgroundColor = 'rgb(250,250,250)';
     this.setOrder(3);
 
     this.resetState();
@@ -16,20 +16,24 @@ function Puzzle() {
   }
 
   this.draw = function() {
+
     // draw background
     context.fillStyle = this.backgroundColor;
     context.fillRect(0, 0, viewWidth, viewHeight);
 
     // draw axis
+
     for (var i=0; i< this.order; i++) {
       var theta = i * Math.PI * 2 / this.order;
-      var textAbs = viewHeight * 0.45;
-      var textPosition = new Point2D( - textAbs * Math.sin(theta) - 11, - textAbs * Math.cos(theta) + 13);
+      var textAbs = viewHeight * 0.475;
+      var textPosition = new Point2D( - textAbs * Math.sin(theta) - 9, - textAbs * Math.cos(theta) + 13);
 
-      context.font = '30pt Arial';
+      context.font = '20pt Arial';
       context.fillStyle = 'blue';
       // displayed axis number is the internal index plus one. Counting from 1
       context.fillText((i+1).toString(), canvasCenter.x + textPosition.x, canvasCenter.y + textPosition.y);
+      // draw knobs
+      this.knobs[i].draw();
     }
 
     // draw stickers
@@ -67,6 +71,14 @@ function Puzzle() {
         this.duplicateHue[i][j] = 0;
       }
     }
+
+    this.knobs = new Array(this.order);
+
+    for (var i=0; i<this.order; i++) {
+      var theta = i * Math.PI * 2 / this.order;
+      this.knobs[i] = new Knob(theta, i);
+    }
+    
     document.getElementById('historyBox').value = '';
   }
 
