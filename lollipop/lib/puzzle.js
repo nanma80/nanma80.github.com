@@ -144,7 +144,7 @@ function Puzzle() {
   }
 
   this.scramble = function() {
-    var scrambleLength = 10;
+    var scrambleLength = 50;
     scrambleLength += Math.round(Math.random());
 
     for (var scrambleIndex = 0; scrambleIndex < scrambleLength; scrambleIndex++) {
