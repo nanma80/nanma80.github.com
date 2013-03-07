@@ -54,11 +54,11 @@
 <div id = "sidebar" style = "float:left;">
   <h3>Number of axes</h3>
   <div id="order" style = "width:250px;">
-    <input type="radio" name="order" value=3 onclick = "onRadioButton();"> 3 &nbsp;
+    <input type="radio" name="order" value=3 onclick = "onRadioButton();" checked> 3 &nbsp;
     <input type="radio" name="order" value=4 onclick = "onRadioButton();"> 4 &nbsp;
     <input type="radio" name="order" value=5 onclick = "onRadioButton();"> 5 &nbsp;
-    <input type="radio" name="order" value=6 onclick = "onRadioButton();"> 6 &nbsp;
-    <input type="radio" name="order" value=7 onclick = "onRadioButton();" checked> 7
+    <input type="radio" name="order" value=6 onclick = "onRadioButton();"> 6 <!-- &nbsp;
+    <input type="radio" name="order" value=7 onclick = "onRadioButton();" checked> 7 -->
   </div>
 
   <div id="control" style="margin:10px;height:50px;width:250px;">
@@ -81,13 +81,13 @@
   <ul style = "line-height:25px;">
     <li>There are 3, 4, 5, or 6 axes that can flip around.</li>
     <li>Each piece on the disk is flipped by a subset of axes. <b>All</b> the pieces that correspond to <b>all</b> possible subsets can be found on the disk.</li>
-    <li>Different bands of the disk contain pieces that are flipped by different types of axes. For example:
+    <li>Different rings on the disk contain pieces that are flipped by different types of axes. For example:
       <ul>
-        <li>The outmost band never moves or flips.</li>
-        <li>Each piece in the second band can be flipped by one axis.</li>
-        <li>Each piece in the third band can be flipped by two adjacent axes.</li>
+        <li>The outmost ring never moves or flips.</li>
+        <li>Each piece in the second ring can be flipped by one axis.</li>
+        <li>Each piece in the third ring can be flipped by two adjacent axes.</li>
         <li>... ... ...</li>
-        <li>The smallest band around the core can be flipped by all but one axes.</li>
+        <li>The smallest ring around the core can be flipped by all but one axes.</li>
         <li>The core can be flipped all the axes.</li>
       </ul>
     </li>
