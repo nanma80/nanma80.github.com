@@ -53,14 +53,15 @@
 
 <div id = "sidebar" style = "float:left;">
   <h3>Number of axes</h3>
-  <div id="order">
-    <input type="radio" name="order" value=3 onclick = "onRadioButton();" checked> 3 &nbsp;
+  <div id="order" style = "width:250px;">
+    <input type="radio" name="order" value=3 onclick = "onRadioButton();"> 3 &nbsp;
     <input type="radio" name="order" value=4 onclick = "onRadioButton();"> 4 &nbsp;
     <input type="radio" name="order" value=5 onclick = "onRadioButton();"> 5 &nbsp;
-    <input type="radio" name="order" value=6 onclick = "onRadioButton();"> 6 &nbsp;
+    <input type="radio" name="order" value=6 onclick = "onRadioButton();"> 6 <!-- &nbsp;
+    <input type="radio" name="order" value=7 onclick = "onRadioButton();" checked> 7 -->
   </div>
 
-  <div id="control" style="margin:10px;height:50px;width:300px;">
+  <div id="control" style="margin:10px;height:50px;width:250px;">
     <button type="button" onclick = "puzzle.resetState(); puzzle.draw();">Reset</button> 
     <button type="button" onclick = "puzzle.scramble();">Scramble</button>
   </div>

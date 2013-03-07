@@ -4,7 +4,7 @@ function Puzzle() {
     this.totalSize = viewHeight * 0.4;
     this.backgroundColor = 'rgb(250,250,250)';
     this.setOrder(3);
-
+    this.count = 0;
     this.resetState();
   }
 
@@ -35,6 +35,10 @@ function Puzzle() {
       // draw knobs
       this.knobs[i].draw();
     }
+
+    context.font = "20pt Arial";
+    context.fillStyle = "black";
+    context.fillText(this.count.toString() + " move" + (this.count > 1 ? "s" : ""), 10, viewHeight - 10);
 
     // draw stickers
     for (var i = this.layers.length -1 ; i >= 0 ; i--) {
@@ -80,6 +84,7 @@ function Puzzle() {
     }
     
     document.getElementById('historyBox').value = '';
+    this.count = 0;
   }
 
   this.copyHue = function() {
@@ -133,6 +138,7 @@ function Puzzle() {
 
     this.copyHue();
     this.copyBackTwist(snapIndex);
+    this.count += 1;
   }
 
   this.reorient = function(reorientation) {
@@ -151,6 +157,7 @@ function Puzzle() {
       this.twist( Math.floor(Math.random() * 100) % this.order );
     }
     snap.update();
+    this.count = 0;
     this.draw();
     document.getElementById('historyBox').value = '';
   }
