@@ -1,8 +1,23 @@
 // configuration saves the number of layers of each puzzle; the turnability of each type of pieces
 var configuration = [
   {}, // order = 0
-  {}, // order = 1
-  {}, // order = 2
+  {
+    'order': 1,
+    'layer': 2,
+    'turnability': [
+      [   ], //layer = 0
+      [0,1]  //layer = 1
+    ]
+  }, // order = 1
+  {
+    'order': 2,
+    'layer': 3,
+    'turnability': [
+      [       ], //layer = 0
+      [0,    3], //layer = 1
+      [0,1,2,3]  //layer = 2
+    ]
+  }, // order = 2
   {
     'order': 3,
     'layer': 4,
