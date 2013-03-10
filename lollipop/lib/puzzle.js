@@ -95,7 +95,9 @@ function Puzzle() {
           this.layerRadii[i+1], // minRadius
           this.layerRadii[i], // maxRadius
           j * this.angleSize, //minAngle
-          (j + 1) * this.angleSize //maxAngle
+          (j + 1) * this.angleSize, //maxAngle
+          i,
+          j
         );
         this.duplicateHue[i][j] = 0;
       }

@@ -1,12 +1,14 @@
-function Sticker(minRadius, maxRadius, minAngle, maxAngle) {
+function Sticker(minRadius, maxRadius, minAngle, maxAngle, indexOfLayer, indexOfPhase) {
+  this.indexOfLayer = indexOfLayer;
+  this.indexOfPhase = indexOfPhase;
   this.minRadius = minRadius;
   this.maxRadius = maxRadius;
   this.minAngle = minAngle;
   this.maxAngle = maxAngle;
   this.hue_original = Math.floor((this.minAngle + this.maxAngle)/2 /Math.PI * 180);
   this.hue_original = Math.floor(this.minAngle /Math.PI * 180);
-  this.saturation = '90%';
-  this.lighting_original = '48%';
+  this.saturation = (this.indexOfPhase % 2)? '100%': '80%';
+  this.lighting_original = '50%';
   this.lighting_highlighted = '70%';
 
   this.hue = this.hue_original;
