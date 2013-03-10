@@ -43,7 +43,6 @@ function TextInput() {
   }
 
   this.executeString = function(algorithm) {
-
     for(var i=0; i<algorithm.length; i++) {
       var step = algorithm[i];
 
@@ -64,6 +63,34 @@ function TextInput() {
     
     document.getElementById('historyBox').value += algorithm +"\n";
 
+    puzzle.draw();
+  }
+
+  this.undo = function() {
+    var history = document.getElementById('historyBox').value;
+    var historyLength = history.length;
+
+    if (historyLength <= 0) return;
+
+    var lastStep = history[historyLength - 1];
+
+    while (lastStep == "\n") {
+      historyLength -= 1;
+      if (historyLength <= 0) return;
+      lastStep = history[historyLength - 1];
+    }
+
+    if (lastStep == 'R') {
+      puzzle.reorient(1);
+    } else if (lastStep == 'L') {
+      puzzle.reorient(puzzle.order - 1);
+    } else {
+      var axis = eval(lastStep) - 1;
+      puzzle.twist(axis);
+      puzzle.count -= 2;
+    }
+
+    document.getElementById('historyBox').value = history.slice(0, historyLength-1);
     puzzle.draw();
   }
 
