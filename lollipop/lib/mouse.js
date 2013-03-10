@@ -67,7 +67,9 @@ mouseUp = function(e){
 }
 
 click = function(e){
-  if (snap.index >= 0) {
+  if (e.shiftKey) {
+    puzzle.highlightLayer(snap.layer);
+  } else if (snap.index >= 0) {
     puzzle.twist(snap.index);
     document.getElementById('historyBox').value += (snap.index + 1).toString();
 

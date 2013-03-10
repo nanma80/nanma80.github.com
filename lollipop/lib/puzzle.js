@@ -10,9 +10,34 @@ function Puzzle() {
 
   this.setOrder = function(order) {
     this.order = order;
-    this.layerSize = this.totalSize / configuration[this.order].layer;
+    var layerSize = this.totalSize / configuration[this.order].layer;
+    this.layerRadii = new Array(configuration[this.order].layer + 1);
+
+    for (var i = 0; i <= configuration[this.order].layer; i++) {
+      this.layerRadii[i] = layerSize * (configuration[this.order].layer - i);
+    }
+
     this.angleSize = Math.PI / this.order;
     this.turnability = configuration[this.order].turnability;
+  }
+
+  this.highlightLayer = function(indexOfLayer) {
+    this.highlightFactor = (indexOfLayer < 0)? 1 : 3 ; // a highlighted layer = Factor times other layer
+    var layerSize = this.totalSize / (configuration[this.order].layer + this.highlightFactor - 1);
+
+    for (var i = 0; i <= configuration[this.order].layer; i++) {
+      if (i <= indexOfLayer)
+        this.layerRadii[i] = layerSize * (configuration[this.order].layer - i + this.highlightFactor - 1);
+      else 
+        this.layerRadii[i] = layerSize * (configuration[this.order].layer - i);
+    }
+
+    for (var i=0; i<this.layers.length; i++) {
+      for (var j=0; j< 2 * this.order; j++) {
+        this.layers[i][j].minRadius = this.layerRadii[i+1];
+        this.layers[i][j].maxRadius = this.layerRadii[i];
+      }
+    }
   }
 
   this.draw = function() {
@@ -67,8 +92,8 @@ function Puzzle() {
 
       for (var j=0; j< 2 * this.order; j++) {
         this.layers[i][j] = new Sticker(
-          (configuration[this.order].layer - i -1) * this.layerSize, // minRadius 
-          (configuration[this.order].layer - i) * this.layerSize, // maxRadius
+          this.layerRadii[i+1], // minRadius
+          this.layerRadii[i], // maxRadius
           j * this.angleSize, //minAngle
           (j + 1) * this.angleSize //maxAngle
         );
