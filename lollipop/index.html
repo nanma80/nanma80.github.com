@@ -39,10 +39,9 @@
 <script src="lib/knob.js"></script>
 
 </head>
-<body onselectstart='return false;' style="font-family:Arial, Helvetica, sans-serif;">
+<body style="font-family:Arial, Helvetica, sans-serif;">
 
 <h1>Lollipop</h1>
-
 
 <div id="canvasDiv" style="float:left;">
   <canvas id="canvas" width="550" height="550" style="border:1px solid #e3e3e3;" oncontextmenu="return false;" onselectstart='return false;'>
@@ -62,7 +61,7 @@
     <input type="radio" name="order" value=7 onclick = "onRadioButton();"> 7: Suicide (eye exam)
   </div>
 
-  <div id="control" style="margin:10px;height:50px;width:250px;">
+  <div id="control" style="margin:10px;">
     <button type="button" onclick = "puzzle.resetState(); puzzle.draw();">Reset</button> 
     <button type="button" onclick = "puzzle.scramble();">Scramble</button>
     <button type="button" onclick = "textInput.undo();">Undo</button>
@@ -70,13 +69,23 @@
 
   <div id="textboxes">
     <h3>Batch Input</h3>
-    <textarea id="batchExecuteBox" rows="4" cols="30" style="resize:none;" placeholder = "Enter a sequence to execute. Example: 12123232LR"></textarea>
+    <textarea id="batchExecuteBox" rows="3" cols="30" style="resize:none;" placeholder = "Enter a sequence to execute. Example: 12123232LR"></textarea>
     <br>
     <button type="button" onclick = "textInput.execute();" style="margin:10px;margin-left:75px; width: 100px">Execute</button>
     <br>
     <!-- <h3>History</h3> -->
-    <textarea readonly onselectstart ="return false;"  id="historyBox" rows="4" cols="30" style="resize:none;" placeholder = "History of twists"></textarea>
+    <textarea readonly onselectstart ="return false;"  id="historyBox" rows="3" cols="30" style="resize:none;" placeholder = "History of twists"></textarea>
   </div>
+  <div id = "highlightBy" style = "line-height:27px;">
+    Highlighting pieces to be flipped by
+    <br>
+    <input type="checkbox" id="highlightByColor" onclick = "onHighlightByColor();" checked>lightening color
+    <input type="checkbox" id="highlightByDot" onclick = "onHighlightByDot();">showing dots
+  </div>
+</div>
+
+<div id = "options" style = "float:left;">
+
 </div>
 
 <div id="intro" style="float:left;background-color:rgb(240,255,240);">

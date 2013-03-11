@@ -153,8 +153,8 @@ function Puzzle() {
           this.layers[i][j].hue = this.duplicateHue[i][jTwisted];
           this.layers[i][j].saturation = this.duplicateSaturation[i][jTwisted];
         } else {
-          this.layers[i][j].hue = this.duplicateHue[i][j];
-          this.layers[i][j].saturation = this.duplicateSaturation[i][j];
+          // this.layers[i][j].hue = this.duplicateHue[i][j];
+          // this.layers[i][j].saturation = this.duplicateSaturation[i][j];
         }
       }
     }

@@ -1,5 +1,4 @@
 ///////// onRadioButton: 
-
 onRadioButton = function() {
   var needUpdate = false;
   var layersElements = document.getElementsByName('order');
@@ -18,6 +17,20 @@ onRadioButton = function() {
     puzzle.draw();
   }
 }
+
+////////// onCheckboxButton:
+
+var stickerHighlightByColor = true;
+var stickerHighlightByDot = false;
+
+onHighlightByDot = function() {
+  stickerHighlightByDot = document.getElementById('highlightByDot').checked;
+}
+
+onHighlightByColor = function() {
+  stickerHighlightByColor = document.getElementById('highlightByColor').checked;
+}
+
 
 function TextInput() {
   this.initialize = function () {

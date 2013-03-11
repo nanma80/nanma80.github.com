@@ -38,7 +38,7 @@ function Sticker(minRadius, maxRadius, minAngle, maxAngle, indexOfLayer, indexOf
   }
 
   this.drawArc = function() {
-    var counterClockwise = (((this.maxAngle - this.minAngle + 2 * Math.PI) % (2 * Math.PI)) < Math.PI);
+    var counterClockwise = (((this.maxAngle - this.minAngle + 2 * Math.PI -0.0001) % (2 * Math.PI)) < Math.PI);
 
     context.beginPath();
     context.arc(
@@ -53,23 +53,25 @@ function Sticker(minRadius, maxRadius, minAngle, maxAngle, indexOfLayer, indexOf
     context.lineWidth = (this.maxRadius - this.minRadius) - 2;
 
     // highlighting by lighting
-    var lighting = (this.highlighted) ? (this.lighting_highlighted) : (this.lighting_original);
+    var lighting = (this.highlighted && stickerHighlightByColor) ? (this.lighting_highlighted) : (this.lighting_original);
     // var lighting = (this.lighting_original);
     context.strokeStyle = 'hsl('+ this.hue.toString() +','+ this.saturation + ','+ lighting +')';
     context.stroke();
 
-    // highlighting by drawing a dot
-    // if (this.highlighted) {
-    //   var avgRadius = (this.minRadius + this.maxRadius)/2;
-    //   var avgAngle = (this.minAngle + this.maxAngle)/2;
+    if (stickerHighlightByDot) {
+      // highlighting by drawing a dot
+      if (this.highlighted) {
+        var avgRadius = (this.minRadius + this.maxRadius)/2;
+        var avgAngle = (this.minAngle + this.maxAngle)/2;
 
-    //   context.beginPath();
-    //   context.arc(
-    //     canvasCenter.x - avgRadius * Math.cos(avgAngle - dragAngle - Math.PI/2), 
-    //     canvasCenter.y + avgRadius * Math.sin(avgAngle - dragAngle - Math.PI/2), 
-    //     2, 0, 2 * Math.PI, false);
-    //   context.fillStyle = 'black';
-    //   context.fill();
-    // }
+        context.beginPath();
+        context.arc(
+          canvasCenter.x - avgRadius * Math.sin(avgAngle + dragAngle), 
+          canvasCenter.y - avgRadius * Math.cos(avgAngle + dragAngle), 
+          2, 0, 2 * Math.PI, false);
+        context.fillStyle = 'black';
+        context.fill();
+      }
+    }
   }
 }
