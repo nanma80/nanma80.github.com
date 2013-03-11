@@ -101,9 +101,12 @@ function Puzzle() {
   this.resetState = function() {
     this.layers = new Array( configuration[this.order].layer );
     this.duplicateHue = new Array( configuration[this.order].layer );
+    this.duplicateSaturation = new Array( configuration[this.order].layer );
+
     for (var i=0; i<this.layers.length; i++) {
       this.layers[i] = new Array( 2 * this.order );
       this.duplicateHue[i] = new Array( 2 * this.order );
+      this.duplicateSaturation[i] = new Array( 2 * this.order );
 
       for (var j=0; j< 2 * this.order; j++) {
         this.layers[i][j] = new Sticker(
@@ -115,6 +118,7 @@ function Puzzle() {
           j
         );
         this.duplicateHue[i][j] = 0;
+        this.duplicateSaturation[i][j] = "100%";
       }
     }
 
@@ -133,6 +137,7 @@ function Puzzle() {
     for(var i=0; i<this.layers.length; i++) {
       for(var j=0; j< 2*this.order; j++) {
         this.duplicateHue[i][j] = this.layers[i][j].hue;
+        this.duplicateSaturation[i][j] = this.layers[i][j].saturation;
       }
     }
   }
@@ -146,8 +151,10 @@ function Puzzle() {
           // piece [i,j] should be twisted
           var jTwisted = (4*snapIndex - 1 - j + 4 * this.order) % (2 * this.order);
           this.layers[i][j].hue = this.duplicateHue[i][jTwisted];
+          this.layers[i][j].saturation = this.duplicateSaturation[i][jTwisted];
         } else {
           this.layers[i][j].hue = this.duplicateHue[i][j];
+          this.layers[i][j].saturation = this.duplicateSaturation[i][j];
         }
       }
     }
@@ -158,25 +165,28 @@ function Puzzle() {
       for(var j=0; j< 2*this.order; j++) {
         var jNew = (j + reorientation * 2) % (2 * this.order);
         this.layers[i][jNew].hue = this.duplicateHue[i][j];
+        this.layers[i][jNew].saturation = this.duplicateSaturation[i][j];
       }
     }
   }
 
-  this.twist = function(snapIndex) {
+  this.twist = function(snapIndex, withAnimation) {
     // console.log("Turning Axis " + snapIndex.toString());
     animationTwistFrameIndex = 0;
     animatingTwist = true;
 
-    var animationTwistInterval = setInterval(
-      function() {
-        animationTwistFrameIndex ++;
-        puzzle.draw();
-        if( animationTwistFrameIndex >= animationTwistFrames ) {
-          animatingTwist = false;
-          clearInterval(animationTwistInterval);
+    if (withAnimation) {
+      var animationTwistInterval = setInterval(
+        function() {
+          animationTwistFrameIndex ++;
+          puzzle.draw();
+          if( animationTwistFrameIndex >= animationTwistFrames ) {
+            animatingTwist = false;
+            clearInterval(animationTwistInterval);
+          }
         }
-      }
-    , animationTwistDuration / animationTwistFrames);
+      , animationTwistDuration / animationTwistFrames);
+    }
 
     this.copyHue();
     this.copyBackTwist(snapIndex);
@@ -196,7 +206,7 @@ function Puzzle() {
     scrambleLength += Math.round(Math.random());
 
     for (var scrambleIndex = 0; scrambleIndex < scrambleLength; scrambleIndex++) {
-      this.twist( Math.floor(Math.random() * 100) % this.order );
+      this.twist( Math.floor(Math.random() * 100) % this.order , false);
     }
     snap.update();
     this.count = 0;

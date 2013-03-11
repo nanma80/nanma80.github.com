@@ -52,7 +52,7 @@ function TextInput() {
         puzzle.reorient(puzzle.order - 1);
       } else {
         var axis = eval(step) - 1;
-        puzzle.twist(axis);
+        puzzle.twist(axis, false);
       }
     }
 

@@ -70,7 +70,7 @@ click = function(e){
   if (e.shiftKey) {
     puzzle.highlightLayer(snap.layer);
   } else if (snap.index >= 0) {
-    puzzle.twist(snap.index);
+    puzzle.twist(snap.index, true);
     document.getElementById('historyBox').value += (snap.index + 1).toString();
 
     puzzle.draw();
