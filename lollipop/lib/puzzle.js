@@ -172,10 +172,11 @@ function Puzzle() {
 
   this.twist = function(snapIndex, withAnimation) {
     // console.log("Turning Axis " + snapIndex.toString());
+
+    if (withAnimation) {
     animationTwistFrameIndex = 0;
     animatingTwist = true;
 
-    if (withAnimation) {
       var animationTwistInterval = setInterval(
         function() {
           animationTwistFrameIndex ++;
