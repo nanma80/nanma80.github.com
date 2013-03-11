@@ -173,9 +173,10 @@ function Puzzle() {
   this.twist = function(snapIndex, withAnimation) {
     // console.log("Turning Axis " + snapIndex.toString());
 
-    if (withAnimation) {
-    animationTwistFrameIndex = 0;
-    animatingTwist = true;
+    if (withAnimation == true) {
+      
+      animationTwistFrameIndex = 0;
+      animatingTwist = true;
 
       var animationTwistInterval = setInterval(
         function() {
@@ -207,9 +208,9 @@ function Puzzle() {
     scrambleLength += Math.round(Math.random());
 
     for (var scrambleIndex = 0; scrambleIndex < scrambleLength; scrambleIndex++) {
-      this.twist( Math.floor(Math.random() * 100) % this.order , false);
+      this.twist( Math.floor(Math.random() * 100) % this.order, false);
     }
-    snap.update();
+    
     this.count = 0;
     this.draw();
     document.getElementById('historyBox').value = '';
