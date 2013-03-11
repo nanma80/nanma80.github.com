@@ -17,11 +17,14 @@ function Puzzle() {
       this.layerRadii[i] = layerSize * (configuration[this.order].layer - i);
     }
 
+    this.highlightedLayer = -1;
+
     this.angleSize = Math.PI / this.order;
     this.turnability = configuration[this.order].turnability;
   }
 
   this.highlightLayer = function(indexOfLayer) {
+    this.highlightedLayer = indexOfLayer;
     this.highlightFactor = (indexOfLayer < 0)? 1 : 3 ; // a highlighted layer = Factor times other layer
     var layerSize = this.totalSize / (configuration[this.order].layer + this.highlightFactor - 1);
 
@@ -55,6 +58,7 @@ function Puzzle() {
 
       context.font = '20pt Arial';
       context.fillStyle = 'blue';
+      context.textAlign = 'left';
       // displayed axis number is the internal index plus one. Counting from 1
       context.fillText((i+1).toString(), canvasCenter.x + textPosition.x, canvasCenter.y + textPosition.y);
       // draw knobs
@@ -64,6 +68,17 @@ function Puzzle() {
     context.font = "20pt Arial";
     context.fillStyle = "black";
     context.fillText(this.count.toString() + " move" + (this.count > 1 ? "s" : ""), 10, viewHeight - 10);
+
+    var magnifiedString = "";
+    if (this.highlightedLayer < 0) magnifiedString = 'Shift + click to magnify a ring';
+    else magnifiedString = 'Magnifying ring #' + (this.highlightedLayer + 1).toString();
+
+    context.font = "12pt Arial";
+    context.fillStyle = "black";
+    context.textAlign = 'right';
+    context.fillText(magnifiedString, viewWidth-10, viewHeight - 10);
+    context.textAlign = 'left';
+
 
     // draw stickers
     for (var i = this.layers.length -1 ; i >= 0 ; i--) {
