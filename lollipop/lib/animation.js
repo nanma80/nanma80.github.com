@@ -1,6 +1,6 @@
 animatingTwist = false;
 animationTwistFrameIndex = 0;
-animationTwistFrames = 10;
+animationTwistFrames = 11;
 animationTwistDuration = 250;
 
 animatingDrag = false;
