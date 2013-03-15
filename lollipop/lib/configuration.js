@@ -135,5 +135,41 @@ var configuration = [
       // 17. anti-core, 7 rotational states
       [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
     ]
-  }
+  },
+  {
+  'order': 8,
+  'layer': 30,
+  'turnability': [
+    [                                     ],     // 0  -- 0 grips (core)
+    [0,                                 15],     // 1  -- 1 grip
+    [0,1,                            14,15],     // 2  -- 2 grips adjacent
+    [  1,2,                       13,14   ],     // 3  -- 2 grips spaced out by 1
+    [    2,3,                  12,13      ],     // 4  -- 2 grips spaced out by 2
+    [0,            7,8,                 15],     // 5  -- 2 grips spaced out by 3
+    [0,1,2,                       13,14,15],     // 6  -- 3 grips adjacent
+    [0,    3,4,             11,12,      15],     // 7  -- 3 grips with one grip between each
+    [0,        5,6,    9,10,            15],     // 8  -- 3 grips with two grips between each
+    [0,    3,  5,        10,   12,      15],     // 9  -- 3 grips (chiral pieces with 1-wide gap)
+    [0,        5,  7,8,  10,            15],     // 10 -- 3 grips (chiral pieces with 2-wide gap)
+    [0,1,2,3,                  12,13,14,15],     // 11 -- 4 grips adjacent
+    [0,1,    4,5,        10,11,      14,15],     // 12 -- 4 grips in one 1-gap two 1-gap one
+    [  1,2,3,4,             11,12,13,14   ],     // 13 -- 4 grips split into 2 groups seperated by a 1-wide gap
+    [0,1,        6,7,8,9,            14,15],     // 14 -- 4 grips split into 2 groups separated by a 2-wide gap
+    [0,1,2,        7,8,           13,14,15],     // 15 -- 4 grips, three adjacent on top, loner on bottom
+    [0,  2,  4,    7,8,     11,   13,   15],     // 16 -- 4 grips, three, 1-gap, one
+    [0,  2,    5,6,    9,10,      13,   15],     // 17 -- 4 grips, two, 1-gap, one, 1-gap, one
+    [0,    3,4,    7,8,     11,12,      15],     // 18 -- 4 grips, windmill
+    [  1,2,3,4,  6,    9,   11,12,13,14   ],     // 19 -- 5 grips, anti-3 grips (chiral pieces with 2-wide gap)
+    [0,1,  3,  5,6,    9,10,   12,   14,15],     // 20 -- 5-grips, anti-3 grips (chiral pieces with 1-wide gap)
+    [0,    3,4,5,6,    9,10,11,12,      15],     // 21 -- 5-grips, anti-3 grips with two grips between each
+    [0,1,2,    5,6,    9,10,      13,14,15],     // 22 -- 5-grips, anti-3 grips with one grip between each
+    [0,1,2,3,4,             11,12,13,14,15],     // 23 -- 5-grips, anti-3 grips adjacent
+    [0,1,2,    5,6,7,8,9,10,      13,14,15],     // 24 -- 6-grips, anti-2 grips spaced out by 3
+    [0,1,2,3,    6,7,8,9,      12,13,14,15],     // 25 -- 6-grips, anti-2 grips spaced out by 2
+    [0,1,2,3,4,    7,8,     11,12,13,14,15],     // 26 -- 6-grips, anti-2 grips spaced out by 1
+    [0,1,2,3,4,5,        10,11,12,13,14,15],     // 27 -- 6-grips, anti-2 grips adjacent
+    [0,1,2,3,4,5,6,    9,10,11,12,13,14,15],     // 28 -- 7-grips, anti-1 grip
+    [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]      // 29 -- 8 grips (inverted core)
+  ]
+ }
 ];
