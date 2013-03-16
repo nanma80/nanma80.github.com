@@ -79,7 +79,6 @@ function Puzzle() {
     context.fillText(magnifiedString, viewWidth-10, viewHeight - 10);
     context.textAlign = 'left';
 
-
     // draw stickers
     for (var i = this.layers.length -1 ; i >= 0 ; i--) {
       var turnability_layer = this.turnability[i];
@@ -178,11 +177,18 @@ function Puzzle() {
       animationTwistFrameIndex = 0;
       animatingTwist = true;
 
+      for(var i=0; i<this.layers.length; i++) {
+        for(var j=0; j< 2*this.order; j++) {
+          this.layers[i][j].animated = this.layers[i][j].highlighted;
+        }
+      }
+      animatingSnapIndex = snap.index;
+
       var animationTwistInterval = setInterval(
         function() {
           animationTwistFrameIndex ++;
           puzzle.draw();
-          if( animationTwistFrameIndex >= animationTwistFrames ) {
+          if( animationTwistFrameIndex >= animationTwistFrames) {
             animatingTwist = false;
             clearInterval(animationTwistInterval);
           }

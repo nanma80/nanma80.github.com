@@ -14,10 +14,11 @@ function Sticker(minRadius, maxRadius, minAngle, maxAngle, indexOfLayer, indexOf
   this.hue = this.hue_original;
   this.saturation = this.saturation_original;
   this.highlighted = false;
+  this.animated = false;
 
   this.draw = function() {
-    if (this.highlighted && animatingTwist) {
-      var angle = - 2 * Math.PI * snap.index / puzzle.order;
+    if (this.animated && animatingTwist) {
+      var angle = - 2 * Math.PI * animatingSnapIndex / puzzle.order;
       var radiusx = - Math.cos( Math.PI * animationTwistFrameIndex/animationTwistFrames );
       var radiusy = 1;
 
@@ -34,7 +35,6 @@ function Sticker(minRadius, maxRadius, minAngle, maxAngle, indexOfLayer, indexOf
     } else {
       this.drawArc();
     }
-
   }
 
   this.drawArc = function() {

@@ -13,7 +13,7 @@ function Knob(theta, position) {
     context.strokeStyle = 'black';
 
     var rotation = 0;
-    if (this.position == snap.index && animatingTwist) {
+    if (this.position == animatingSnapIndex && animatingTwist) {
       rotation = Math.PI * animationTwistFrameIndex/animationTwistFrames;
     }
 

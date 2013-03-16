@@ -6,9 +6,8 @@ function Snap() {
   }
 
   this.update = function(e) {
-    if (animatingTwist || animatingDrag) {
-      return;
-    }
+    if (animatingDrag) return;
+    
     findMouse(e);
 
     var snapPos = new Point2D( - mousePos.y + canvasCenter.y, - mousePos.x + canvasCenter.x);
@@ -17,7 +16,7 @@ function Snap() {
     if (snapPosNorm > puzzle.layerRadii[0]) {
       this.index = -1;
       this.layer = -1;
-      puzzle.draw();
+      if (! animatingTwist) puzzle.draw();
       return;
     }
 
@@ -26,7 +25,7 @@ function Snap() {
 
     if (newIndex != this.index) {
       this.index = newIndex;
-      puzzle.draw();
+      if (! animatingTwist) puzzle.draw();
     }
 
     for(this.layer = 0; this.layer < configuration[puzzle.order].layer; this.layer ++) {
