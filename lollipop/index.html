@@ -51,7 +51,7 @@
 
 <div id = "sidebar" style = "float:left;">
   <h3>Number of axes</h3>
-  <div id="order" style = "margin-left:10px;width:250px;line-height:27px;">
+  <div onselectstart="return false;" id="order" style = "margin-left:10px;width:250px;line-height:27px;">
     <input type="radio" name="order" value=1 onclick = "onRadioButton();"> 1: Just a coin <br>
     <input type="radio" name="order" value=2 onclick = "onRadioButton();"> 2: Monkey <br>
     <input type="radio" name="order" value=3 onclick = "onRadioButton();" checked> 3: Baby <br>
@@ -62,7 +62,7 @@
     <input type="radio" name="order" value=8 onclick = "onRadioButton();"> 8: Octometrist's Revenge
   </div>
 
-  <div id="control" style="margin:10px;">
+  <div onselectstart="return false;" id="control" style="margin:10px;">
     <button type="button" onclick = "puzzle.resetState(); puzzle.draw();">Reset</button> 
     <button type="button" onclick = "puzzle.scramble();">Scramble</button>
     <button type="button" onclick = "textInput.undo();">Undo</button>
@@ -75,7 +75,7 @@
     <button type="button" onclick = "textInput.execute();" style="margin:10px;margin-left:75px; width: 100px">Execute</button>
     <br>
     <!-- <h3>History</h3> -->
-    <textarea readonly onselectstart ="return false;"  id="historyBox" rows="3" cols="30" style="resize:none;" placeholder = "History of twists"></textarea>
+    <textarea readonly id="historyBox" rows="3" cols="30" style="resize:none;" placeholder = "History of twists"></textarea>
   </div>
   <div id = "highlightBy" style = "line-height:27px;">
     Highlighting pieces to be flipped by
