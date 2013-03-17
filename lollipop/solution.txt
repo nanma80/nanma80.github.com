@@ -357,45 +357,166 @@ Quaduple flip 1,3,5,7: 131313131313
 Ring-9 # 8  -- 3 grips with two grips between each. Two orbits, perm tied to type 3 and 6. Double flip in each orbit. (2^3)^2
 Double flip 1 and 3: 6464146461
 
+(Solve Ring-11 before solving Ring-10)
+Ring-11 # 10 -- 3 grips (chiral pieces with 2-wide gap). 16 pieces in two orbits. Even perm in each orbit. No flip (Factorial(8)/2)^2
+
+1 left -> 1 right -> 3 down
+
+6565156561
+
+inverse: 1 right -> 1 left -> 3 down
+
+1656515656
+
+1 left -> 1 right -> 7 down
+
+1454515454
+
+inverse: 1 right -> 1 left -> 7 down
+
+4545154541
+
+(Solve Ring-11 before solving Ring-10)
 Ring-10 # 9  -- 3 grips (chiral pieces with 1-wide gap). 16 pieces in two orbits. Even perm in each orbit. No flip (Factorial(8)/2)^2
 
-    original:
+1 left -> 1 right -> 3 down
 
-    141614161416141614161416141614161416141614161416
-    1
-    614161416141614161416141614161416141614161416141
-    1
+RRR8 236874 236874 236874 236874 8LLL
 
-    mirror:
+inverse: 1 right -> 1 left -> 3 down
 
-    161416141614161416141614161416141614161416141614
-    1
-    416141614161416141614161416141614161416141614161
-    1
+RRR8 478632 478632 478632 478632 8LLL
 
-    614161416141614161416141614161416141614161416141
-    416141614161416141614161416141614161416141614161
+1 left -> 1 right -> 7 down
 
-1 right -> 1 left -> 7 down
+LLL2 632478 632478 632478 632478 2RRR
 
-RRR141614161416141614161416141614161416141614161416161416141614161416141614161416141614161416141614LLL
+inverse: 1 right -> 1 left -> 7 down
+
+LLL2 874236 874236 874236 874236 2RRR
+
+
+Ring-15 # 14 -- 4 grips split into 2 groups separated by a 2-wide gap. Self-anti. Even perm. double flip: remote flip, flipping with antipode. (Factorial(4)/2 * 2^3)
+Algorithms affecting Rings 12 and 14
+
+3-cycle: (45 -> 34 -> 23)
+6565156561 8 1656515656 8
+
+Rotate by 90 degree: (two two-swaps)
+
+3232787823238787
+
+double flip: (12~56 and 23~67)
+
+1 3232787823238787 L 3232787823238787 R 1
+
+
+
+Ring-12 # 11 -- 4 grips adjacent. Even perm, no flip. (Factorial(8)/2)
+
+(34->23->12 left side going up)
+
+8657
+6 121212121212
+6 212121212121
+7568
+
+reverse: (going down)
+
+8657
+121212121212 6
+212121212121 6
+7568
+
+(Solve Ring-14 before solving Ring-13)
+Ring-14 # 13 -- 4 grips split into 2 groups seperated by a 1-wide gap. Two orbits. In each orbit, even perm, double flip. (Factorial(4)/2 * 2^3)^2
+Algorithms affecting Ring-13
+
+3-cycle: 3->1->7
+
+2828 5 8282 5 2828 5 8282 5
+
+inverse:
+
+5 2828 5 8282 5 2828 5 8282
+
+double flip: (1 and 3)
+
+7424272424 7424272424 6
+2828582825 2828582825 6
+
+(Solve Ring-14 before solving Ring-13)
+Ring-13 # 12 -- 4 grips in one 1-gap two 1-gap one. Self-anti. Even perm. no flip. (Factorial(8)/2)
+
+(34->23->12 left side going up)
+
+LLL
+5 141414141414
+5 414141414141
+RRR
+
+reverse: (going down)
+
+LLL
+141414141414 5
+414141414141 5
+RRR
+
+Ring-16 # 15 -- 4 grips, three adjacent on top, loner on bottom. Two orbits, perm tied to type 3. In each orbit: no more perm, no flip (orientation tied to center bars?). REDUNDANT
+Ring-17 # 16 -- 4 grips, three, 1-gap, one. Two orbits. Even perm in each. No flip. (Factorial(8)/2)^2
+
+3-cycle: (affecting Rings 17 and 18)
+
+465465465465465465465465465465465465 1
+465465465465465465465465465465465465 1
+3
+1 465465465465465465465465465465465465
+1 465465465465465465465465465465465465
+3
+
+Better setup:
+
+1 left -> 1 right -> 3 down
+
+1RRR 4 3 465465465465465465465465465465465465 1 465465465465465465465465465465465465 1 3 1 4654654654654654654654654654654654651465465465465465465465465465465465465 4 LLL 1
 
 1 right -> 1 left -> 3 down
 
-LLL614161416141614161416141614161416141614161416141416141614161416141614161416141614161416141614161RRR
+1 RRR 65465465465465465465465465465465465 1 465465465465465465465465465465465465 1 3 1 465465465465465465465465465465465465 1 465465465465465465465465465465465465 3 4 LLL 1
+
+1 left -> 1 right -> 7 down
+
+RRR
+65465465465465465465465465465465465 1 465465465465465465465465465465465465 1 3 1 465465465465465465465465465465465465 1 465465465465465465465465465465465465 3 4
+LLL
+
+inverse: 1 right->1 left -> 7 down
+
+RRR 4 3 465465465465465465465465465465465465 1 465465465465465465465465465465465465 1 3 1 4654654654654654654654654654654654651465465465465465465465465465465465465 4 LLL
 
 
-
-
-Ring-11 # 10 -- 3 grips (chiral pieces with 2-wide gap). 16 pieces in two orbits. Even perm in each orbit. No flip (Factorial(8)/2)^2
-Ring-12 # 11 -- 4 grips adjacent. Even perm, no flip. (Factorial(8)/2)
-Ring-13 # 12 -- 4 grips in one 1-gap two 1-gap one. Self-anti. Even perm. no flip. (Factorial(8)/2)
-Ring-14 # 13 -- 4 grips split into 2 groups seperated by a 1-wide gap. Two orbits. In each orbit, even perm, double flip. (Factorial(4)/2 * 2^3)^2
-Ring-15 # 14 -- 4 grips split into 2 groups separated by a 2-wide gap. Self-anti. Even perm. double flip: remote flip, flipping with antipode. (Factorial(4)/2 * 2^3)
-Ring-16 # 15 -- 4 grips, three adjacent on top, loner on bottom. Two orbits, perm tied to type 3. In each orbit: no more perm, no flip (orientation tied to center bars?). REDUNDANT
-Ring-17 # 16 -- 4 grips, three, 1-gap, one. Two orbits. Even perm in each. No flip. (Factorial(8)/2)^2
 Ring-18 # 17 -- 4 grips, two, 1-gap, one, 1-gap, one. Two orbits. Even perm in each. No flip. (Factorial(8)/2)^2
+
+1 left -> 1 right -> 3 down
+
+RRRR84564564564564564564564564564564564565456456456456456456456456456456456456534564564564564564564564564564564564565456456456456456456456456456456456456538LLLL
+
+1 left -> 1 right -> 3 down
+
+1RRRR84564564564564564564564564564564564565456456456456456456456456456456456456534564564564564564564564564564564564565456456456456456456456456456456456456538LLLL1
+
+
+1 left -> 1 right -> 7 down
+
+1RRRR24564564564564564564564564564564564565456456456456456456456456456456456456574564564564564564564564564564564564565456456456456456456456456456456456456572LLLL1
+
+
+inverse: 1 right->1 left -> 7 down
+
+RRRR24564564564564564564564564564564564565456456456456456456456456456456456456574564564564564564564564564564564564565456456456456456456456456456456456456572LLLL
+
 Ring-19 # 18 -- 4 grips, windmill. [One, one gap] * 4. Self-anti. REDUNDANT
+
 Ring-20 # 19 -- 5 grips, anti-3 grips (chiral pieces with 2-wide gap). anti type 10. 16 pieces in two orbits.  Even perm in each orbit. No flip (Factorial(8)/2)^2
 Ring-21 # 20 -- 5-grips, anti-3 grips (chiral pieces with 1-wide gap). anti type 9. 16 pieces in two orbits.  Even perm in each orbit. No flip (Factorial(8)/2)^2
 Ring-22 # 21 -- 5-grips, anti-3 grips with two grips between each. anti type 8. Two orbits. Perm tied to type 13. double flip in each orbit. (2^3)^2
@@ -419,7 +540,112 @@ Ring-30 # 29 anti core. Only two rotational states, given that type 1 pieces are
 
 
 
+###############
+backup algorithms for 8-axis
+
+465465
+465465
+465465
+465465
+465465
+465465
+
+-----------
+154156
+154156
+154156
+154156
+154156
+154156
+
+----------
+
+141416161414161614141616141416161414161614141616
+
+----------
+longer algorithms for ring 10:
+
+1 left -> 1 right -> 7 down
+
+LLL2 632478 632478 632478 632478 2RRR
+
+inverse:
+
+LLL2 874236 874236 874236 874236 2RRR
+
+1 left -> 1 right -> 3 down
+
+RRR8 236874 236874 236874 236874 8LLL
+
+inverse: 1 right -> 1 left -> 3 down
+
+RRR8 478632 478632 478632 478632 8LLL
+
+or:
+
+R 324786 324786 324786 324786 L
+
+-------------
+
+141414141414141414141414
+
+-----------
+(34->23->12 left side going up), for ring 12
+RRRR
+4
+1 478632 478632 478632 478632
+1 236874 236874 236874 236874
+4
+1 478632 478632 478632 478632
+1 236874 236874 236874 236874
+LLLL
+
+reverse: (going down)
+
+RRRR
+478632 478632 478632 478632 1
+236874 236874 236874 236874 1
+4
+478632 478632 478632 478632 1
+236874 236874 236874 236874 1
+4
+LLLL
+--------
+Algo affecting both Ring 11 and 10
+effect to ring 10:
+
+1 left -> 1 right -> 3 down
+
+4545154541
+
+inverse: 1 right -> 1 left -> 3 down
+
+1454515454
+
+1 left -> 1 right -> 7 down
+
+1656515656
+
+inverse: 1 right -> 1 left -> 7 down
+
+6565156561
+
+-----------
+algo affecting Ring 11
+
+1 left -> 1 right -> 3 down
+
+LLL2 632478 632478 632478 632478 2RRR 65651 56561
+
+1 right -> 1 left -> 3 down
+
+1656515656 LLL28742368742368742368742362RRR
 
 
+1 left -> 1 right -> 7 down
 
+RRR82368742368742368742368748LLL 1454515454
 
+1 right -> 1 left -> 7 down
+
+4545154541 RRR8 478632 478632 478632 478632 8LLL
