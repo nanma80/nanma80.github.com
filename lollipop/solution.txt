@@ -84,26 +84,32 @@ anti-center-bars are solved automatically.
 
 ========================================
 Lollipop 7-axis:
-0. Ring-1, Layer 0 never changes.
-1. Ring-2, Solve layer 1 [1] center, trivial.
-2. Ring-3, Solve layer 2 [1, 2] corner. 
+Ring-1: Layer 0 never changes.
+
+Ring-2: Solve layer 1 [1] center, trivial.
+
+Ring-3: Solve layer 2 [1, 2] corner. 
   Permutation 1212
   Double flip (12, and 71): 212127654323245672
-3. Ring-4 and 5, Permute Layer 3 and 4. Permutation core: 2727
+
+Ring-4 and 5: Permute Layer 3 and 4. Permutation core: 2727
    With better setup: top three (7,1,2) moving left 75313157
    top three moving right (inverse of previous). 75131357
    mirror: 24616142
-4. Ring-4, Double flip layer 3: (1 and 2)
+
+Ring-4: Double flip layer 3: (1 and 2)
    2461614275313157
-5. Ring-5, Double flip Layer 4: (1 and 2)
+
+Ring-5: Double flip Layer 4: (1 and 2)
    R64272717272146L
-6. Ring-6, Layer 5: 
+
+Ring-6: Layer 5: 
    Permutation: 
       bottom three (34,45,56) to the left 27363672
       bottom three (34,45,56) to the right 27636372
    Orientation: double flip (12 and 71) LL4273636724L27636372RRR
 
-7. Ring-7, Layer 6: 14 chiral pieces
+Ring-7: Layer 6: 14 chiral pieces
    3 cycle: (1 left -> 1 right -> target)
 
    3 up (26 moves)
@@ -145,8 +151,51 @@ Lollipop 7-axis:
 Ring-11, Layer 10: permutation only
 Algo affecting Ring-8
 
+
+
+4 right -> 5 right -> 2 up:
+
+RRR1
+171717171717 4 7171717171714 3
+171717171717 4 7171717171714 3
+1LLL
+
+4 right -> 5 right -> 3 up:
+
+LLL
+3 171717171717 4 7171717171714 3
+171717171717 4 7171717171714 
+RRR
+
+4 right -> 5 right -> 6 up: (54 moves)
+
+RRR
 12121212121252121212121215 6
 12121212121252121212121215 6
+LLL
+
+4 right -> 5 right -> 7 up:
+
+LLL 16
+12121212121252121212121215 6
+12121212121252121212121215 1 RRR
+
+4 right -> 5 right -> 1 left:
+
+LL71
+12121212121252121212121215 6
+12121212121252121212121215 6 17RR
+
+
+core:
+
+12121212121252121212121215 6
+12121212121252121212121215 6
+
+mirror:
+
+171717171717 4 7171717171714 3
+171717171717 4 7171717171714 3
 
 
 8. Ring-8, Layer 7: 
