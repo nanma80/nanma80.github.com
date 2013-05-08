@@ -32,6 +32,7 @@ In principle, once we know the coordinates of one cell, we can use a Lorentz tra
   <h2> {5,3,4} </h2>
   R = sqrt(1/phi), where phi is the golden ratio. The vertices of a vertex-first model are as follows. Each nonzero number in the last three coordinates may have a plus or minus sign in front of it. I removed all the signs just for convenience.
   <ul>
+    <li>Cells closest to the center:</li>
     <li>(sqrt(1/phi); 0,0,0). The centered vertex</li>
     <li>(sqrt(phi); 1, 0, 0)^S. The closest vertices to the center. Forming an orthogonal cross.</li>
     <li>(sqrt(phi^3); phi, 1, 0)^A</li>
@@ -39,6 +40,7 @@ In principle, once we know the coordinates of one cell, we can use a Lorentz tra
     <li>(sqrt(4 * phi^3); phi, phi^2, phi^2)^S</li>
     <li>(sqrt(5 * phi^3); phi^2, phi^2, phi^2)</li>
 
+    <li>Second layer cells along the axis</li>
     <li>(sqrt(phi^5); 2 phi, 0, 0)^S</li>
     <li>(sqrt(phi^7); 2 phi^2, 1, 0)^A </li>
     <li>(sqrt(5 * phi^3); phi^3, phi, 0)^A</li>
@@ -47,12 +49,18 @@ In principle, once we know the coordinates of one cell, we can use a Lorentz tra
     <li>(sqrt(phi^7) + sqrt(phi^3); phi^4, phi^2, 1)^A</li>
     <li>(3 sqrt(phi^5); 4 phi + 3, phi^2, phi)^A </li>
 
+
+    <li>Second layer cells off the axis (along x=y, z=0 direction)</li>
     <li>(sqrt(phi^7); phi^3, 2 phi, 0)^A </li>
     <li>(sqrt(phi^9); phi^4, 2 phi^2, 1)^A </li>
     <li>(sqrt(phi^7) + sqrt(phi^3); 0, 2 phi^2, 2 phi^2)^S </li>
+    <li>(sqrt(5 * phi^5); phi^3 + phi, phi^3, phi)^A</li>
 
 
-    <li>(sqrt(phi^9) + qrt(phi); phi^4 + phi, 2 phi^2, 0)^A </li>
+    <li>Third layer cells which are not adjacent to first layer cells</li>
+    <li>(sqrt(phi^5) + 3 *sqrt(phi^3); 2 phi^3, phi^3, 0)^A </li>
+    <li>(3*sqrt(phi^7) - sqrt(phi^5); phi^5 + phi, phi, 0)^A </li>
+    <li>(sqrt(phi^9) + sqrt(phi); phi^4 + phi, 2 phi^2, 0)^A </li>
     <li>(sqrt(phi^9) +2 sqrt(phi^5); phi^4 + phi^2, 1, 0)^A </li>
     <li>(sqrt(phi^7) + 2 * sqrt(phi^3); 4 phi + 3, 0, 0)^A</li>
   </ul>
