@@ -4,94 +4,87 @@
 <title>Hyperbolic Honeycombs</title>
 <style type = "text/css">
   img {
-    padding: 5px;
-  } 
-  table {
-    padding: 5px;
-    width: 300px;
-    height: 400px;
-    float: left;
-  }
-  img {
-    max-width: 290px;
-    max-height: 290px;
     vertical-align: middle;
   }
+  table {
+    border: 1px solid gray;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  } 
+  td {
+    border: 1px solid gray;
+    padding-right: 10px;
+    padding-left: 10px;
+  } 
 </style>
-<link rel="stylesheet" type="text/css" href="../mathquill/mathquill.css">
+
+<!-- <link rel="stylesheet" type="text/css" href="../mathquill/mathquill.css">
 <script src="../jquery-1.9.1.min.js"></script>
 <script src="../mathquill/mathquill.min.js"></script>
+ -->
+<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+<script type="text/javascript"> LatexIT.add('p',true); LatexIT.add('td',true); </script>
 
 </head>
 <body style="font-family:Arial, Helvetica, sans-serif;line-height:25px">
 <h1> Hyperbolic Honeycombs </h1>
 <p>  Here are the coordinates of some vertices of some hyperbolic honeycombs under a hyperboloid model. The coordinates of each point is in the form of 
-<span class="mathquill-embedded-latex">(x_0; x_1, x_2, x_3)</span>, which satisfies x_0^2 - x_1^2 - x_2^2 - x_3^2 = R^2. The constant R is different for different honeycombs. </p>
+$(x_0; x_1, x_2, x_3)$, which satisfies $x_0^2 - x_1^2 - x_2^2 - x_3^2 = R^2$. The constant $R$ is different for different honeycombs. </p>
 
-<p> Notation: When a vertex is written as (x_0; x_1, x_2, x_3)^S, it represents three vertices (x_0; x_1, x_2, x_3), (x_0; x_2 x_3, x_1), and (x_0; x_3, x_1, x_2) (even permutations of the last three coordinates). When a vertex is written as (x_0; x_1, x_2, x_3)^A, it represents six vertices (x_0; x_1, x_2, x_3), (x_0; x_2, x_3, x_1), (x_0; x_3, x_1, x_2), (x_0; x_3, x_2, x_1), (x_0; x_1, x_3, x_2), (x_0; x_2, x_1, x_3) (all permutations of the last three coordinates). </p>
+<p> Notation: When a vertex is written as $(x_0; x_1, x_2, x_3)^S$, it represents three vertices $(x_0; x_1, x_2, x_3)$, $(x_0; x_2 x_3, x_1)$, and $(x_0; x_3, x_1, x_2)$ (even permutations of the last three coordinates). When a vertex is written as $(x_0; x_1, x_2, x_3)^A$, it represents six vertices $(x_0; x_1, x_2, x_3)$, $(x_0; x_2, x_3, x_1)$, $(x_0; x_3, x_1, x_2)$, $(x_0; x_3, x_2, x_1)$, $(x_0; x_1, x_3, x_2)$, $(x_0; x_2, x_1, x_3)$ (all permutations of the last three coordinates). </p>
 
 In principle, once we know the coordinates of one cell, we can use a Lorentz transform to move the cell to another place to get the coordinates of more vertices. 
 
   <h2> {5,3,4} </h2>
-  R = sqrt(1/phi), where phi is the golden ratio. The vertices of a vertex-first model are as follows. Each nonzero number in the last three coordinates may have a plus or minus sign in front of it. I removed all the signs just for convenience.
+  <p>$R = \phi^{-1/2}$, where $\phi$ is the golden ratio. The vertices of a vertex-first model are as follows. Each nonzero number in the last three coordinates may have $\pm$ sign in front of it. I removed all the signs just for convenience.</p>
 
-  This form includes the eight cells closest to the central vertex, and all those cells adjacent to the eight cells.
-  
-  <ul>
-    <li>  Cells closest to the center:
-      <ul>
-        <li>(sqrt(1/phi); 0,0,0)</li>
-        <li>(sqrt(phi); 1, 0, 0)^S</li>
-        <li>(sqrt(phi^3); phi, 1, 0)^A</li>
-        <li>(sqrt(phi^5); phi^2, phi, 1)^A</li>
-        <li>(2 sqrt(phi^3); phi, phi^2, phi^2)^S</li>
-        <li>(sqrt(5 * phi^3); phi^2, phi^2, phi^2)</li>
-      </ul>
-    </li>
+  <p>This form includes the eight cells closest to the central vertex, and all those cells adjacent to the eight cells.</p>
 
-    <li>Second layer cells along the axes
-      <ul>
-        <li>(sqrt(phi^5); 2 phi, 0, 0)^S</li>
-        <li>(sqrt(phi^7); 2 phi^2, 1, 0)^A </li>
-        <li>(sqrt(5 * phi^3); phi^3, phi, 0)^A</li>
-        <li>(sqrt(phi^9); 2 phi^3, phi, 1)^A</li>
-        <li>(2 sqrt(phi^5); phi^3 + phi, phi^2, phi)^A</li>
-        <li>(sqrt(phi^7) + sqrt(phi^3); phi^4, phi^2, 1)^A</li>
-        <li>(3 sqrt(phi^5); 4 phi + 3, phi^2, phi)^A </li>
-      </ul>
-    </li>
+  <table>
+    <tr><td>Hyperboloid model</td><td>Klein disk</td></tr>
+    <tr><td colspan = "2">Cells closest to the center</td></tr>
+    <tr><td>$(\phi^{-1/2}; 0,0,0)$</td><td></td></tr>
+    <tr><td>$(\phi^{1/2}; 1, 0, 0)^S$</td><td></td></tr>
+    <tr><td>$(\phi^{3/2}; \phi, 1, 0)^A$</td><td></td></tr>
+    <tr><td>$(\phi^{5/2}; \phi^2, \phi, 1)^A$</td><td></td></tr>
+    <tr><td>$(2 \phi^{3/2}; \phi^2, \phi^2, \phi)^S$</td><td></td></tr>
+    <tr><td>$(\sqrt{5} \phi^{3/2}; \phi^2, \phi^2, \phi^2)$</td><td></td></tr>
+    
+    <tr><td colspan = "2">Second layer cells along the axes</td></tr>
+    <tr><td>$(\phi^{5/2}; 2 \phi, 0, 0)^S$</td><td></td></tr>
+    <tr><td>$(\phi^{7/2}; 2 \phi^2, 1, 0)^A$</td><td></td></tr>
+    <tr><td>$(\sqrt{5} \phi^{3/2}; \phi^3, \phi, 0)^A$</td><td></td></tr>
+    <tr><td>$(\phi^{9/2}; 2 \phi^3, \phi, 1)^A$</td><td></td></tr>
+    <tr><td>$(2 \phi^{5/2}; \sqrt{5} \phi^2, \phi^2, \phi)^A$</td><td></td></tr>
+    <tr><td>$(\sqrt{5} \phi^{5/2} ; \phi^4, \phi^2, 1)^A$</td><td></td></tr>
+    <tr><td>$(3 \phi^{5/2}; \sqrt{5} \phi^3, \phi^2, \phi)^A$</td><td></td></tr>
+    
+    <tr><td colspan = "2">Second layer cells along x=y, z=0 direction</td></tr>
+    <tr><td>$(\phi^{7/2}; \phi^3, 2 \phi, 0)^A$</td><td></td></tr>
+    <tr><td>$(\phi^{9/2}; \phi^4, 2 \phi^2, 1)^A$</td><td></td></tr>
+    <tr><td>$(\sqrt{5} \phi^{5/2}; 2 \phi^2, 2 \phi^2,0)^S$</td><td></td></tr>
+    <tr><td>$(\sqrt{5} \phi^{5/2}; \sqrt{5} \phi^2, \phi^3, \phi)^A$</td><td></td></tr>
+    <tr><td>$(\phi^{11/2} - \phi^{1/2}; \sqrt{5} \phi^3, 2 \phi^3, \phi)^A$</td><td></td></tr>
+    <tr><td>$(\sqrt{5}\phi^{7/2}; 2 \phi^3, 2 \phi^3, 1)^A$</td><td></td></tr>
+    <tr><td>$(\phi^{9/2}; \sqrt{5} \phi^2, \sqrt{5} \phi^2, \phi^2)^S$</td><td></td></tr>
+    <tr><td>$(2 \phi^{7/2}; 3\phi^2, \phi^4, \phi^2)^A $</td><td></td></tr>
+    <tr><td>$(\phi^{11/2}; \phi^5 - 1, \sqrt{5}\phi^3, \phi^2)^A$</td><td></td></tr>
 
+    <tr><td colspan = "2">Second layer cells close to the x=y=z direction</td></tr>
+    <tr><td>$(\phi^{9/2}; \phi^4, \phi^3, 2 \phi)^A $</td><td></td></tr>
+    <tr><td>$(\phi^{11/2} - \phi^{1/2}; \sqrt{5}\phi^3, \phi^4, 2 \phi^2)^A$</td><td></td></tr>
+    <tr><td>$(\sqrt{5} \phi^7; \sqrt{5}\phi^3, 2 \phi^2, 2 \phi^2)^S$</td><td></td></tr>
+    <tr><td>$(3\phi^{5/2}; \phi^4, \phi^3, \sqrt{5} \phi^2)^A$</td><td></td></tr>
+    <tr><td>$(\phi^{13/2} - 2 \phi^{3/2}; 2 \phi^4, \sqrt{5} \phi^3, 2 \phi^3)^A $</td><td></td></tr>
+    <tr><td>$(\phi^{11/2} + 2 \phi^{3/2}; 2 \phi^4, 2\phi^3, 2\phi^3)^S$</td><td></td></tr>
+    <tr><td>$(2 \phi^{7/2}; \phi^4, \sqrt{5} \phi^2, \sqrt{5} \phi^2)^S$</td><td></td></tr>
+    <tr><td>$(\phi^{11/2}; \sqrt{5} \phi^3, 3\phi^2, \phi^4)^A $</td><td></td></tr>
+    <tr><td>$(\sqrt{5} \phi^{9/2}; 2 \phi^4, \phi^5 - 1, \sqrt{5}\phi^3)^A$</td><td></td></tr>
+  </table>
 
-    <li>    Second layer cells along x=y, z=0 direction
-      <ul>
-        <li>(sqrt(phi^7); phi^3, 2 phi, 0)^A </li>
-        <li>(sqrt(phi^9); phi^4, 2 phi^2, 1)^A </li>
-        <li>(sqrt(phi^7) + sqrt(phi^3); 0, 2 phi^2, 2 phi^2)^S </li>
-        <li>(sqrt(5 * phi^5); phi^3 + phi, phi^3, phi)^A</li>
-        <li>(sqrt(phi^11) - sqrt(phi); phi^5 - phi, 2 phi^3, phi)^A</li>
-        <li>(sqrt(phi^11) - sqrt(phi^3); 2 phi^3, 2 phi^3, 1)^A</li>
-        <li>(sqrt(phi^9); phi^3+phi, phi^3+phi, phi^2)^S </li>
-        <li>(2 * sqrt(phi^7); phi^4 + 1, phi^4, phi^2)^A </li>
-        <li>(sqrt(phi^11); phi^5 - 1, 4 phi +3, phi^2)^A </li>
-      </ul>
-    </li>
-
-
-    <li> Second layer cells close to the x=y=z direction
-      <ul>
-        <li>(sqrt(phi^9); phi^4, 2 phi, phi^3)^A </li>
-        <li>(sqrt(phi^11) - sqrt(phi); phi^4 + phi^2, phi^4, 2 phi^2)^A </li>
-        <li>(sqrt(phi^9) + sqrt(phi^5); phi^4 + phi^2, 2 phi^2, 2 phi^2)^S </li>
-        <li>(sqrt(phi^9) + sqrt(phi); phi^4, phi^3, phi^3 + phi)^A </li>
-        <li>(sqrt(phi^13) - 2 sqrt(phi^3); phi^5 + phi^2, phi^5 - phi, phi^4 + phi)^A </li>
-        <li>(sqrt(phi^11) + 2 sqrt(phi^3); phi^5 + phi^2, phi^4 + phi, phi^4 + phi)^S </li>
-        <li>(sqrt(phi^11) - sqrt(phi^5); phi^4, phi^3 + phi, phi^3 + phi)^S </li>
-        <li>(sqrt(phi^11); phi^4 + phi^2, phi^4 + 1, phi^4)^A </li>
-        <li>(sqrt(phi^11) + sqrt(phi^7); phi^5 + phi^2, phi^5 - 1, phi^4 + phi^2)^A </li>
-      </ul>
-    </li>
-
-<!--     Part of third layer cells which are not adjacent to first layer cells
+<!--   <ul>
+     Part of third layer cells which are not adjacent to first layer cells
     <li>(sqrt(phi^11) + sqrt(phi^3); 2 phi^4, 2 phi^3, 1)^A</li>
     <li>(sqrt(phi^11) + sqrt(phi); phi^5 + phi, 2 phi^3, phi)^A</li>
     <li>(sqrt(phi^5) + 3 *sqrt(phi^3); 2 phi^3, phi^3, 0)^A </li>
@@ -99,13 +92,12 @@ In principle, once we know the coordinates of one cell, we can use a Lorentz tra
     <li>(sqrt(phi^9) + sqrt(phi); phi^4 + phi, 2 phi^2, 0)^A </li>
     <li>(sqrt(phi^9) +2 sqrt(phi^5); phi^4 + phi^2, 1, 0)^A </li>
     <li>(sqrt(phi^7) + 2 * sqrt(phi^3); 4 phi + 3, 0, 0)^A</li>
- -->  
-  </ul>
+  </ul> -->
 
 <h1> References </h1>
 <ul>
-  <li>About hyperboloid model: http://en.wikipedia.org/wiki/Hyperboloid_model</li>
-  <li>About Lorentz transform: http://en.wikipedia.org/wiki/Orthochronous_Lorentz_group#Hyperbolic</li>
+  <li>About hyperboloid model: <a href="http://en.wikipedia.org/wiki/Hyperboloid_model">http://en.wikipedia.org/wiki/Hyperboloid_model</a></li>
+  <li>About Lorentz transform: <a href="http://en.wikipedia.org/wiki/Orthochronous_Lorentz_group#Hyperbolic">http://en.wikipedia.org/wiki/Orthochronous_Lorentz_group#Hyperbolic</a></li>
   <li>This paper demonstrates the general method and some vertices: C. W. L. Garner, Coordinates for Vertices of Regular Honeycombs in Hyperbolic Space, Proceedings of the Royal Society of London. Series A, Mathematical and Physical Sciences Vol. 293, No. 1432 (Jul. 5, 1966), pp. 94-107</li>
 </ul>
 </body>
