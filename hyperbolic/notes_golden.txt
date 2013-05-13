@@ -1,0 +1,31 @@
+Notes about the golden ratio field:
+
+a * phi + b, where a and b are rational numbers.
+
+1/(a * phi + b) = (a * phi - a - b)/(a^2 - a b - b^2)
+
+phi = (sqrt(5) + 1) / 2
+phi^2 = phi + 1
+phi^3 = 2 phi + 1
+phi^4 = 3 phi + 2
+phi^5 = 5 phi + 3
+phi^6 = 8 phi + 5
+phi^7 = 13 phi + 8
+...
+
+1/phi = phi - 1
+sqrt(5) = 2 phi - 1
+
+Golden ratio base:
+
+http://en.wikipedia.org/wiki/Golden_ratio_base
+
+2 = 10.01
+3 = 100.01
+4 = 101.01
+5 = 1000.1001
+6 = 1010.0001
+7 = 10000.0001
+
+sqrt(5) = 10.1
+2 * sqrt(5) = 1000.001
