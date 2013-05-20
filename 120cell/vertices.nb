@@ -1,0 +1,94 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[      2217,         85]
+NotebookOptionsPosition[      1893,         68]
+NotebookOutlinePosition[      2247,         84]
+CellTagsIndexPosition[      2204,         81]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[Phi]", "=", "GoldenRatio"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"v", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"2", 
+        SqrtBox["2"]}], ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"2", 
+         SqrtBox["2"]}], "-", 
+        FractionBox[
+         SuperscriptBox["\[Phi]", 
+          RowBox[{"-", "4"}]], 
+         SqrtBox["2"]]}], ",", 
+       FractionBox["1", 
+        RowBox[{
+         SqrtBox["2"], "\[Phi]"}]], ",", 
+       FractionBox["1", 
+        RowBox[{
+         SqrtBox["2"], "\[Phi]"}]], ",", 
+       FractionBox["1", 
+        RowBox[{
+         SqrtBox["2"], "\[Phi]"}]]}], "}"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Map", "[", 
+   RowBox[{"Norm", ",", "v"}], "]"}], "//", 
+  "N"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.578072629848897*^9, 3.578072733499881*^9}, {
+  3.57807276734142*^9, 3.578072786058872*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"2.8284271247461903`", ",", "2.8284271247461903`"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.578072678729334*^9, {3.578072713919183*^9, 3.578072734168242*^9}, {
+   3.578072773478136*^9, 3.5780727865359907`*^9}}]
+}, Open  ]]
+},
+WindowSize->{740, 756},
+WindowMargins->{{4, Automatic}, {Automatic, 4}},
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
+2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 1040, 35, 111, "Input"],
+Cell[1622, 59, 255, 6, 62, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
