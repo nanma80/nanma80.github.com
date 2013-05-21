@@ -1,0 +1,19 @@
+Hi Scott,
+
+Thanks again for organizing the party!
+
+In that party I raised the question about a 4D Zome. A good analogy of the 3D Zome model is to use a 120-cell shaped 4-ball as a node, allowing struts coming out from the directions of cell centers, face centers, edge centers or vertices. We asked the question: in order to build a 120-cell using this kind of balls, what type of struts do we need?
+
+I thought about this problem later. As opposed to 3D where we can only use blue struts (edge type) to build a dodecahedron, in 4D, we can use at least two types of struts: cell-centers or vertices.
+
+Specifically, if we use the coordinates here:
+
+http://en.wikipedia.org/wiki/120-cell#Cartesian_coordinates
+
+to describe the vertices of a ball, we can place a ball at (a, 0, 0, 0) for some large enough a, and put vertex-type struts in the four vertices holes facing (-phi^2, phi, phi, phi), (-phi^2, phi, -phi, -phi), (-phi^2, -phi, phi, -phi), and (-phi^2, -phi, -phi, phi). This way we can build a 120-cell using vertex (yellow?) struts.
+
+Alternatively, we can place a ball at (a, a, 0, 0) for some large enough a, and put cell-type struts in the four cell holes facing (1/phi, -1, phi, 0)/2, (1/phi, -1, -phi, 0)/2, (-1, 1/phi, 0, phi)/2, and (-1, 1/phi, 0, -phi)/2. This way we can build a 120-cell using cell struts (hyper red?).
+
+I checked the coordinates of edges and faces and struts from there seem not to be able to used to construct a 120-cell.
+
+Nan
