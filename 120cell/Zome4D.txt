@@ -17,3 +17,26 @@ Alternatively, we can place a ball at (a, a, 0, 0) for some large enough a, and 
 I checked the coordinates of edges and faces and struts from there seem not to be able to used to construct a 120-cell.
 
 Nan
+
+Similarly, we can use the same balls to make a 600-cell using two types of struts.
+
+We can place a ball at (a, 0, 0, 0) for some large enough a, and put cell-type struts in twelve holes facing (-1/phi, 1, phi, 0)/2, (-1/phi, 0, 1, phi)/2, and (-1/phi, phi, 0, 1)/2 with plus or minus signs in front of 1 and phi.
+
+We can place a ball at (a, a, 0, 0) for large enough a, and put vertex-type struts in twelve holes facing the following directions:
+(1, -sqrt(5), -1, 1)
+(1, -sqrt(5), 1, -1)
+(-sqrt(5), 1, -1, 1)
+(-sqrt(5), 1, 1, -1)
+(-phi, 1/phi^2, -phi, -phi)
+(-phi, 1/phi^2, phi, phi)
+(1/phi^2, -phi, -phi, -phi)
+(1/phi^2, -phi, phi, phi)
+(-1/phi, -1/phi, -1/phi, phi^2)
+(-1/phi, -1/phi, 1/phi, -phi^2)
+(-1/phi, -1/phi, -phi^2, 1/phi)
+(-1/phi, -1/phi, phi^2, -1/phi)
+
+In conclusion if we have 4D Zome we can use two types of struts to make the 120-cell and the 600-cell.
+
+Nan
+
