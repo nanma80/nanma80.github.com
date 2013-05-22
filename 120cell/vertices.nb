@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     19541,        554]
-NotebookOptionsPosition[     18998,        530]
-NotebookOutlinePosition[     19341,        545]
-CellTagsIndexPosition[     19298,        542]
+NotebookDataLength[     21961,        617]
+NotebookOptionsPosition[     21174,        586]
+NotebookOutlinePosition[     21605,        603]
+CellTagsIndexPosition[     21562,        600]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -420,8 +420,6 @@ Cell[BoxData[
    3.414018278609375*^9, 3.414018278984375*^9}, {3.5781039605720153`*^9, 
    3.57810398740355*^9}, {3.578104408775651*^9, 3.578104409012665*^9}}],
 
-Cell[CellGroupData[{
-
 Cell[BoxData[{
  RowBox[{
   RowBox[{"numericalVertices", "=", 
@@ -468,23 +466,15 @@ Cell[BoxData[{
   ";"}]}], "Input",
  CellChangeTimes->{{3.5781053691715827`*^9, 3.5781055140228677`*^9}}],
 
-Cell[BoxData["1200"], "Output",
- CellChangeTimes->{3.5781055095366116`*^9}]
-}, Open  ]],
-
 Cell[CellGroupData[{
 
 Cell[BoxData[{
  RowBox[{
   RowBox[{"nodes", "=", 
-   RowBox[{"N", "[", "edgecenters", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"N", "[", "cells", "]"}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"targetInnerProduct", "=", 
-   RowBox[{
-    FractionBox["1", "4"], " ", 
-    RowBox[{"(", 
-     RowBox[{"1", "-", 
-      SqrtBox["5"]}], ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+   FractionBox["1", "2"]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"\[Delta]", "=", "0.001"}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
@@ -519,18 +509,86 @@ Cell[BoxData[{
  CellChangeTimes->{{3.578104946388401*^9, 3.578105112395896*^9}, {
   3.578105262458479*^9, 3.578105264374589*^9}, {3.5781052959833965`*^9, 
   3.5781052992645845`*^9}, {3.578105331162409*^9, 3.5781053467342997`*^9}, {
-  3.5781055232893977`*^9, 3.578105524473466*^9}}],
+  3.5781055232893977`*^9, 3.578105524473466*^9}, {3.57817278405184*^9, 
+  3.5781728565700607`*^9}}],
 
-Cell[BoxData["0"], "Output",
+Cell[BoxData["1200"], "Output",
  CellChangeTimes->{
   3.5781050995881634`*^9, 3.578105265026626*^9, 3.5781053000586295`*^9, {
-   3.578105335243642*^9, 3.5781053499174814`*^9}, 3.5781055329869523`*^9}]
+   3.578105335243642*^9, 3.5781053499174814`*^9}, 3.5781055329869523`*^9, 
+   3.57817281331186*^9, {3.578172850281146*^9, 3.578172857511776*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"nodes", "=", 
+   RowBox[{"N", "[", "vertices", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"targetInnerProduct", "=", 
+   FractionBox["1", 
+    RowBox[{"2", "\[Phi]"}]]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Delta]", "=", "0.001"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"matches", "=", 
+   RowBox[{"Select", "[", 
+    RowBox[{
+     RowBox[{"Range", "[", 
+      RowBox[{"2", ",", 
+       RowBox[{"Length", "[", "nodes", "]"}]}], "]"}], ",", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"targetInnerProduct", "-", "\[Delta]"}], "\[LessEqual]", 
+       RowBox[{
+        RowBox[{"nodes", "[", 
+         RowBox[{"[", "#", "]"}], "]"}], ".", 
+        RowBox[{"cells", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}], "\[LessEqual]", 
+       RowBox[{"targetInnerProduct", "+", "\[Delta]"}]}], "&"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Length", "[", "matches", "]"}]}], "Input",
+ CellChangeTimes->{{3.578172867228724*^9, 3.578172946217613*^9}, {
+   3.578172988368474*^9, 3.578172988541843*^9}, {3.578173899035164*^9, 
+   3.578173913800727*^9}, 3.5781746989777718`*^9, {3.578174765096068*^9, 
+   3.578174818899485*^9}, {3.578174851629733*^9, 3.578174863121159*^9}, {
+   3.578174902909231*^9, 3.578174904112213*^9}, {3.578175055099476*^9, 
+   3.5781750869910107`*^9}}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{{3.578172928392529*^9, 3.5781729493478603`*^9}, {
+   3.578174794081615*^9, 3.578174819254869*^9}, {3.57817485247499*^9, 
+   3.5781748639081383`*^9}, 3.578174904633497*^9, 3.5781749779579477`*^9, {
+   3.57817505930299*^9, 3.578175087990411*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"nodes", "[", 
+    RowBox[{"[", 
+     RowBox[{"matches", "[", 
+      RowBox[{"[", "i", "]"}], "]"}], "]"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", "1", ",", 
+     RowBox[{"Length", "[", "matches", "]"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.578175000013286*^9, 3.578175044716937*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output",
+ CellChangeTimes->{{3.578175001185479*^9, 3.578175006379404*^9}, {
+  3.57817504573523*^9, 3.57817506176902*^9}}]
 }, Open  ]]
 }, Open  ]]
 },
 WindowSize->{740, 756},
 WindowMargins->{{4, Automatic}, {Automatic, 4}},
-FrontEndVersion->"7.0 for Microsoft Windows (64-bit) (February 18, 2009)",
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> True}},
+FrontEndVersion->"9.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (January 25, \
+2013)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -545,15 +603,20 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[579, 22, 113, 2, 83, "Title"],
-Cell[695, 26, 14766, 394, 1208, "Input"],
+Cell[579, 22, 113, 2, 77, "Title"],
+Cell[695, 26, 14766, 394, 1038, "Input"],
+Cell[15464, 422, 1482, 44, 186, "Input"],
 Cell[CellGroupData[{
-Cell[15486, 424, 1482, 44, 210, "Input"],
-Cell[16971, 470, 75, 1, 30, "Output"]
+Cell[16971, 470, 1639, 42, 174, "Input"],
+Cell[18613, 514, 271, 4, 28, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[17083, 476, 1687, 45, 208, "Input"],
-Cell[18773, 523, 197, 3, 30, "Output"]
+Cell[18921, 523, 1362, 33, 130, "Input"],
+Cell[20286, 558, 292, 4, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20615, 567, 370, 10, 29, "Input"],
+Cell[20988, 579, 158, 3, 28, "Output"]
 }, Open  ]]
 }, Open  ]]
 }
