@@ -40,3 +40,37 @@ In conclusion if we have 4D Zome we can use two types of struts to make the 120-
 
 Nan
 
+Scott,
+
+Let me explain it more. When we use the 4D Zome balls to construct an edge-frame of a 120-cell, we are talking about two levels of 120-cell. Each 4D ball is a small 120-cell, and the whole 120-cell is a larger one. The orientations of the two levels may or may not match.
+
+We can find the vertex of a 120-cell in the wikipedia page. 
+
+http://en.wikipedia.org/wiki/120-cell#Cartesian_coordinates
+
+Let's call the orientation of 120-cell Orientation-1. This is only one out of infinitely many orientations.
+
+Let's construct another orientation by applying the mapping
+(x1, x2, x3, x4) -> ((x1+x2)/4, (x1-x2)/4, (x3+x4)/4, (x3-x4)/4)
+This is a rotation followed by normalization (so that the norm is changed from 2*sqrt(2) to 1). After this transform, the vertices are located at:
+
+(1, 0, 0, 0), 
+
+Let's assume that the vertex coordinates of the small balls follow those values, except that we move each ball to a different position. 
+
+
+
+
+Let's find the centers of each ball by placing a ball at (a,0,0,0). It turns out we can't just scale the vertex coordinates in the wiki page to get a vertex at (a,0,0,0). 
+
+
+
+When the vertices are like that, the coordinates of the cell centers are all permutations of (1/2, 1/2, 1/2, 1/2), (1,0,0,0), and even permutations of (phi, 1, 0, 1/phi) where each number can be positive or negative.
+
+
+
+
+
+
+
+
