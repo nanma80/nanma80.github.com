@@ -18,11 +18,67 @@ I checked the coordinates of edges and faces and struts from there seem not to b
 
 Nan
 
-Similarly, we can use the same balls to make a 600-cell using two types of struts.
 
-We can place a ball at (a, 0, 0, 0) for some large enough a, and put cell-type struts in twelve holes facing (-1/phi, 1, phi, 0)/2, (-1/phi, 0, 1, phi)/2, and (-1/phi, phi, 0, 1)/2 with plus or minus signs in front of 1 and phi.
 
-We can place a ball at (a, a, 0, 0) for large enough a, and put vertex-type struts in twelve holes facing the following directions:
+Hi Scott,
+
+Let me explain it more. 
+
+When we use the 4D Zome balls to construct an edge-frame of a 120-cell, we talk about two levels of 120-cell. Each 4D ball is a small 120-cell; and the whole 120-cell is a larger one. The orientations of the two levels may or may not match.
+
+--- Two Orientation ---
+We can find the vertex of a 120-cell in the wikipedia page:
+
+http://en.wikipedia.org/wiki/120-cell#Cartesian_coordinates
+
+Note that the norms of the vertices are not 1, but 2*sqrt(2). But let's not worry about it. Let's call the orientation of 120-cell "Orientation-1". This is only one out of infinitely many possible orientations.
+
+Let's construct another orientation by applying a 4D rotation:
+(x1, x2, x3, x4) -> ((x1+x2)/sqrt(2), (x1-x2)/sqrt(2), (x3+x4)/sqrt(2), (x3-x4)/sqrt(2))
+After the rotation, (2,2,0,0) becomes (2*sqrt(2), 0, 0, 0), and its four neighbors become
+((3*phi-1)/sqrt(2), 1/(sqrt(2)*phi), 1/(sqrt(2)*phi), 1/(sqrt(2)*phi)),
+((3*phi-1)/sqrt(2), -1/(sqrt(2)*phi), -1/(sqrt(2)*phi), 1/(sqrt(2)*phi)),
+((3*phi-1)/sqrt(2), -1/(sqrt(2)*phi), 1/(sqrt(2)*phi), -1/(sqrt(2)*phi)),
+((3*phi-1)/sqrt(2), 1/(sqrt(2)*phi), -1/(sqrt(2)*phi), -1/(sqrt(2)*phi)).
+
+If you like, you may work out the other coordinates. But I'll stop here. Let's call this orientation of 120-cell "Orientation-2".
+
+--- 4D Zome model ---
+In our 4D Zome model, let's orient the large 120-cell at Orientation-2, and orient each ball as Orientation-1.
+
+According to Orientation-2, there will be a ball as a vertex of the large 120-cell centered at (2*sqrt(2), 0, 0, 0) * a, and its neighbors are at
+((3*phi-1)/sqrt(2), 1/(sqrt(2)*phi), 1/(sqrt(2)*phi), 1/(sqrt(2)*phi)) * a,
+((3*phi-1)/sqrt(2), -1/(sqrt(2)*phi), -1/(sqrt(2)*phi), 1/(sqrt(2)*phi)) * a,
+((3*phi-1)/sqrt(2), -1/(sqrt(2)*phi), 1/(sqrt(2)*phi), -1/(sqrt(2)*phi)) * a,
+((3*phi-1)/sqrt(2), 1/(sqrt(2)*phi), -1/(sqrt(2)*phi), -1/(sqrt(2)*phi)) * a.
+The constant a is some large number. The global 120-cell is a times larger than each Zome ball.
+
+With respect to the ball (2*sqrt(2), 0, 0, 0) * a, the relative locations of its neighbors can be computed by a simple subtraction:
+(1/(sqrt(2)*phi^4), 1/(sqrt(2)*phi), 1/(sqrt(2)*phi), 1/(sqrt(2)*phi)) * a
+(1/(sqrt(2)*phi^4), -1/(sqrt(2)*phi), -1/(sqrt(2)*phi), 1/(sqrt(2)*phi)) * a,
+(1/(sqrt(2)*phi^4), -1/(sqrt(2)*phi), 1/(sqrt(2)*phi), -1/(sqrt(2)*phi)) * a,
+(1/(sqrt(2)*phi^4), 1/(sqrt(2)*phi), -1/(sqrt(2)*phi), -1/(sqrt(2)*phi)) * a.
+
+If we normalize the relative locations by multiplying everything above by sqrt(2)*phi^2/a, we get the direction of the neighbors relative to that vertex as
+(1/phi^2, phi, phi, phi),
+(1/phi^2, -phi, -phi, phi),
+(1/phi^2, -phi, phi, -phi),
+(1/phi^2, phi, -phi, -phi).
+
+Please checkout the coordinates on wikipedia, these directions happen to be four vertices in Orientation-1. And we are orienting each Zome ball as Orientation-1. Therefore we can use yellow struts on these directions to connect the ball at (2*sqrt(2), 0, 0, 0) * a to its neighbors. And by symmetry, the whole 120-cell can be constructed in this way. This is why we can use struts from vertices to construct a 120-cell.
+--------------------
+
+In the second case, we orient both the large 120-cell and each Zome ball as Orientation-1. The argument is similar, the relative direction from (2,2,0,0) * a to its neighbors are (1/phi, -1, phi, 0)/2, (1/phi, -1, -phi, 0)/2, (-1, 1/phi, 0, phi)/2, and (-1, 1/phi, 0, -phi)/2. And these four directions happen to be four cell centers in Orientation-1. And that's why we can use cell-type struts to make a 120-cell.
+
+--------------------
+
+After I sent the email about 120-cell, I then considered using the same balls to construct the 600-cell. The result is the same: there are two ways to construct a 600-cell, using vertex-type struts or cell-type struts. Let me just dump more details here in case we can use them later.
+
+About orientation: for the Zome balls I always use Orientation-1. For the large 600-cell, let's use the convention that we dualize the 600-cell to get a 120-cell and look at the orientation of the 120-cell. For example, if the dual 120-cell is in Orientation-1, we say the 600-cell is in Orientation-1.
+
+1. We can place a ball at (a, 0, 0, 0) for some large enough a, and put cell-type struts in twelve holes facing (-1/phi, 1, phi, 0)/2, (-1/phi, 0, 1, phi)/2, and (-1/phi, phi, 0, 1)/2 with plus or minus signs in front of 1 and phi. The large 600-cell is in Orientation-1. And the Zome balls are oriented as Orientation-1.
+
+2. We can place a ball at (a, a, 0, 0) for large enough a, and put vertex-type struts in twelve holes facing the following directions:
 (1, -sqrt(5), -1, 1)
 (1, -sqrt(5), 1, -1)
 (-sqrt(5), 1, -1, 1)
@@ -36,41 +92,11 @@ We can place a ball at (a, a, 0, 0) for large enough a, and put vertex-type stru
 (-1/phi, -1/phi, -phi^2, 1/phi)
 (-1/phi, -1/phi, phi^2, -1/phi)
 
-In conclusion if we have 4D Zome we can use two types of struts to make the 120-cell and the 600-cell.
+The large 600-cell is oriented in Orientation-2. And the Zome balls are oriented as Orientation-1.
+
+In conclusion if we have 4D Zome, we can use two types of struts to make either the 120-cell or the 600-cell.
 
 Nan
-
-Scott,
-
-Let me explain it more. When we use the 4D Zome balls to construct an edge-frame of a 120-cell, we are talking about two levels of 120-cell. Each 4D ball is a small 120-cell, and the whole 120-cell is a larger one. The orientations of the two levels may or may not match.
-
-We can find the vertex of a 120-cell in the wikipedia page. 
-
-http://en.wikipedia.org/wiki/120-cell#Cartesian_coordinates
-
-Let's call the orientation of 120-cell Orientation-1. This is only one out of infinitely many orientations.
-
-Let's construct another orientation by applying the mapping
-(x1, x2, x3, x4) -> ((x1+x2)/4, (x1-x2)/4, (x3+x4)/4, (x3-x4)/4)
-This is a rotation followed by normalization (so that the norm is changed from 2*sqrt(2) to 1). After this transform, the vertices are located at:
-
-(1, 0, 0, 0), 
-
-Let's assume that the vertex coordinates of the small balls follow those values, except that we move each ball to a different position. 
-
-
-
-
-Let's find the centers of each ball by placing a ball at (a,0,0,0). It turns out we can't just scale the vertex coordinates in the wiki page to get a vertex at (a,0,0,0). 
-
-
-
-When the vertices are like that, the coordinates of the cell centers are all permutations of (1/2, 1/2, 1/2, 1/2), (1,0,0,0), and even permutations of (phi, 1, 0, 1/phi) where each number can be positive or negative.
-
-
-
-
-
 
 
 
