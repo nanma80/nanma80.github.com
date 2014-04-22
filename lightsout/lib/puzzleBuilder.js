@@ -6,12 +6,12 @@ function PuzzleBuilder() {
   ];
 
   this.setParameters = function(type, layers) {
-    this.shape = 'dodecahedron';
+    this.shape = 'face first dodecahedron';
+    // this.shape = 'edge first dodecahedron';
   }
 
   this.initializeState = function() {
     this.vertices = getVertices(this.shape);
-    console.log(this.vertices);
   }
 
   this.rotate = function(axis, angle) {
@@ -33,37 +33,34 @@ function PuzzleBuilder() {
     context.fillStyle = "rgb(" + this.colorArray[0][0] + "," + this.colorArray[0][1] + "," + this.colorArray[0][2] + ")";
     context.fillRect(0,0,viewWidth,viewHeight);
 
-    // console.log(this.nTurns);
-    context.font = "25pt Arial";
-    context.fillStyle = "blue";
-    context.fillText("some text", 10, 540);
+    for (var i = 0; i < this.vertices.length; i++) {
+      var vertex3d = this.vertices[i];
+      if (vertex3d.z < 0) continue;
+      var vertex2d = vertex3d.project();
+      var size = 4;
+      var halfSize = size / 2;
+      context.fillStyle = 'black';
+      context.fillRect(vertex2d.x - halfSize, vertex2d.y - halfSize, size, size);
+
+      context.font = "8pt Arial";
+      context.fillStyle = "blue";
+      context.fillText(i, vertex2d.x, vertex2d.y);
+    }
+
+
+    // context.font = "25pt Arial";
+    // context.fillStyle = "blue";
+    // context.fillText("some text", 10, 540);
     
   }
 
   this.rotate = function(axis, angle) {
     setRotationMatrix(axis, angle);
 
-    for (var i=0; i<2+this.stateLayers; i++) {
-      for (var j=0; j<2+this.stateLayers; j++) {
-        for (var k=0; k<2+this.stateLayers; k++) {
-          if (typeof (this.state[i][j][k]) == "undefined") continue;
+    for (var i = 0; i < this.vertices.length; i++) {
+      this.vertices[i].rotate();
+    }    
 
-          this.state[i][j][k].rotate(axis, angle);
-
-        }
-      }
-    }
-
-    for (var i=0; i<2+this.layers; i++) {
-      for (var j=0; j<2+this.layers; j++) {
-        for (var k=0; k<2+this.layers; k++) {
-          if (typeof (this.stickers[i][j][k]) == "undefined") continue;
-
-          this.stickers[i][j][k].rotate(axis, angle);
-
-        }
-      }
-    }
   }
 
   this.snap = function() {

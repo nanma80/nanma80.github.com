@@ -4,7 +4,7 @@ var EPSILON = 0.00000000001;
 getAxes = function(shape) {
   var axes = [];
 
-  if (shape == 'dodecahedron') {
+  if (shape == 'face first dodecahedron') {
     axes.push(new Point3D(0, 1, PHI));
     axes.push(new Point3D(0, 1, - PHI));
     axes.push(new Point3D(0, - 1, PHI));
@@ -19,7 +19,11 @@ getAxes = function(shape) {
     axes.push(new Point3D(- PHI, 0, 1));
     axes.push(new Point3D(PHI, 0, - 1));
     axes.push(new Point3D(- PHI, 0, - 1));
+  } else if (shape == 'edge first dodecahedron') {
+    axes = getVertices('face first dodecahedron');
   }
+
+
 
   axes.forEach(function(axis){
     axis.normalize();
