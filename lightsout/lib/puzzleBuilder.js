@@ -5,8 +5,9 @@ function PuzzleBuilder() {
     [244,244,244] //background
   ];
 
-  this.setParameters = function(type, layers) {
-    this.shape = 'face first dodecahedron';
+  this.setParameters = function(shape) {
+    this.shape = shape;
+    // this.shape = 'face first dodecahedron';
     // this.shape = 'edge first dodecahedron';
   }
 

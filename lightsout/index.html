@@ -30,34 +30,18 @@ Your browser does not support the HTML5 canvas tag.
 </div>
 
 <div id="info" style="margin-left:10px;width:330px;float:left;font-family:Arial, Helvetica, sans-serif;">
-<div id="types" style="font-size:large;height:160px;width:160px;float:left;background-color:rgb(240,240,255);line-height:30px;">
-<input type="radio" name="type" value="mirror+" onclick = "onRadioButton();" checked>Mirror +<br>
-<input type="radio" name="type" value="mirrorX" onclick = "onRadioButton();">Mirror X<br>
-<input type="radio" name="type" value="rubik" onclick = "onRadioButton();">Rubik's Cube<br>
-<input type="radio" name="type" value="halfturn" onclick = "onRadioButton();">Half turn cube<br>
-<input type="radio" name="type" value="full" onclick = "onRadioButton();">Mirror & twist<br>
-</div>
+  <div id="types" style="font-size:large;float:left;background-color:rgb(240,240,255);line-height:30px;">
+    <input type="radio" name="type" value="face first dodecahedron" onclick = "onRadioButton();" checked>Face first dodecahedron<br>
+    <input type="radio" name="type" value="edge first dodecahedron" onclick = "onRadioButton();">Edge first dodecahedron<br>
+  </div>
 
-<div id="layers" style="margin-left:5px;font-size:large;height:160px;width:160px;float:right;background-color:rgb(240,240,255);line-height:38px;">
-<input type="radio" name="layers" value=2 onclick = "onRadioButton();">2x2x2<br>
-<input type="radio" name="layers" value=3 onclick = "onRadioButton();" checked >3x3x3<br>
-<input type="radio" name="layers" value=4 onclick = "onRadioButton();">4x4x4<br>
-<input type="radio" name="layers" value=5 onclick = "onRadioButton();">5x5x5<br>
-</div>
-
-<div id="control" style="margin-left:53px;margin-top:10px;margin-bottom:10px;height:50px;width:300px;float:left;font-family:Arial, Helvetica, sans-serif;">
-<button type="button" onclick = "puzzle.resetState();">Reset</button> 
-<button type="button" onclick = "puzzle.scramble();">Scramble</button>
-</div>
-
+  <div id="control" style="margin-left:53px;margin-top:10px;margin-bottom:10px;height:50px;width:300px;float:left;font-family:Arial, Helvetica, sans-serif;">
+    <button type="button" onclick = "puzzle.resetState();">Reset</button> 
+    <button type="button" onclick = "puzzle.scramble();">Scramble</button>
+  </div>
 </div>
 
 <div id="content" style="font-size:small;float:left;font-family:Arial, Helvetica, sans-serif">
-<p>
-If you can solve them, try different scrambles to make sure you haven't missed the <a href="wacky.html">wacky phenomena (spoiler alert!!)</a> that are forbidden on the Rubik's Cube.</p>
-
-<p>This puzzle is inspired by <a href="http://www.superliminal.com/cube/mc2d.html">Magic Cube 2D</a> and the discussion about it in the <a href="http://games.groups.yahoo.com/group/4D_Cubing/">Yahoo group</a>. I also emulated this puzzle using <a href="http://www.superliminal.com/cube/cube.htm">MC4D</a> and <a href="http://astr73.narod.ru/MPUlt/MPUlt.html">MPUlt</a> before implementing it.</p>
-
 <p>The puzzle uses html5 canvas, which is not supported directly by IE 8 or lower. I also apologize if the animation is jumpy on some browsers. Try using the latest version of Chrome for the best experience.</p>
 <p>Nan Ma, 2014</p>
 </div>

@@ -94,8 +94,7 @@ resnap = function(e) {
 onRadioButton = function() {
   var needUpdate = false;
   var typeElements = document.getElementsByName('type');
-  var layersElements = document.getElementsByName('layers');
-  var i, j;
+  var i;
 
   for (i=0; i < typeElements.length; i++) {
     if (typeElements[i].checked) {
@@ -104,15 +103,8 @@ onRadioButton = function() {
     }
   }
 
-  for (j=0; j < layersElements.length; j++) {
-    if (layersElements[j].checked) {
-      if (!(eval(layersElements[j].value) == puzzle.layers)) needUpdate = true;
-        break;
-    }
-  }
-
   if (needUpdate) {
-    puzzle.setParameters(typeElements[i].value, eval(layersElements[j].value));
+    puzzle.setParameters(typeElements[i].value);
     puzzle.resetState();
   }
 }
