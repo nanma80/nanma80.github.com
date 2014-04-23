@@ -7,15 +7,19 @@ function PuzzleBuilder() {
 
   this.setParameters = function(shape) {
     this.shape = shape;
-    // this.shape = 'face first dodecahedron';
-    // this.shape = 'edge first dodecahedron';
   }
 
   this.initializeState = function() {
-    this.vertices = getVertices(this.shape);
-  }
+    this.axes = getAxes(this.shape);
+    this.vertices = getVertices(this.axes);
 
-  this.rotate = function(axis, angle) {
+    this.prototypeStickers = getPrototypeStickers(this.shape);
+    this.stickersByType = [];
+    for(var i = 0; i < this.prototypeStickers.length; i++) {
+      var stickersPerType = populateStickers(this.vertices, this.prototypeStickers[i], 'dodecahedron');
+
+      this.stickersByType.push(stickersPerType);
+    }
   }
 
   this.resetState = function() {
@@ -48,11 +52,9 @@ function PuzzleBuilder() {
       context.fillText(i, vertex2d.x, vertex2d.y);
     }
 
-
     // context.font = "25pt Arial";
     // context.fillStyle = "blue";
     // context.fillText("some text", 10, 540);
-    
   }
 
   this.rotate = function(axis, angle) {
@@ -61,14 +63,9 @@ function PuzzleBuilder() {
     for (var i = 0; i < this.vertices.length; i++) {
       this.vertices[i].rotate();
     }    
-
   }
 
   this.snap = function() {
 
   }
-
-
-
-
 }

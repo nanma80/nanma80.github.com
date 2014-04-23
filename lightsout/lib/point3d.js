@@ -1,3 +1,5 @@
+var EPSILON = 0.00000000001;
+
 area = function(p1, p2, p3) {
   return (p1.x * p2.y - p1.y * p2.x) + (p2.x * p3.y - p2.y * p3.x) + (p3.x * p1.y - p3.y * p1.x);
 }
@@ -28,21 +30,12 @@ setRotationMatrix = function(axis, t) {
 dedupOnInnerProd = function(inputArray) {
   var outputArray = [];
   for (var i = 0; i < inputArray.length; i++) {
-    var isNewElement = true;
-    for (var j = 0; j < outputArray.length; j++) {
-      if (inputArray[i].innerProd(outputArray[j]) > 1 - EPSILON) {
-        isNewElement = false;
-        break;
-      }
-    }
-
-    if (isNewElement) {
+    if (inputArray[i].indexIn(outputArray) < 0) {
       outputArray.push(inputArray[i]);
     }
   }
   return outputArray;
 }
-
 
 function Point3D(x,y,z) {
   this.x = x;
@@ -113,6 +106,15 @@ function Point3D(x,y,z) {
 
   this.reverse = function() {
     return new Point3D(- this.x, - this.y, - this.z);
+  }
+
+  this.indexIn = function(arr) {
+    for (var i = 0; i < arr.length; i++) {
+      if (this.innerProd(arr[i]) > 1 - EPSILON) {
+        return i;
+      }
+    }
+    return -1;
   }
 }
 
