@@ -17,8 +17,9 @@ function PuzzleBuilder() {
     this.stickersByType = [];
     for(var i = 0; i < this.prototypeStickers.length; i++) {
       var stickersPerType = populateStickers(this.vertices, this.prototypeStickers[i], 'dodecahedron');
-
       this.stickersByType.push(stickersPerType);
+
+      console.log(stickersPerType.length);
     }
   }
 

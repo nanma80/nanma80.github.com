@@ -66,7 +66,16 @@ dedupStickers = function(arr) {
     return a.signature > b.signature ? 1 : -1;
   });
 
-  console.log(arr);
+  var currentSignature = '';
+  var deduped = [];
+  for(var i = 0; i < arr.length; i++) {
+    if (arr[i].signature !== currentSignature) {
+      deduped.push(arr[i]);
+    }
+    currentSignature = arr[i].signature;
+  }
+
+  return deduped;
 }
 
 
@@ -91,9 +100,8 @@ populateStickers = function(vertices, prototypeSticker, symmetry) {
       newVertex.rotate();
       return newVertex.indexIn(vertices);
     });
-    stickers.push(new Sticker(vertices, rotationImage));
+    stickers.push(new Sticker(vertices, rotationImage2));
   }
-
 
   for(var i = 0; i < dodecahedron_vertices.length; i++) {
     var rotationImage = prototypeSticker.map(function(j) {
@@ -127,8 +135,7 @@ populateStickers = function(vertices, prototypeSticker, symmetry) {
     
   stickers = stickers.concat(mirrorStickers);
 
-  dedupStickers(stickers);
-  return stickers;
+  return dedupStickers(stickers);
 }
 
 var dodecahedron_faces = getAxes('face first dodecahedron');

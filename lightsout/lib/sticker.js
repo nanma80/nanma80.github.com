@@ -9,4 +9,12 @@ function Sticker(vertices, indices) {
   }
 
   this.signature = this.getSignature();
+
+  this.draw = function() {
+
+  }
+
+  this.rotate = function() {
+
+  }
 };
