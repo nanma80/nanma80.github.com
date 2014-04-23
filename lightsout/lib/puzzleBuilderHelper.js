@@ -4,7 +4,7 @@ var EPSILON = 0.00000000001;
 getAxes = function(shape) {
   var axes = [];
 
-  if (shape == 'face first dodecahedron') {
+  if (shape === 'face first dodecahedron') {
     axes.push(new Point3D(0, 1, PHI));
     axes.push(new Point3D(0, 1, - PHI));
     axes.push(new Point3D(0, - 1, PHI));
@@ -19,7 +19,7 @@ getAxes = function(shape) {
     axes.push(new Point3D(- PHI, 0, 1));
     axes.push(new Point3D(PHI, 0, - 1));
     axes.push(new Point3D(- PHI, 0, - 1));
-  } else if (shape == 'edge first dodecahedron') {
+  } else if (shape === 'edge first dodecahedron') {
     axes = getVertices(getAxes('face first dodecahedron'));
   }
 
@@ -48,15 +48,15 @@ getVertices = function(axes) {
 }
 
 getPrototypeStickers = function(shape) {
-  if (shape == 'face first dodecahedron') {
+  if (shape === 'face first dodecahedron') {
     return [[1, 13, 27, 22, 3], [1, 4, 13]];
-  } else if (shape == 'edge first dodecahedron') {
+  } else if (shape === 'edge first dodecahedron') {
     return [[1, 20, 8]];
   }
 }
 
 getSymmetry = function(shape) {
-  if (shape == 'face first dodecahedron' || shape == 'edge first dodecahedron') {
+  if (shape === 'face first dodecahedron' || shape === 'edge first dodecahedron') {
     return 'dodecahedron';
   }
 }
