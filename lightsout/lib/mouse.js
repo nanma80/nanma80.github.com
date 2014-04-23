@@ -74,7 +74,7 @@ onRadioButton = function() {
 
   for (i=0; i < typeElements.length; i++) {
     if (typeElements[i].checked) {
-      if (!(typeElements[i].value == puzzle.type)) needUpdate = true;
+      if (!(typeElements[i].value == puzzle.shape)) needUpdate = true;
       break;
     }
   }
@@ -84,5 +84,3 @@ onRadioButton = function() {
     puzzle.resetState();
   }
 }
-
-

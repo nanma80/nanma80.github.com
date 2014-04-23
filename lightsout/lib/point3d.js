@@ -6,6 +6,18 @@ area = function(p1, p2, p3) {
 
 var rotationMatrix = [[1,0,0],[0,1,0],[0,0,1]];
 
+resetRotationMatrix = function() {
+  for(var i = 0; i<3; i++){
+    for(var j = 0; j<3; j++){
+      if (i === j) {
+        rotationMatrix[i][j] = 1;
+      } else {
+        rotationMatrix[i][j] = 0;
+      }
+    }  
+  }
+}
+
 setRotationMatrix = function(axis, t) {
   axis.normalize();
 

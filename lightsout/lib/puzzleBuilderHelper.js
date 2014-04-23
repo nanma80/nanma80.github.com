@@ -21,6 +21,9 @@ getAxes = function(shape) {
     axes.push(new Point3D(- PHI, 0, - 1));
   } else if (shape === 'edge first dodecahedron') {
     axes = getVertices(getAxes('face first dodecahedron'));
+  } else if (shape === 'vertex first dodecahedron') {
+    var points = getPoints('dodecahedron');
+    axes = points[2];
   }
 
   axes.forEach(function(axis){
@@ -52,11 +55,15 @@ getPrototypeStickers = function(shape) {
     return [[1, 13, 27, 22, 3], [1, 4, 13]];
   } else if (shape === 'edge first dodecahedron') {
     return [[1, 20, 8]];
+  } else if (shape === 'vertex first dodecahedron') {
+    return [[7, 22, 25, 74, 14], [0, 22, 7], [46, 37, 88], [37, 78, 88]];
+  } else {
+    return [];
   }
 }
 
 getSymmetry = function(shape) {
-  if (shape === 'face first dodecahedron' || shape === 'edge first dodecahedron') {
+  if (shape === 'face first dodecahedron' || shape === 'edge first dodecahedron' || shape === 'vertex first dodecahedron') {
     return 'dodecahedron';
   }
 }
@@ -83,10 +90,37 @@ getAxesScale = function(shape) {
     return 0.85;
   } else if (shape === 'edge first dodecahedron') {
     return 1.0;
+  } else if (shape === 'vertex first dodecahedron') {
+    return 0.94;
   }
 }
 
+getPoints = function(symmetry) {
+  var output = []
+  if (symmetry === 'dodecahedron') {
+    var dodecahedron_faces = getAxes('face first dodecahedron');
+    var dodecahedron_edges = getVertices(dodecahedron_faces);
+    var dodecahedron_all = getVertices(dodecahedron_edges);
+    var dodecahedron_vertices = [];
+    for(var i = 0; i < dodecahedron_all.length; i++) {
+      if (dodecahedron_all[i].indexIn(dodecahedron_faces) < 0 
+        && dodecahedron_all[i].indexIn(dodecahedron_edges) < 0) {
+        dodecahedron_vertices.push(dodecahedron_all[i]);
+      }
+    }
+    output.push(dodecahedron_faces);
+    output.push(dodecahedron_edges);
+    output.push(dodecahedron_vertices);
+  }
+  return output;
+}
+
 populateStickers = function(vertices, prototypeSticker, symmetry) {
+  var points = getPoints(symmetry);
+  dodecahedron_faces = points[0];
+  dodecahedron_edges = points[1];
+  dodecahedron_vertices = points[2];
+
   var stickers = [];
 
   stickers.push(new Sticker(vertices, prototypeSticker));
@@ -110,13 +144,13 @@ populateStickers = function(vertices, prototypeSticker, symmetry) {
   }
 
   for(var i = 0; i < dodecahedron_vertices.length; i++) {
-    var rotationImage = prototypeSticker.map(function(j) {
+    var rotationImage3 = prototypeSticker.map(function(j) {
       setRotationMatrix(dodecahedron_vertices[i], Math.PI * 2.0 / 3.0);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       return newVertex.indexIn(vertices);
     });
-    stickers.push(new Sticker(vertices, rotationImage));
+    stickers.push(new Sticker(vertices, rotationImage3));
   }
 
   for(var i = 0; i < dodecahedron_edges.length; i++) {
@@ -144,13 +178,3 @@ populateStickers = function(vertices, prototypeSticker, symmetry) {
   return dedupStickers(stickers);
 }
 
-var dodecahedron_faces = getAxes('face first dodecahedron');
-var dodecahedron_edges = getVertices(dodecahedron_faces);
-var dodecahedron_all = getVertices(dodecahedron_edges);
-var dodecahedron_vertices = [];
-for(var i = 0; i < dodecahedron_all.length; i++) {
-  if (dodecahedron_all[i].indexIn(dodecahedron_faces) < 0 
-    && dodecahedron_all[i].indexIn(dodecahedron_edges) < 0) {
-    dodecahedron_vertices.push(dodecahedron_all[i]);
-  }
-}

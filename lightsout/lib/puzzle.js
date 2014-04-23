@@ -10,9 +10,10 @@ function Puzzle() {
   }
 
   this.initializeState = function() {
+    resetRotationMatrix();
     this.axes = getAxes(this.shape);
     this.vertices = getVertices(this.axes);
-
+    
     this.prototypeStickers = getPrototypeStickers(this.shape);
     this.stickersByType = [];
     this.stickers = [];
@@ -31,7 +32,6 @@ function Puzzle() {
     this.rotate(new Point3D(1,0,0), 0.5);
     this.rotate(new Point3D(0,0,-1), 0.2);
     
-    snap.reset();
     this.draw();
   }
 
