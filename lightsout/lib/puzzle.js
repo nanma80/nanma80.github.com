@@ -18,7 +18,7 @@ function Puzzle() {
     this.stickersByType = [];
     this.stickers = [];
     for(var i = 0; i < this.prototypeStickers.length; i++) {
-      var stickersPerType = populateStickers(this.vertices, this.prototypeStickers[i], 'dodecahedron');
+      var stickersPerType = populateStickers(this.vertices, this.prototypeStickers[i], getSymmetry(this.shape));
       this.stickers = this.stickers.concat(stickersPerType);
     }
     console.log(this.stickers.length);
@@ -84,6 +84,7 @@ function Puzzle() {
   }
 
   this.turn = function(axisId) {
+    if (axisId === -1) return;
     // console.log(axisId);
     for (var i = 0; i < this.stickers.length; i++) {
       var innerProduct = this.axes[axisId].innerProd(this.stickers[i].center());
@@ -95,7 +96,7 @@ function Puzzle() {
 
   this.snap = function(mouse) {
     var axes2d = this.axes2d();
-    var minimum = 10000000;
+    var minimum = 50;
     var axisId = -1;
     for (var i = 0; i < axes2d.length; i++) {
       if (axes2d[i] === null) continue;

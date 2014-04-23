@@ -24,6 +24,24 @@ getAxes = function(shape) {
   } else if (shape === 'vertex first dodecahedron') {
     var points = getPoints('dodecahedron');
     axes = points[2];
+  } else if (shape === 'face first cube') {
+    axes.push(new Point3D(1, 0, 0));
+    axes.push(new Point3D(-1, 0, 0));
+    axes.push(new Point3D(0, 1, 0));
+    axes.push(new Point3D(0, -1, 0));
+    axes.push(new Point3D(0, 0, 1));
+    axes.push(new Point3D(0, 0, -1));
+  } else if (shape === 'vertex first cube') {
+    axes.push(new Point3D(1, 1, 1));
+    axes.push(new Point3D(1, 1, -1));
+    axes.push(new Point3D(1, -1, 1));
+    axes.push(new Point3D(1, -1, -1));
+    axes.push(new Point3D(-1, 1, 1));
+    axes.push(new Point3D(-1, 1, -1));
+    axes.push(new Point3D(-1, -1, 1));
+    axes.push(new Point3D(-1, -1, -1));
+  } else if (shape === 'edge first cube') {
+    axes = getVertices(getAxes('vertex first cube'));
   }
 
   axes.forEach(function(axis){
@@ -57,6 +75,12 @@ getPrototypeStickers = function(shape) {
     return [[1, 20, 8]];
   } else if (shape === 'vertex first dodecahedron') {
     return [[7, 22, 25, 74, 14], [0, 22, 7], [46, 37, 88], [37, 78, 88]];
+  } else if (shape === 'face first cube') {
+    return [[0, 2, 4]];
+  } else if (shape === 'edge first cube') {
+    return [[1, 5, 7]];
+  } else if (shape === 'vertex first cube') {
+    return [[1, 2, 10, 9], [7, 9, 10]];
   } else {
     return [];
   }
@@ -65,6 +89,8 @@ getPrototypeStickers = function(shape) {
 getSymmetry = function(shape) {
   if (shape === 'face first dodecahedron' || shape === 'edge first dodecahedron' || shape === 'vertex first dodecahedron') {
     return 'dodecahedron';
+  } else if (shape === 'face first cube' || shape === 'edge first cube' || shape === 'vertex first cube') {
+    return 'cube';
   }
 }
 
@@ -92,42 +118,61 @@ getAxesScale = function(shape) {
     return 1.0;
   } else if (shape === 'vertex first dodecahedron') {
     return 0.94;
+  } else if (shape === 'face first cube') {
+    return 1.0;
+  } else if (shape === 'edge first cube') {
+    return 0.835;
+  } else if (shape === 'vertex first cube') {
+    return 0.83;
+  } else {
+    return 1.0;
   }
 }
 
 getPoints = function(symmetry) {
   var output = []
   if (symmetry === 'dodecahedron') {
-    var dodecahedron_faces = getAxes('face first dodecahedron');
-    var dodecahedron_edges = getVertices(dodecahedron_faces);
-    var dodecahedron_all = getVertices(dodecahedron_edges);
-    var dodecahedron_vertices = [];
+    var symmetry_faces = getAxes('face first dodecahedron');
+    var symmetry_edges = getVertices(symmetry_faces);
+    var dodecahedron_all = getVertices(symmetry_edges);
+    var symmetry_vertices = [];
     for(var i = 0; i < dodecahedron_all.length; i++) {
-      if (dodecahedron_all[i].indexIn(dodecahedron_faces) < 0 
-        && dodecahedron_all[i].indexIn(dodecahedron_edges) < 0) {
-        dodecahedron_vertices.push(dodecahedron_all[i]);
+      if (dodecahedron_all[i].indexIn(symmetry_faces) < 0 
+        && dodecahedron_all[i].indexIn(symmetry_edges) < 0) {
+        symmetry_vertices.push(dodecahedron_all[i]);
       }
     }
-    output.push(dodecahedron_faces);
-    output.push(dodecahedron_edges);
-    output.push(dodecahedron_vertices);
+    output.push(symmetry_faces);
+    output.push(symmetry_edges);
+    output.push(symmetry_vertices);
+  } else if (symmetry === 'cube') {
+    var cube_faces = getAxes('face first cube');
+    var cube_edges = getAxes('edge first cube');
+    var cube_vertices = getAxes('vertex first cube');
+    output.push(cube_faces);
+    output.push(cube_edges);
+    output.push(cube_vertices);
   }
   return output;
 }
 
 populateStickers = function(vertices, prototypeSticker, symmetry) {
   var points = getPoints(symmetry);
-  dodecahedron_faces = points[0];
-  dodecahedron_edges = points[1];
-  dodecahedron_vertices = points[2];
 
   var stickers = [];
 
   stickers.push(new Sticker(vertices, prototypeSticker));
 
-  for(var i = 0; i < dodecahedron_faces.length; i++) {
+  symmetry_faces = points[0];
+  symmetry_edges = points[1];
+  symmetry_vertices = points[2];
+
+  face_degree = Math.PI / 2.0;
+  if (symmetry === 'dodecahedron') face_degree = Math.PI * 2.0 / 5.0;
+
+  for(var i = 0; i < symmetry_faces.length; i++) {
     var rotationImage = prototypeSticker.map(function(j) {
-      setRotationMatrix(dodecahedron_faces[i], Math.PI * 2.0 / 5.0);
+      setRotationMatrix(symmetry_faces[i], face_degree);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       return newVertex.indexIn(vertices);
@@ -135,7 +180,7 @@ populateStickers = function(vertices, prototypeSticker, symmetry) {
     stickers.push(new Sticker(vertices, rotationImage));
 
     var rotationImage2 = prototypeSticker.map(function(j) {
-      setRotationMatrix(dodecahedron_faces[i], Math.PI * 4.0 / 5.0);
+      setRotationMatrix(symmetry_faces[i], face_degree * 2);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       return newVertex.indexIn(vertices);
@@ -143,9 +188,9 @@ populateStickers = function(vertices, prototypeSticker, symmetry) {
     stickers.push(new Sticker(vertices, rotationImage2));
   }
 
-  for(var i = 0; i < dodecahedron_vertices.length; i++) {
+  for(var i = 0; i < symmetry_vertices.length; i++) {
     var rotationImage3 = prototypeSticker.map(function(j) {
-      setRotationMatrix(dodecahedron_vertices[i], Math.PI * 2.0 / 3.0);
+      setRotationMatrix(symmetry_vertices[i], Math.PI * 2.0 / 3.0);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       return newVertex.indexIn(vertices);
@@ -153,12 +198,12 @@ populateStickers = function(vertices, prototypeSticker, symmetry) {
     stickers.push(new Sticker(vertices, rotationImage3));
   }
 
-  for(var i = 0; i < dodecahedron_edges.length; i++) {
-    var edge = dodecahedron_edges[i];
+  for(var i = 0; i < symmetry_edges.length; i++) {
+    var edge = symmetry_edges[i];
     if (edge.x * 243 + edge.y * 19 + edge.z > 0) continue;
 
     var rotationImage = prototypeSticker.map(function(j) {
-      setRotationMatrix(dodecahedron_edges[i], Math.PI);
+      setRotationMatrix(symmetry_edges[i], Math.PI);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       return newVertex.indexIn(vertices);
