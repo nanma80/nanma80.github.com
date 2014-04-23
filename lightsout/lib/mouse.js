@@ -3,8 +3,6 @@ mouseInRegion = false;
 mouseIsDown = false;
 mousePos = new Point2D(0,0);
 dragging = false;
-snapIndex = [];
-currentSnapIndex = [];
 
 mouseDown = function(e){
   mouseIsDown = true;
@@ -18,20 +16,18 @@ mouseUp = function(e){
     click(e);
   }
   dragging = false;
-  snap.update(e);
 }
 
 click = function(e){
-  if (e.ctrlKey) return;
-  // resnap(e);
-  if (snap.index.length > 0) {
-    var layer;
-    if (!(e.altKey) && !(e.shiftKey)) layer = 1;
-    else if (e.altKey && !(e.shiftKey)) layer = 2;
-    else if (e.shiftKey && !(e.altKey)) layer = 12;
-    else layer = 123;
-    puzzle.twist(e.button == 2, layer);
-  }
+  var layer;
+  axisId = puzzle.snap(mousePos);
+  puzzle.turn(axisId);
+  // if (!(e.altKey) && !(e.shiftKey)) layer = 1;
+  // else if (e.altKey && !(e.shiftKey)) layer = 2;
+  // else if (e.shiftKey && !(e.altKey)) layer = 12;
+  // else layer = 123;
+  // puzzle.twist(e.button == 2, layer);
+
   puzzle.draw();
 }
 
@@ -48,7 +44,6 @@ mouseOut = function(e){
   mouseInRegion = false;
   if (dragging) {
     dragging = false;
-    snap.update(e);
   }
 }
 
@@ -59,36 +54,17 @@ mouseOver = function(e){
 }
 
 mouseMove = function(e) {
-
   startTime = new Date().getTime();
 
   if (mouseIsDown && mouseInRegion) {
-    if (snap.index.length > 1) snap.reset();
     mouseDrag(e);
-  } else {
-   snap.update(e); 
   }
-
-  duration = new Date().getTime() - startTime;
-  // console.log(duration);
 }
 
 
 findMouse = function (e) {
   mousePos.x = e.pageX - canvas.offsetLeft;
   mousePos.y = e.pageY - canvas.offsetTop;
-}
-
-
-resnap = function(e) {
-  findMouse(e);
-  snapIndex = puzzle.snap(mousePos);
-
-  if (snapIndex.toString() != currentSnapIndex.toString()) {
-    // snap object is changed
-    currentSnapIndex = snapIndex.slice(0);
-    puzzle.draw();
-  }
 }
 
 onRadioButton = function() {

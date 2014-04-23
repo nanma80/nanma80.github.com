@@ -43,20 +43,32 @@ function Puzzle() {
       this.stickers[i].draw();
     }
 
+    var axes2d = this.axes2d();
 
-    for (var i = 0; i < this.axes.length; i++) {
-      var vertex3d = this.axes[i];
-      if (vertex3d.z < 0) continue;
-      var vertex2d = vertex3d.project();
+    for (var i = 0; i < axes2d.length; i++) {
+      if (axes2d[i] === null) continue;
       var size = 4;
       var halfSize = size / 2;
-      context.fillStyle = 'black';
-      context.fillRect(vertex2d.x - halfSize, vertex2d.y - halfSize, size, size);
+      context.fillStyle = 'red';
+      context.fillRect(axes2d[i].x - halfSize, axes2d[i].y - halfSize, size, size);
     }
+  }
 
-    // context.font = "25pt Arial";
-    // context.fillStyle = "blue";
-    // context.fillText("some text", 10, 540);
+  this.axes2d = function() {
+    var axesScale = getAxesScale(this.shape);
+
+    var output = [];
+    for (var i = 0; i < this.axes.length; i++) {
+
+      var vertex3d = this.axes[i].scale(axesScale);
+      if (vertex3d.z < 0) {
+        output.push(null);
+      } else {
+        var vertex2d = vertex3d.project();
+        output.push(vertex2d);
+      }
+    }
+    return output;
   }
 
   this.rotate = function(axis, angle) {
@@ -66,12 +78,46 @@ function Puzzle() {
       this.axes[i].rotate();
     }
 
-    for (var i = 0; i < this.stickers.length; i++) {
-      this.stickers[i].rotate();
+    for (var i = 0; i < this.vertices.length; i++) {
+      this.vertices[i].rotate();
     }
   }
 
-  this.snap = function() {
+  this.turn = function(axisId) {
+    // console.log(axisId);
+    for (var i = 0; i < this.stickers.length; i++) {
+      var innerProduct = this.axes[axisId].innerProd(this.stickers[i].center());
+      if (innerProduct > 0) {
+        this.stickers[i].changeState();
+      }
+    };
+  }
+
+  this.snap = function(mouse) {
+    var axes2d = this.axes2d();
+    var minimum = 10000000;
+    var axisId = -1;
+    for (var i = 0; i < axes2d.length; i++) {
+      if (axes2d[i] === null) continue;
+      var distance = mouse.distance(axes2d[i]);
+      if ( distance < minimum) {
+        minimum = distance;
+        axisId = i;
+      }
+    };
+    return axisId;
+  }
+
+  this.scramble = function() {
+    var scrambleLength = 50;
+    scrambleLength += Math.round(Math.random());
+
+    for (var scrambleIndex = 0; scrambleIndex < scrambleLength; scrambleIndex++) {
+      this.turn( Math.floor(Math.random() * 100) % this.axes.length);
+    }
+    
+    this.count = 0;
+    this.draw();
 
   }
 }

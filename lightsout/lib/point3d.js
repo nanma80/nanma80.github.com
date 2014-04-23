@@ -67,10 +67,6 @@ function Point3D(x,y,z) {
     this.z = output[2];
   }
 
-  this.clone = function() {
-    return new Point3D(this.x, this.y, this.z);
-  }
-
   this.project = function() {
     // project this 3D point to 2D, viewed from the +x direction, considering the origin of 2D is the center of canvas
     
@@ -80,8 +76,9 @@ function Point3D(x,y,z) {
 
   this.project_origin = function() {
     // project this 3D point to 2D, viewed from the +z direction, 3D origin -> 2D origin
-    var factor, x, y, viewDistance
-    factor = viewHeight * 0.28 / (1 - this.z / 15);
+    var factor, x, y, viewDistance;
+    
+    factor = viewHeight * 0.4 / (1 - this.z / 15);
     
     x = this.x * factor;
     y = -this.y * factor;
@@ -104,8 +101,16 @@ function Point3D(x,y,z) {
     return new Point3D(x, y, z);
   }
 
+  this.scale = function(s) {
+    return new Point3D(s * this.x, s * this.y, s * this.z);
+  }
+
+  this.clone = function() {
+    return this.scale(1);
+  }
+
   this.reverse = function() {
-    return new Point3D(- this.x, - this.y, - this.z);
+    return this.scale(-1);
   }
 
   this.indexIn = function(arr) {

@@ -78,7 +78,13 @@ dedupStickers = function(arr) {
   return deduped;
 }
 
-
+getAxesScale = function(shape) {
+  if (shape === 'face first dodecahedron') {
+    return 0.85;
+  } else if (shape === 'edge first dodecahedron') {
+    return 1.0;
+  }
+}
 
 populateStickers = function(vertices, prototypeSticker, symmetry) {
   var stickers = [];
