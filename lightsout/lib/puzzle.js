@@ -88,7 +88,7 @@ function Puzzle() {
     // console.log(axisId);
     for (var i = 0; i < this.stickers.length; i++) {
       var innerProduct = this.axes[axisId].innerProd(this.stickers[i].center());
-      if (innerProduct > 0) {
+      if (innerProduct > - 0.5 && innerProduct < 0.5) {
         this.stickers[i].changeState();
       }
     };
