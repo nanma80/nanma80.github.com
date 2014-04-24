@@ -24,6 +24,10 @@ getAxes = function(shape) {
   } else if (shape === 'vertex first dodecahedron') {
     var points = getPoints('dodecahedron');
     axes = points[2];
+  } else if (shape === 'face vertex first dodecahedron') {
+    axes = axes.concat(getAxes('face first dodecahedron'));
+    axes = axes.concat(getAxes('vertex first dodecahedron'));
+    console.log(axes);
   } else if (shape === 'face first cube') {
     axes.push(new Point3D(1, 0, 0));
     axes.push(new Point3D(-1, 0, 0));
@@ -75,6 +79,8 @@ getPrototypeStickers = function(shape) {
     return [[1, 20, 8]];
   } else if (shape === 'vertex first dodecahedron') {
     return [[7, 22, 25, 74, 14], [0, 22, 7], [46, 37, 88], [37, 78, 88]];
+  } else if (shape === 'face vertex first dodecahedron') {
+    return [[67, 44, 42, 31, 35], [1, 31, 42], [1, 42, 3], [1, 3, 10]];
   } else if (shape === 'face first cube') {
     return [[0, 2, 4]];
   } else if (shape === 'edge first cube') {
@@ -87,7 +93,7 @@ getPrototypeStickers = function(shape) {
 }
 
 getSymmetry = function(shape) {
-  if (shape === 'face first dodecahedron' || shape === 'edge first dodecahedron' || shape === 'vertex first dodecahedron') {
+  if (shape === 'face first dodecahedron' || shape === 'edge first dodecahedron' || shape === 'vertex first dodecahedron' || shape === 'face vertex first dodecahedron') {
     return 'dodecahedron';
   } else if (shape === 'face first cube' || shape === 'edge first cube' || shape === 'vertex first cube') {
     return 'cube';
@@ -118,6 +124,8 @@ getAxesScale = function(shape) {
     return 1.0;
   } else if (shape === 'vertex first dodecahedron') {
     return 0.94;
+  } else if (shape === 'face vertex first dodecahedron') {
+    return 0.96;
   } else if (shape === 'face first cube') {
     return 1.0;
   } else if (shape === 'edge first cube') {
