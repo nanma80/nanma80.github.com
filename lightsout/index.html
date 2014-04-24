@@ -9,6 +9,26 @@
 <script src="lib/mouse.js"></script>
 <script src="lib/puzzleBuilderHelper.js"></script>
 <script src="lib/puzzleBuilder.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script>
+$(function() {
+  $( "#slider-range" ).slider({
+    range: true,
+    min: -100,
+    max: 100,
+    values: [ 0, 100 ],
+    slide: function( event, ui ) {
+      $( "#amount" ).val( "Depth: " + ui.values[ 0 ] + "% to " + ui.values[ 1 ] + "%");
+    }
+  });
+  $( "#amount" ).val( "Depth: " + $( "#slider-range" ).slider( "values", 0 ) +
+    "% to " + $( "#slider-range" ).slider( "values", 1 ) + "%");
+});
+
+</script>
+
 <style type = "text/css">
   button {
     margin: 10px;
@@ -38,13 +58,17 @@ Your browser does not support the HTML5 canvas tag.
     <input type="radio" name="type" value="face first cube" onclick = "onRadioButton();">Face first cube<br>
     <input type="radio" name="type" value="edge first cube" onclick = "onRadioButton();">Edge first cube<br>
     <input type="radio" name="type" value="vertex first cube" onclick = "onRadioButton();">Vertex first cube<br>
-
   </div>
 
   <div id="control" style="margin-left:53px;margin-top:10px;margin-bottom:10px;height:50px;width:300px;float:left;font-family:Arial, Helvetica, sans-serif;">
     <button type="button" onclick = "puzzle.resetState();">Reset</button> 
     <button type="button" onclick = "puzzle.scramble();">Scramble</button>
   </div>
+
+  <input type="text" id="amount" style="border:0; font-weight:bold;">
+   
+  <div id="slider-range"></div>
+
 </div>
 
 <div id="content" style="font-size:small;float:left;font-family:Arial, Helvetica, sans-serif">

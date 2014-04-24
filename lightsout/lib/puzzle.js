@@ -86,9 +86,13 @@ function Puzzle() {
   this.turn = function(axisId) {
     if (axisId === -1) return;
     // console.log(axisId);
+
+    var minimum = $( "#slider-range" ).slider( "values", 0 ) / 100.0;
+    var maximum = $( "#slider-range" ).slider( "values", 1 ) / 100.0;
+
     for (var i = 0; i < this.stickers.length; i++) {
       var innerProduct = this.axes[axisId].innerProd(this.stickers[i].center());
-      if (innerProduct > - 0.5 && innerProduct < 0.5) {
+      if (innerProduct >= minimum - EPSILON && innerProduct <= maximum + EPSILON) {
         this.stickers[i].changeState();
       }
     };
