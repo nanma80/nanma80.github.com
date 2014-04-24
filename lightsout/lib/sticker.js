@@ -79,6 +79,8 @@ function Sticker(vertices, indices) {
     x /= points.length;
     y /= points.length;
     z /= points.length;
-    return new Point3D(x, y, z);
+    var output = new Point3D(x, y, z);
+    output.normalize();
+    return output;
   }
 };
