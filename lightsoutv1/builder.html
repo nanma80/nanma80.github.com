@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lights Out</title>
+<script src="lib/point3d.js"></script>
+<script src="lib/sticker.js"></script>
+<script src="lib/puzzle.js"></script>
+<script src="lib/snap.js"></script>
+<script src="lib/mouse.js"></script>
+<script src="lib/puzzleBuilderHelper.js"></script>
+<script src="lib/puzzleBuilder.js"></script>
+<style type = "text/css">
+  button {
+    margin: 10px;
+    height:30px; 
+    width:90px;
+  } 
+</style>
+</head>
+<body onselectstart='return false;'>
+
+<h1 style="margin-top:0;margin-bottom:0;font-family:Arial, Helvetica, sans-serif;">
+  Lights Out on a Dodecahedron
+</h1>
+
+<div id="content" style="height:550px;width:550px;float:left;">
+<canvas id="canvas" width="550" height="550" style="border:1px solid #c3c3c3;" oncontextmenu="return false;" onselectstart='return false;'>
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+</div>
+
+<div id="info" style="margin-left:10px;width:330px;float:left;font-family:Arial, Helvetica, sans-serif;">
+  <div id="types" style="font-size:large;float:left;background-color:rgb(240,240,255);line-height:30px;">
+    <input type="radio" name="type" value="face first dodecahedron" onclick = "onRadioButton();">Face first dodecahedron<br>
+    <input type="radio" name="type" value="edge first dodecahedron" onclick = "onRadioButton();">Edge first dodecahedron<br>
+    <input type="radio" name="type" value="vertex first dodecahedron" onclick = "onRadioButton();">Vertex first dodecahedron<br>
+    <input type="radio" name="type" value="face vertex first dodecahedron" onclick = "onRadioButton();">Face vertex first dodecahedron<br>
+
+
+    <input type="radio" name="type" value="face first cube" onclick = "onRadioButton();" checked>Face first cube<br>
+    <input type="radio" name="type" value="edge first cube" onclick = "onRadioButton();">Edge first cube<br>
+    <input type="radio" name="type" value="vertex first cube" onclick = "onRadioButton();">Vertex first cube<br>
+  </div>
+
+  <div id="control" style="margin-left:53px;margin-top:10px;margin-bottom:10px;height:50px;width:300px;float:left;font-family:Arial, Helvetica, sans-serif;">
+    <button type="button" onclick = "puzzle.resetState();">Reset</button> 
+    <button type="button" onclick = "puzzle.scramble();">Scramble</button>
+  </div>
+</div>
+
+<div id="content" style="font-size:small;float:left;font-family:Arial, Helvetica, sans-serif">
+<p>The puzzle uses html5 canvas, which is not supported directly by IE 8 or lower. I also apologize if the animation is jumpy on some browsers. Try using the latest version of Chrome for the best experience.</p>
+<p>Nan Ma, 2014</p>
+</div>
+
+<script type="text/javascript">
+  var canvas = document.getElementById("canvas");
+  var context = canvas.getContext("2d");
+  var viewHeight = canvas.height;
+  var viewWidth = canvas.width;
+
+  var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
+
+  var snap = new Snap();
+  var puzzle = new PuzzleBuilder();
+
+  onRadioButton();
+
+  canvas.addEventListener("mousedown", mouseDown, false);
+  canvas.addEventListener("mousemove", mouseMove, false);
+  canvas.addEventListener("mouseover", mouseOver, false);
+  canvas.addEventListener("mouseout", mouseOut, false);
+  document.body.addEventListener("mouseup", mouseUp, false);
+</script>
+
+
+</body>
+</html>
