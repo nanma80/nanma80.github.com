@@ -5,7 +5,6 @@
 <script src="lib/point3d.js"></script>
 <script src="lib/sticker.js"></script>
 <script src="lib/puzzle.js"></script>
-<script src="lib/snap.js"></script>
 <script src="lib/mouse.js"></script>
 <script src="lib/puzzleBuilderHelper.js"></script>
 <script src="lib/puzzleBuilder.js"></script>
@@ -54,8 +53,6 @@ Your browser does not support the HTML5 canvas tag.
     <input type="radio" name="type" value="face first dodecahedron" onclick = "onRadioButton();" checked>Face first dodecahedron<br>
     <input type="radio" name="type" value="edge first dodecahedron" onclick = "onRadioButton();">Edge first dodecahedron<br>
     <input type="radio" name="type" value="vertex first dodecahedron" onclick = "onRadioButton();">Vertex first dodecahedron<br>
-    <input type="radio" name="type" value="face vertex first dodecahedron" onclick = "onRadioButton();">Face vertex first dodecahedron<br>
-
     <input type="radio" name="type" value="face first cube" onclick = "onRadioButton();">Face first cube<br>
     <input type="radio" name="type" value="edge first cube" onclick = "onRadioButton();">Edge first cube<br>
     <input type="radio" name="type" value="vertex first cube" onclick = "onRadioButton();">Vertex first cube<br>
@@ -85,7 +82,6 @@ Your browser does not support the HTML5 canvas tag.
 
   var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
 
-  var snap = new Snap();
   var puzzle = new Puzzle();
 
   onRadioButton();

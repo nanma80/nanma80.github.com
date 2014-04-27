@@ -1,6 +1,8 @@
 function Puzzle() {
   // show vertices and the indices
 
+  this.neighborhood = 2; // number of vertices shared
+
   this.colorArray = [
     [244,244,244] //background
   ];
@@ -49,16 +51,6 @@ function Puzzle() {
     for (var i = 0; i < this.stickers.length; i++) {
       this.stickers[i].draw();
     }
-
-    var axes2d = this.axes2d();
-
-    for (var i = 0; i < axes2d.length; i++) {
-      if (axes2d[i] === null) continue;
-      var size = 4;
-      var halfSize = size / 2;
-      context.fillStyle = 'red';
-      context.fillRect(axes2d[i].x - halfSize, axes2d[i].y - halfSize, size, size);
-    }
   }
 
   this.axes2d = function() {
@@ -92,35 +84,19 @@ function Puzzle() {
 
   this.turn = function(axisId) {
     if (axisId === -1) return;
-    // console.log(axisId);
 
-    var minimum = $( "#slider-range" ).slider( "values", 0 ) / 100.0;
-    var maximum = $( "#slider-range" ).slider( "values", 1 ) / 100.0;
-
-    var normalizedAxis = this.axes[axisId].clone();
-    normalizedAxis.normalize();
     for (var i = 0; i < this.stickers.length; i++) {
-
-      var innerProduct = normalizedAxis.innerProd(this.stickers[i].normalizedCenter());
-      if (innerProduct >= minimum - EPSILON && innerProduct <= maximum + EPSILON) {
+      var neighborLevel = this.stickers[axisId].neighbor(this.stickers[i]);
+      if (neighborLevel > 0 && neighborLevel <3 && neighborLevel >= this.neighborhood)
         this.stickers[i].changeState();
-      }
     };
   }
 
   this.snap = function(mouse) {
-    var axes2d = this.axes2d();
-    var minimum = 50;
-    var axisId = -1;
-    for (var i = 0; i < axes2d.length; i++) {
-      if (axes2d[i] === null) continue;
-      var distance = mouse.distance(axes2d[i]);
-      if ( distance < minimum) {
-        minimum = distance;
-        axisId = i;
-      }
+    for (var i = 0; i < this.stickers.length; i++) {
+      if (this.stickers[i].contains(mouse)) return i;
     };
-    return axisId;
+    return -1;
   }
 
   this.scramble = function() {
@@ -128,7 +104,7 @@ function Puzzle() {
     scrambleLength += Math.round(Math.random());
 
     for (var scrambleIndex = 0; scrambleIndex < scrambleLength; scrambleIndex++) {
-      this.turn( Math.floor(Math.random() * 100) % this.axes.length);
+      this.turn( Math.floor(Math.random() * 100) % this.stickers.length);
     }
     
     this.count = 0;

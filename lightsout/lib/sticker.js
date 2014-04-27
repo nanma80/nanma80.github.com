@@ -1,3 +1,9 @@
+intersection = function(array1, array2) {
+  return array1.filter(function(n) {
+      return array2.indexOf(n) != -1
+  });
+}
+
 function Sticker(vertices, indices) {
   this.modulo = 2;
   this.vertices = vertices;
@@ -24,6 +30,24 @@ function Sticker(vertices, indices) {
     return this.points3d().map(function(p){ return p.project()});
   }
 
+  this.contains = function(point2d) {
+    if (!this.visible()) {
+      return false;
+    }
+
+    var points = this.points2d();
+    for (var i = 0; i < points.length; i++) {
+      var p1 = points[i];
+      var p2 = points[(i + 1) % points.length];
+      if (area(p1, p2, point2d) > 0 ) return false;
+    };
+    return true;
+  }
+
+  this.neighbor = function(sticker) {
+    return intersection(this.indices, sticker.indices).length;
+  }
+
   this.changeState = function() {
     this.state = (this.state + 1) % this.modulo;
   }
@@ -36,12 +60,17 @@ function Sticker(vertices, indices) {
     }
   }
 
-  this.draw = function() {
+  this.visible = function() {
     var points = this.points2d();
+    return (area(points[0], points[1], points[2]) < 0 );
+  }
 
-    if (area(points[0], points[1], points[2]) > 0 ) {
+  this.draw = function() {
+    if (!this.visible()) {
       return;
     }
+
+    var points = this.points2d();
 
     // compute lighting
     // var innerProd = this.normal.innerProd(lighting); // between -1 and 1
