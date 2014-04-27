@@ -22,6 +22,13 @@ function Puzzle() {
       this.stickers = this.stickers.concat(stickersPerType);
     }
     console.log(this.stickers.length);
+
+    this.axes = [];
+    for (var i = 0; i < this.stickers.length; i++) {
+      this.axes.push(this.stickers[i].center());
+    };
+
+    console.log(this.axes.length);
   }
 
   this.resetState = function() {
@@ -90,8 +97,11 @@ function Puzzle() {
     var minimum = $( "#slider-range" ).slider( "values", 0 ) / 100.0;
     var maximum = $( "#slider-range" ).slider( "values", 1 ) / 100.0;
 
+    var normalizedAxis = this.axes[axisId].clone();
+    normalizedAxis.normalize();
     for (var i = 0; i < this.stickers.length; i++) {
-      var innerProduct = this.axes[axisId].innerProd(this.stickers[i].center());
+
+      var innerProduct = normalizedAxis.innerProd(this.stickers[i].normalizedCenter());
       if (innerProduct >= minimum - EPSILON && innerProduct <= maximum + EPSILON) {
         this.stickers[i].changeState();
       }

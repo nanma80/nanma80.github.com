@@ -79,7 +79,11 @@ function Sticker(vertices, indices) {
     x /= points.length;
     y /= points.length;
     z /= points.length;
-    var output = new Point3D(x, y, z);
+    return new Point3D(x, y, z);
+  }
+
+  this.normalizedCenter = function() {
+    var output = this.center();
     output.normalize();
     return output;
   }

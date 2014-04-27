@@ -118,6 +118,7 @@ dedupStickers = function(arr) {
 }
 
 getAxesScale = function(shape) {
+  return 1.0;
   if (shape === 'face first dodecahedron') {
     return 0.85;
   } else if (shape === 'edge first dodecahedron') {
