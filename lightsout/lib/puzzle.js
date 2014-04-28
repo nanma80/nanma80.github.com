@@ -13,7 +13,7 @@ function Puzzle() {
 
   this.testSolved = function() {
     if (this.scrambledSolve && this.isSolved()) {
-      alert('Congrats! You solved it!');
+      alert('Congrats! You solved it in ' + this.nTurnsString() + '!');
       this.scrambledSolve = false;
     }
   }
@@ -36,6 +36,7 @@ function Puzzle() {
     }
     console.log("Number of stickers: " + this.stickers.length);
     this.scrambledSolve = false;
+    this.nTurns = 0;
   }
 
   this.resetState = function() {
@@ -51,11 +52,15 @@ function Puzzle() {
 
   this.draw = function() {
     context.fillStyle = "rgb(" + this.colorArray[0][0] + "," + this.colorArray[0][1] + "," + this.colorArray[0][2] + ")";
-    context.fillRect(0,0,viewWidth,viewHeight);
+    context.fillRect(0, 0, viewWidth,viewHeight);
 
     for (var i = 0; i < this.stickers.length; i++) {
       this.stickers[i].draw();
     }
+
+    context.font = "25pt Arial";
+    context.fillStyle = "green";
+    context.fillText(this.nTurnsString(), 10, 540);
   }
 
   this.rotate = function(axis, angle) {
@@ -69,6 +74,7 @@ function Puzzle() {
   this.turn = function(handleId) {
     if (handleId === -1) return;
     var neighborhood = getNeighborhood();
+    this.nTurns += 1;
 
     for (var i = 0; i < this.stickers.length; i++) {
       var neighborLevel = this.stickers[handleId].neighbor(this.stickers[i]);
@@ -89,15 +95,20 @@ function Puzzle() {
     scrambleLength += Math.round(Math.random());
 
     for (var scrambleIndex = 0; scrambleIndex < scrambleLength; scrambleIndex++) {
-      this.turn( Math.floor(Math.random() * 100) % this.stickers.length);
+      this.turn( Math.floor(Math.random() * 10000) % this.stickers.length);
     }
 
     if (this.isSolved()) {
       this.turn(0);
     }
     
-    this.count = 0;
-    this.draw();
     this.scrambledSolve = true;
+    this.nTurns = 0;
+
+    this.draw();
+  }
+
+  this.nTurnsString = function() {
+    return this.nTurns.toString() + " move" + (this.nTurns !== 1 ? "s" : "");
   }
 }

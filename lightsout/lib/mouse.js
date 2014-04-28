@@ -18,6 +18,9 @@ mouseUp = function(e){
   dragging = false;
 }
 
+touchUp = function(e){
+}
+
 click = function(e){
   var layer;
   puzzle.turn(puzzle.snap(mousePos));
@@ -48,13 +51,17 @@ mouseOver = function(e){
 }
 
 mouseMove = function(e) {
-  startTime = new Date().getTime();
-
   if (mouseIsDown && mouseInRegion) {
     mouseDrag(e);
   }
 }
 
+touchMove = function(e) {
+  e.preventDefault();
+  if (mouseIsDown) {
+    mouseDrag(e);
+  }
+}
 
 findMouse = function (e) {
   mousePos.x = e.pageX - canvas.offsetLeft;
