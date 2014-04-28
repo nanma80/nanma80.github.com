@@ -23,9 +23,13 @@ touchUp = function(e){
 
 click = function(e){
   var layer;
+  startTime = new Date().getTime();
   puzzle.turn(puzzle.snap(mousePos));
+  afterTurnTime = new Date().getTime();
   puzzle.draw();
+  afterDrawTime = new Date().getTime();
   puzzle.testSolved();
+  document.getElementById("log").innerHTML += [afterTurnTime - startTime, afterDrawTime - afterTurnTime].toString() + ';';
 }
 
 mouseDrag = function(e){
