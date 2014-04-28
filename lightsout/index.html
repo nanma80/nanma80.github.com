@@ -1,63 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Lights Out</title>
-<script src="lib/point3d.js"></script>
-<script src="lib/sticker.js"></script>
-<script src="lib/puzzle.js"></script>
-<script src="lib/mouse.js"></script>
-<script src="lib/puzzleBuilderHelper.js"></script>
-<script src="lib/puzzleBuilder.js"></script>
-<style type = "text/css">
-  button {
-    margin: 10px;
-    height:30px; 
-    width:90px;
-  } 
-</style>
+  <title>Lights Out</title>
+  <script src="lib/point3d.js"></script>
+  <script src="lib/sticker.js"></script>
+  <script src="lib/puzzle.js"></script>
+  <script src="lib/mouse.js"></script>
+  <script src="lib/puzzleBuilderHelper.js"></script>
+  <script src="lib/puzzleBuilder.js"></script>
+
+  <link href="style/main.css" rel="stylesheet" type="text/css">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+
 </head>
 <body onselectstart='return false;'>
 
-<h1 style="margin-top:0;margin-bottom:0;font-family:Arial, Helvetica, sans-serif;">
-  Lights Out on Polyhedron
+<h1>
+  Polyhedral Lights Out
 </h1>
 
-<div id="content" style="height:550px;width:550px;float:left;">
-<canvas id="canvas" width="550" height="550" style="border:1px solid #c3c3c3;" oncontextmenu="return false;" onselectstart='return false;'>
-Your browser does not support the HTML5 canvas tag.
-</canvas>
+<div id="content">
+  <canvas id="canvas" width="550" height="550" oncontextmenu="return false;" onselectstart='return false;'>
+    Your browser does not support the HTML5 canvas tag.
+  </canvas>
 </div>
 
-<div id="info" style="margin-left:10px;width:330px;float:left;font-family:Arial, Helvetica, sans-serif;">
-  <div id="types" style="font-size:large;float:left;background-color:rgb(240,240,255);line-height:30px;">
-    <div>Shape</div>
-    <input type="radio" name="type" value="cube" onclick = "onRadioButton();">Cube<br>
-    <input type="radio" name="type" value="octahedron" onclick = "onRadioButton();">Octahedron<br>
-    <input type="radio" name="type" value="dodecahedron" onclick = "onRadioButton();" checked>Dodecahedron<br>
-    <input type="radio" name="type" value="icosahedron" onclick = "onRadioButton();">Icosahedron<br>
-    <input type="radio" name="type" value="vertex first cube" onclick = "onRadioButton();">Cuboctahedron<br>
-    <input type="radio" name="type" value="face first dodecahedron" onclick = "onRadioButton();">Icosidodecahedron<br>
-    <input type="radio" name="type" value="soccer" onclick = "onRadioButton();">Soccer Ball<br>
-
-    <div>Neighborhood is defined as:</div>
-    <input type="radio" name="neighborhood" value="2" checked>sharing an edge<br>
-    <input type="radio" name="neighborhood" value="1">sharing an vertex<br>
-  </div>
-
-  <div id="control" style="margin-left:53px;margin-top:10px;margin-bottom:10px;height:50px;width:300px;float:left;font-family:Arial, Helvetica, sans-serif;">
-    <button type="button" onclick = "puzzle.resetState();">Reset</button> 
-    <button type="button" onclick = "puzzle.scramble();">Scramble</button>
-  </div>
-
-  
-
+<div class="control">
+  <button type="button" onclick = "puzzle.resetState();">Reset</button> 
+  <button type="button" onclick = "puzzle.scramble();">Scramble</button>
 </div>
 
-<div id="content" style="font-size:small;float:left;font-family:Arial, Helvetica, sans-serif">
-<p>Click a sticker to toggle its neighbors.</p>
-<p>The puzzle uses html5 canvas, which is not supported directly by IE 8 or lower. I also apologize if the animation is jumpy on some browsers. Try using the latest version of Chrome for the best experience.</p>
-<p>Nan Ma, 2014</p>
-<p id="log"></p>
+<div class="control">Shape: 
+  <select id="shape" onchange="onShapeChange();">
+    <option value="cube">Cube</option>
+    <option value="octahedron">Octahedron</option>
+    <option value="dodecahedron" selected>Dodecahedron</option>
+    <option value="icosahedron">Icosahedron</option>
+    <option value="vertex first cube">Cuboctahedron</option>
+    <option value="face first dodecahedron">Icosidodecahedron</option>
+    <option value="soccer">Soccer Ball</option>
+  </select>
+</div>
+
+<div class="control">Neighborhood is defined as:
+  <select id="neighborhood">
+    <option value="2" selected>sharing an edge</option>
+    <option value="1">sharing a vertex</option>
+  </select>
+</div>
+
+<div class="comment">
+  <p>Click a sticker to toggle its neighbors.</p>
+  <p>The puzzle uses html5 canvas, which is not supported directly by IE 8 or lower. I also apologize if the animation is jumpy on some browsers. Try using the latest version of Chrome for the best experience.</p>
+  <p>Nan Ma, 2014</p>
+  <p id="log"></p>
 </div>
 
 <script type="text/javascript">
@@ -70,8 +70,7 @@ Your browser does not support the HTML5 canvas tag.
 
   var puzzle = new Puzzle();
 
-  onRadioButton();
-
+  onShapeChange();
   canvas.addEventListener("mousedown", mouseDown, false);
   canvas.addEventListener("mousemove", mouseMove, false);
   canvas.addEventListener("mouseover", mouseOver, false);

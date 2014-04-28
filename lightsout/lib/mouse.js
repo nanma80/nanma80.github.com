@@ -68,30 +68,13 @@ findMouse = function (e) {
   mousePos.y = e.pageY - canvas.offsetTop;
 }
 
-onRadioButton = function() {
-  var needUpdate = false;
-  var typeElements = document.getElementsByName('type');
-  var i;
-
-  for (i=0; i < typeElements.length; i++) {
-    if (typeElements[i].checked) {
-      if (!(typeElements[i].value == puzzle.shape)) needUpdate = true;
-      break;
-    }
-  }
-
-  if (needUpdate) {
-    puzzle.setParameters(typeElements[i].value);
-    puzzle.resetState();
-  }
+onShapeChange = function() {
+  var shape = document.getElementById("shape").value;
+  puzzle.setParameters(shape);
+  puzzle.resetState();
 }
 
 getNeighborhood = function() {
-  var neighborhood = document.getElementsByName('neighborhood');
-
-  for (i=0; i < neighborhood.length; i++) {
-    if (neighborhood[i].checked) {
-      return neighborhood[i].value;
-    }
-  }
+  var neighborhood = document.getElementById('neighborhood');
+  return neighborhood.value;
 }

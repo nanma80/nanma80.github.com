@@ -1,9 +1,5 @@
 function Puzzle() {
 
-  this.colorArray = [
-    [244,244,244] //background
-  ];
-
   this.isSolved = function() {
     for (var i = 0; i < this.stickers.length; i++) {
       if (!this.stickers[i].isSolved()) return false;
@@ -43,15 +39,15 @@ function Puzzle() {
     this.initializeState();
 
     this.rotate(new Point3D(-1,0,0), 1.3);
-    this.rotate(new Point3D(0,-1,0), 2);
-    this.rotate(new Point3D(1,0,0), 0.5);
+    this.rotate(new Point3D(0,-1,0), 1.3);
+    this.rotate(new Point3D(1,0,0), 0.7);
     this.rotate(new Point3D(0,0,-1), 0.2);
     
     this.draw();
   }
 
   this.draw = function() {
-    context.fillStyle = "rgb(" + this.colorArray[0][0] + "," + this.colorArray[0][1] + "," + this.colorArray[0][2] + ")";
+    context.fillStyle = "white";
     context.fillRect(0, 0, viewWidth,viewHeight);
 
     for (var i = 0; i < this.stickers.length; i++) {
