@@ -9,6 +9,7 @@ function Sticker(vertices, indices) {
   this.vertices = vertices;
   this.indices = indices;
   this.state = 0;
+  this.lighting = new Point3D(1, 1, 1);
 
   this.isSolved = function() {
     return (this.state === 0);
@@ -57,11 +58,18 @@ function Sticker(vertices, indices) {
   }
 
   this.color = function() {
+    var colorArray;
+    var innerProd = this.center().innerProd(this.lighting); // between -1 and 1
     if (this.state < 0.5) {
-      return 'rgb(0, 0, 100)';
+      colorArray = [0, 0, 100];
     } else {
-      return 'rgb(0, 0, 180)';
+      colorArray = [60, 70, 230];
     }
+    
+    colorArray = colorArray.map(function(x){return Math.floor(x * (0.8 + innerProd * 0.17 ))  });
+    var displayColor = colorArray.map(function(x){return Math.max(0,Math.min(255,x))  });
+
+    return "rgb(" + displayColor[0] + "," + displayColor[1] + "," + displayColor[2] + ")";
   }
 
   this.visible = function() {
@@ -76,17 +84,10 @@ function Sticker(vertices, indices) {
 
     var points = this.points2d();
 
-    // compute lighting
-    // var innerProd = this.normal.innerProd(lighting); // between -1 and 1
-    
-    // var displayColor = this.colorArray.slice(0);
-    // displayColor = displayColor.map(function(x){return Math.floor(x * (0.8 + innerProd * 0.2 ))  });
-
-    // displayColor = displayColor.map(function(x){return Math.max(0,Math.min(255,x))  });
-
-    // context.fillStyle = "rgb(" + displayColor[0] + "," + displayColor[1] + "," + displayColor[2] + ")";
     context.strokeStyle = 'black';
-    context.lineWidth = 2;
+    context.lineWidth = 3;
+    context.lineJoin = "round";
+    context.lineCap = "round";
     context.fillStyle = this.color();
     context.beginPath();
     context.moveTo(points[0].x, points[0].y);
