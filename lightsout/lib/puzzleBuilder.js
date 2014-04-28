@@ -10,8 +10,7 @@ function PuzzleBuilder() {
   }
 
   this.initializeState = function() {
-    this.axes = getAxes(this.shape);
-    this.vertices = getVertices(this.axes);
+    this.vertices = getVertices(this.shape);
 
     this.prototypeStickers = getPrototypeStickers(this.shape);
     this.stickersByType = [];
@@ -31,7 +30,6 @@ function PuzzleBuilder() {
     this.rotate(new Point3D(1,0,0), 0.5);
     this.rotate(new Point3D(0,0,-1), 0.2);
     
-    snap.reset();
     this.draw();
   }
 
@@ -52,10 +50,6 @@ function PuzzleBuilder() {
       context.fillStyle = "blue";
       context.fillText(i, vertex2d.x, vertex2d.y);
     }
-
-    // context.font = "25pt Arial";
-    // context.fillStyle = "blue";
-    // context.fillText("some text", 10, 540);
   }
 
   this.rotate = function(axis, angle) {

@@ -20,15 +20,9 @@ mouseUp = function(e){
 
 click = function(e){
   var layer;
-  axisId = puzzle.snap(mousePos);
-  puzzle.turn(axisId);
-  // if (!(e.altKey) && !(e.shiftKey)) layer = 1;
-  // else if (e.altKey && !(e.shiftKey)) layer = 2;
-  // else if (e.shiftKey && !(e.altKey)) layer = 12;
-  // else layer = 123;
-  // puzzle.twist(e.button == 2, layer);
-
+  puzzle.turn(puzzle.snap(mousePos));
   puzzle.draw();
+  puzzle.testSolved();
 }
 
 mouseDrag = function(e){
@@ -82,5 +76,15 @@ onRadioButton = function() {
   if (needUpdate) {
     puzzle.setParameters(typeElements[i].value);
     puzzle.resetState();
+  }
+}
+
+getNeighborhood = function() {
+  var neighborhood = document.getElementsByName('neighborhood');
+
+  for (i=0; i < neighborhood.length; i++) {
+    if (neighborhood[i].checked) {
+      return neighborhood[i].value;
+    }
   }
 }

@@ -10,6 +10,10 @@ function Sticker(vertices, indices) {
   this.indices = indices;
   this.state = 0;
 
+  this.isSolved = function() {
+    return (this.state === 0);
+  }
+
   this.getSignature = function(){
     var signature = this.indices.concat();
     signature.sort();

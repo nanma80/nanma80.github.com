@@ -1,11 +1,22 @@
 function Puzzle() {
-  // show vertices and the indices
-
-  this.neighborhood = 2; // number of vertices shared
 
   this.colorArray = [
     [244,244,244] //background
   ];
+
+  this.isSolved = function() {
+    for (var i = 0; i < this.stickers.length; i++) {
+      if (!this.stickers[i].isSolved()) return false;
+    };
+    return true;
+  }
+
+  this.testSolved = function() {
+    if (this.scrambledSolve && this.isSolved()) {
+      alert('Congrats! You solved it!');
+      this.scrambledSolve = false;
+    }
+  }
 
   this.setParameters = function(shape) {
     this.shape = shape;
@@ -13,8 +24,8 @@ function Puzzle() {
 
   this.initializeState = function() {
     resetRotationMatrix();
-    this.axes = getAxes(this.shape);
-    this.vertices = getVertices(this.axes);
+    this.vertices = getVertices(this.shape);
+    console.log("Number of vertices: " + this.vertices.length);
     
     this.prototypeStickers = getPrototypeStickers(this.shape);
     this.stickersByType = [];
@@ -23,14 +34,8 @@ function Puzzle() {
       var stickersPerType = populateStickers(this.vertices, this.prototypeStickers[i], getSymmetry(this.shape));
       this.stickers = this.stickers.concat(stickersPerType);
     }
-    console.log(this.stickers.length);
-
-    this.axes = [];
-    for (var i = 0; i < this.stickers.length; i++) {
-      this.axes.push(this.stickers[i].center());
-    };
-
-    console.log(this.axes.length);
+    console.log("Number of stickers: " + this.stickers.length);
+    this.scrambledSolve = false;
   }
 
   this.resetState = function() {
@@ -53,41 +58,21 @@ function Puzzle() {
     }
   }
 
-  this.axes2d = function() {
-    var axesScale = getAxesScale(this.shape);
-
-    var output = [];
-    for (var i = 0; i < this.axes.length; i++) {
-
-      var vertex3d = this.axes[i].scale(axesScale);
-      if (vertex3d.z < 0) {
-        output.push(null);
-      } else {
-        var vertex2d = vertex3d.project();
-        output.push(vertex2d);
-      }
-    }
-    return output;
-  }
-
   this.rotate = function(axis, angle) {
     setRotationMatrix(axis, angle);
-
-    for (var i = 0; i < this.axes.length; i++) {
-      this.axes[i].rotate();
-    }
 
     for (var i = 0; i < this.vertices.length; i++) {
       this.vertices[i].rotate();
     }
   }
 
-  this.turn = function(axisId) {
-    if (axisId === -1) return;
+  this.turn = function(handleId) {
+    if (handleId === -1) return;
+    var neighborhood = getNeighborhood();
 
     for (var i = 0; i < this.stickers.length; i++) {
-      var neighborLevel = this.stickers[axisId].neighbor(this.stickers[i]);
-      if (neighborLevel > 0 && neighborLevel <3 && neighborLevel >= this.neighborhood)
+      var neighborLevel = this.stickers[handleId].neighbor(this.stickers[i]);
+      if (neighborLevel > 0 && neighborLevel <3 && neighborLevel >= neighborhood)
         this.stickers[i].changeState();
     };
   }
@@ -106,9 +91,13 @@ function Puzzle() {
     for (var scrambleIndex = 0; scrambleIndex < scrambleLength; scrambleIndex++) {
       this.turn( Math.floor(Math.random() * 100) % this.stickers.length);
     }
+
+    if (this.isSolved()) {
+      this.turn(0);
+    }
     
     this.count = 0;
     this.draw();
-
+    this.scrambledSolve = true;
   }
 }
