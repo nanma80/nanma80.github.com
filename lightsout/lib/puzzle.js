@@ -87,6 +87,7 @@ function Puzzle() {
   }
 
   this.scramble = function() {
+    this.resetState();
     var scrambleLength = 50;
     scrambleLength += Math.round(Math.random());
 
