@@ -11,31 +11,37 @@ html, body {
 }
 
 body {
-  margin: 10px 0; }
+  margin: 10px 10px; }
+
+button {
+  margin-left:10px;
+  margin-right:10px;
+  height:30px; 
+  width:90px;} 
 
 .heading:after {
   content: "";
   display: block;
   clear: both; }
 
-h1.title {
-  font-size: 80px;
-  color: #671967;
+.title {
+  font-size: 40px;
   font-weight: bold;
   margin: 0;
-  display: block;
-  float: left; }
+  margin-left: 10px;
+  display: block;}
 
-.tagline {
-  font-size: 80px;
-  font-weight: bold;
-  color: #671967;
-  margin: 0;
-  display: block;
-  float: both; }
+canvas {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;}
 
 .control {
+  text-align:center;
+  margin-left: auto;
+  margin-right: auto;
   margin: 10px;
+  display:block;
 }
 
 @-webkit-keyframes move-up {
@@ -210,12 +216,12 @@ hr {
     font-size: 15px; }
 
   body {
-    margin: 20px 0;
-    padding: 0 20px; }
+    margin: 10px 0;
+    padding: 0 10px; }
 
-  h1.title {
+  .title {
     font-size: 20px;
-    margin-top: 10px; }
+    margin-top: 0px; }
 
   .container {
     width: 280px;

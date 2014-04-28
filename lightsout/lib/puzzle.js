@@ -39,7 +39,7 @@ function Puzzle() {
     this.initializeState();
 
     this.rotate(new Point3D(-1,0,0), 1.3);
-    this.rotate(new Point3D(0,-1,0), 1.3);
+    this.rotate(new Point3D(0,-1,0), 1.7);
     this.rotate(new Point3D(1,0,0), 0.7);
     this.rotate(new Point3D(0,0,-1), 0.2);
     
@@ -54,9 +54,9 @@ function Puzzle() {
       this.stickers[i].draw();
     }
 
-    context.font = "25pt Arial";
+    context.font = "15pt Arial";
     context.fillStyle = "green";
-    context.fillText(this.nTurnsString(), 10, 540);
+    context.fillText(this.nTurnsString(), 6, viewHeight - 10);
   }
 
   this.rotate = function(axis, angle) {

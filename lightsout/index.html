@@ -19,9 +19,9 @@
 </head>
 <body onselectstart='return false;'>
 
-<h1>
-  Polyhedral Lights Out
-</h1>
+<div class="title">
+  Polyhedral Lights Out<br>
+</div>
 
 <div id="content">
   <canvas id="canvas" width="550" height="550" oncontextmenu="return false;" onselectstart='return false;'>
@@ -46,7 +46,7 @@
   </select>
 </div>
 
-<div class="control">Neighborhood is defined as:
+<div class="control">Neighbors defined as:
   <select id="neighborhood">
     <option value="2" selected>sharing an edge</option>
     <option value="1">sharing a vertex</option>
@@ -54,7 +54,7 @@
 </div>
 
 <div class="comment">
-  <p>Click a sticker to toggle its neighbors.</p>
+  <p>Click a tile to toggle its neighbors. Click "scramble" and turn off all tiles to win. </p>
   <p>The puzzle uses html5 canvas, which is not supported directly by IE 8 or lower. I also apologize if the animation is jumpy on some browsers. Try using the latest version of Chrome for the best experience.</p>
   <p>Nan Ma, 2014</p>
   <p id="log"></p>
@@ -63,8 +63,17 @@
 <script type="text/javascript">
   var canvas = document.getElementById("canvas");
   var context = canvas.getContext("2d");
+  var size = 550;
+  if (window.innerWidth < 520) {
+    size = 320;
+  }
+  canvas.width = size;
+  canvas.height = size;
+
+
   var viewHeight = canvas.height;
   var viewWidth = canvas.width;
+
 
   var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
 
