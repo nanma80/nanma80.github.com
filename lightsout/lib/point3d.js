@@ -65,6 +65,11 @@ function Point3D(x,y,z) {
     }
   }
 
+  this.norm = function() {
+    var norm_sq = this.x*this.x + this.y*this.y + this.z*this.z;
+    return Math.sqrt(norm_sq);
+  }
+
   this.rotate = function() {
     
     var coord = [this.x, this.y, this.z].slice(0);
@@ -127,7 +132,7 @@ function Point3D(x,y,z) {
 
   this.indexIn = function(arr) {
     for (var i = 0; i < arr.length; i++) {
-      if (this.innerProd(arr[i]) > 1 - EPSILON) {
+      if (this.innerProd(arr[i]) > this.norm() * arr[i].norm() - EPSILON) {
         return i;
       }
     }

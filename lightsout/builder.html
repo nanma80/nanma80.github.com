@@ -28,21 +28,30 @@ Your browser does not support the HTML5 canvas tag.
 </canvas>
 </div>
 
-<div id="info" style="margin-left:10px;width:330px;float:left;font-family:Arial, Helvetica, sans-serif;">
-  <div id="types" style="font-size:large;float:left;background-color:rgb(240,240,255);line-height:30px;">
-    <input type="radio" name="type" value="cube" onclick = "onRadioButton();">Cube<br>
-    <input type="radio" name="type" value="octahedron" onclick = "onRadioButton();">Octahedron<br>
-    <input type="radio" name="type" value="dodecahedron" onclick = "onRadioButton();" checked>Dodecahedron<br>
-    <input type="radio" name="type" value="icosahedron" onclick = "onRadioButton();">Icosahedron<br>
-    <input type="radio" name="type" value="vertex first cube" onclick = "onRadioButton();">Cuboctahedron<br>
-    <input type="radio" name="type" value="face first dodecahedron" onclick = "onRadioButton();">Icosidodecahedron<br>
-    <input type="radio" name="type" value="soccer" onclick = "onRadioButton();">Soccer Ball<br>
-  </div>
+<div class="control">Shape:
+  <select id="shape" onchange="onShapeChange();">
+    <option value="cube">Cube</option>
+    <option value="octahedron">Octahedron</option>
+    <option value="dodecahedron">Dodecahedron</option>
+    <option value="icosahedron">Icosahedron</option>
+    <option value="vertex first cube">Cuboctahedron</option>
+    <option value="face first dodecahedron">Icosidodecahedron</option>
+    <option value="soccer">Soccer Ball</option>
+    <option value="rhombic dodecahedron">Rhombic Dodecahedron</option>
+    <option value="rhombic triacontahedron" selected>Rhombic Triacontahedron</option>
+  </select>
+</div>
 
-  <div id="control" style="margin-left:53px;margin-top:10px;margin-bottom:10px;height:50px;width:300px;float:left;font-family:Arial, Helvetica, sans-serif;">
-    <button type="button" onclick = "puzzle.resetState();">Reset</button> 
-    <button type="button" onclick = "puzzle.scramble();">Scramble</button>
-  </div>
+<div class="control">Neighbors defined as:
+  <select id="neighborhood">
+    <option value="2" selected>sharing an edge</option>
+    <option value="1">sharing a vertex</option>
+  </select>
+</div>
+
+<div class="control">
+  <input type="checkbox" id="toggleSelf">
+  <label for="toggleSelf">Also toggle clicked tile</label>
 </div>
 
 <div id="content" style="font-size:small;float:left;font-family:Arial, Helvetica, sans-serif">
@@ -59,8 +68,7 @@ Your browser does not support the HTML5 canvas tag.
   var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
 
   var puzzle = new PuzzleBuilder();
-
-  onRadioButton();
+  onShapeChange();
 
   canvas.addEventListener("mousedown", mouseDown, false);
   canvas.addEventListener("mousemove", mouseMove, false);

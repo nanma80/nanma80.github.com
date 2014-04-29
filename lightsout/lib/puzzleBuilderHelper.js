@@ -20,6 +20,34 @@ getVertices = function(shape) {
     return getAxes('face first cube');
   } else if (shape === 'soccer') {
     return getSoccerVertices();
+  } else if (shape === 'rhombic dodecahedron') {
+    var output = [];
+    var cubeVertices = getAxes('vertex first cube');
+    var cubeFaces = getAxes('face first cube');
+    var vertexUnit = cubeVertices[0].x;
+    for (var i = 0; i < cubeVertices.length; i++) {
+      output.push(cubeVertices[i].scale(1.0/2.0/vertexUnit));
+    };
+    output = output.concat(cubeFaces);
+    return output;
+  } else if (shape === 'rhombic triacontahedron') {
+    var output = [];
+    var dodecahedronVertices = getAxes('vertex first dodecahedron');
+    var dodecahedronFaces = getAxes('face first dodecahedron');
+
+    var p0 = dodecahedronVertices[0];
+    var p10 = dodecahedronVertices[10];
+    var n1 = new Point3D(p0.x + p10.x, p0.y + p10.y, p0.z + p10.z).norm();
+    var p22 = dodecahedronFaces[22-dodecahedronVertices.length];
+    var p25 = dodecahedronFaces[25-dodecahedronVertices.length];
+    var n2 = new Point3D(p22.x + p25.x, p22.y + p25.y, p22.z + p25.z).norm();
+
+    var vertexUnit = dodecahedronVertices[0].norm();
+    for (var i = 0; i < dodecahedronVertices.length; i++) {
+      output.push(dodecahedronVertices[i].scale(n2/n1/vertexUnit));
+    };
+    output = output.concat(dodecahedronFaces);
+    return output;
   } else {
     return [];
   }
@@ -51,7 +79,6 @@ getAxes = function(shape) {
   } else if (shape === 'face vertex first dodecahedron') {
     axes = axes.concat(getAxes('face first dodecahedron'));
     axes = axes.concat(getAxes('vertex first dodecahedron'));
-    console.log(axes);
   } else if (shape === 'face first cube') {
     axes.push(new Point3D(1, 0, 0));
     axes.push(new Point3D(-1, 0, 0));
@@ -121,6 +148,10 @@ getPrototypeStickers = function(shape) {
     return [[0, 2, 4]];
   } else if (shape === 'soccer') {
     return [[2, 5, 8, 24, 21], [2, 21, 23, 52, 50, 33]];
+  } else if (shape === 'rhombic dodecahedron') {
+    return [[0, 8, 1, 10]];
+  } else if (shape === 'rhombic triacontahedron') {
+    return [[2, 20, 16, 24]];
   } else {
     return [];
   }
@@ -133,14 +164,16 @@ getSymmetry = function(shape) {
       shape === 'face vertex first dodecahedron' ||
       shape === 'soccer' ||
       shape === 'dodecahedron' ||
-      shape === 'icosahedron') {
+      shape === 'icosahedron' ||
+      shape === 'rhombic triacontahedron') {
     return 'dodecahedron';
   } else if (
     shape === 'face first cube' || 
     shape === 'edge first cube' || 
     shape === 'vertex first cube' ||
     shape === 'cube' ||
-    shape === 'octahedron') {
+    shape === 'octahedron' ||
+    shape === 'rhombic dodecahedron') {
     return 'cube';
   }
 }
@@ -224,7 +257,6 @@ getSoccerVertices = function() {
 
 populateStickers = function(vertices, prototypeSticker, symmetry) {
   var points = getPoints(symmetry);
-
   var stickers = [];
 
   stickers.push(new Sticker(vertices, prototypeSticker));
