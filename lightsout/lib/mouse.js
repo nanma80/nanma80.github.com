@@ -33,7 +33,7 @@ mouseDrag = function(e){
   dragging = true;
   var old = new Point2D(mousePos.x, mousePos.y)
   findMouse(e);
-  var delta  = new Point2D(mousePos.x - old.x, mousePos.y - old.y);
+  var delta = new Point2D(mousePos.x - old.x, mousePos.y - old.y);
   puzzle.rotate(new Point3D(delta.y, delta.x,  0), delta.norm/100); // 100: speed of dragging
   puzzle.draw();
 }
@@ -83,6 +83,7 @@ onShapeChange = function() {
   var shape = document.getElementById("shape").value;
   puzzle.setParameters(shape);
   puzzle.resetState();
+  puzzle.scramble();
 }
 
 getNeighborhood = function() {

@@ -11,6 +11,8 @@ function Puzzle() {
     if (this.scrambledSolve && this.isSolved()) {
       alert('Congrats! You solved it in ' + this.nTurnsString() + '!');
       this.scrambledSolve = false;
+      this.lastTurn = -1;
+      this.draw();
     }
   }
 
@@ -99,7 +101,7 @@ function Puzzle() {
   }
 
   this.scramble = function() {
-    this.initializeState();
+    this.resetState();
     var scrambleLength = 50;
     scrambleLength += Math.round(Math.random());
 
