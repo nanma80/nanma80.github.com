@@ -5,12 +5,14 @@ mousePos = new Point2D(0,0);
 dragging = false;
 
 mouseDown = function(e){
+  console.log('mouseDown');
   mouseIsDown = true;
   findMouse(e);
   dragging = false;
 }
 
 mouseUp = function(e){
+  console.log('mouseUp');
   mouseIsDown = false;
   if (!dragging && mouseInRegion) {
     click(e);
@@ -19,6 +21,8 @@ mouseUp = function(e){
 }
 
 touchUp = function(e){
+  console.log('touchUp');
+  mouseUp(e);
 }
 
 click = function(e){
@@ -32,7 +36,7 @@ mouseDrag = function(e){
   dragging = true;
   var old = new Point2D(mousePos.x, mousePos.y)
   findMouse(e);
-  var delta  = new Point2D(mousePos.x - old.x, mousePos.y - old.y)
+  var delta  = new Point2D(mousePos.x - old.x, mousePos.y - old.y);
   puzzle.rotate(new Point3D(delta.y, delta.x,  0), delta.norm/100); // 100: speed of dragging
   puzzle.draw();
 }
@@ -64,8 +68,18 @@ touchMove = function(e) {
 }
 
 findMouse = function (e) {
-  mousePos.x = e.pageX - canvas.offsetLeft;
-  mousePos.y = e.pageY - canvas.offsetTop;
+  var x,y;
+
+  if(e.touches){
+    x = e.touches[0].pageX;
+    y = e.touches[0].pageY;
+  } else {
+    x = e.pageX;
+    y = e.pageY;
+  }
+
+  mousePos.x = x - canvas.offsetLeft;
+  mousePos.y = y - canvas.offsetTop;
 }
 
 onShapeChange = function() {
