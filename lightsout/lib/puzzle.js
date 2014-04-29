@@ -70,6 +70,7 @@ function Puzzle() {
   this.turn = function(handleId) {
     if (handleId === -1) return;
     var neighborhood = getNeighborhood();
+    var toggleSelf = getToggleSelf();
     this.nTurns += 1;
 
     for (var i = 0; i < this.stickers.length; i++) {
@@ -77,6 +78,9 @@ function Puzzle() {
       if (neighborLevel > 0 && neighborLevel <3 && neighborLevel >= neighborhood)
         this.stickers[i].changeState();
     };
+
+    if (toggleSelf)
+      this.stickers[handleId].changeState();
   }
 
   this.snap = function(mouse) {

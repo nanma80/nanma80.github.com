@@ -7,15 +7,11 @@ html, body {
   font-size: 18px; 
   width:  100%;
   height: 100%;
-  margin: 0px;
 }
 
 #touchTarget {
   -ms-touch-action: none;
 }
-
-body {
-  margin: 10px 10px; }
 
 button {
   margin-left:10px;
@@ -23,6 +19,9 @@ button {
   height:30px; 
   width:90px;} 
 
+div {
+  margin: 0px;
+}
 .heading:after {
   content: "";
   display: block;
@@ -93,8 +92,8 @@ hr {
     font-size: 15px; }
 
   body {
-    margin: 10px 0;
-    padding: 0 10px; }
+    margin: 0;
+    padding: 0; }
 
   .title {
     font-size: 20px;

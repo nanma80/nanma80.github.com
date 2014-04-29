@@ -5,14 +5,12 @@ mousePos = new Point2D(0,0);
 dragging = false;
 
 mouseDown = function(e){
-  console.log('mouseDown');
   mouseIsDown = true;
   findMouse(e);
   dragging = false;
 }
 
 mouseUp = function(e){
-  console.log('mouseUp');
   mouseIsDown = false;
   if (!dragging && mouseInRegion) {
     click(e);
@@ -21,7 +19,7 @@ mouseUp = function(e){
 }
 
 touchUp = function(e){
-  console.log('touchUp');
+  mouseIsDown = false;
 }
 
 click = function(e){
@@ -90,4 +88,9 @@ onShapeChange = function() {
 getNeighborhood = function() {
   var neighborhood = document.getElementById('neighborhood');
   return neighborhood.value;
+}
+
+getToggleSelf = function() {
+  var toggleSelf = document.getElementById('toggleSelf');
+  return toggleSelf.checked;
 }
