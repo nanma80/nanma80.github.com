@@ -22,7 +22,6 @@ mouseUp = function(e){
 
 touchUp = function(e){
   console.log('touchUp');
-  mouseUp(e);
 }
 
 click = function(e){
