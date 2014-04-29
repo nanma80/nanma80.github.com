@@ -4,6 +4,13 @@ intersection = function(array1, array2) {
   });
 }
 
+var colors = {
+  3: {0: [60, 0, 0], 1: [255, 0, 0]},
+  4: {0: [0, 60, 0], 1: [20, 255, 20]},
+  5: {0: [0, 0, 100], 1: [60, 60, 255]},
+  6: {0: [60, 70, 0], 1: [255, 255, 60]}
+}
+
 function Sticker(vertices, indices) {
   this.modulo = 2;
   this.vertices = vertices;
@@ -58,13 +65,8 @@ function Sticker(vertices, indices) {
   }
 
   this.color = function() {
-    var colorArray;
+    var colorArray = colors[this.indices.length][this.state];
     var innerProd = this.center().innerProd(this.lighting); // between -1 and 1
-    if (this.state < 0.5) {
-      colorArray = [0, 0, 100];
-    } else {
-      colorArray = [60, 70, 230];
-    }
     
     colorArray = colorArray.map(function(x){return Math.floor(x * (0.8 + innerProd * 0.17 ))  });
     var displayColor = colorArray.map(function(x){return Math.max(0,Math.min(255,x))  });

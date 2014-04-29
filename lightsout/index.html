@@ -74,8 +74,8 @@
   var canvas = document.getElementById("canvas");
   var context = canvas.getContext("2d");
   var size = 550;
-  if (window.innerWidth < 520) {
-    size = 318;
+  if (window.innerWidth < size) {
+    size = window.innerWidth - 2;
   }
   canvas.width = size;
   canvas.height = size;
