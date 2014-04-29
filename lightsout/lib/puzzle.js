@@ -33,6 +33,8 @@ function Puzzle() {
     console.log("Number of stickers: " + this.stickers.length);
     this.scrambledSolve = false;
     this.nTurns = 0;
+
+    this.lastTurn = -1;
   }
 
   this.resetState = function() {
@@ -54,6 +56,10 @@ function Puzzle() {
       this.stickers[i].draw();
     }
 
+    if (this.lastTurn !== -1) {
+      this.stickers[this.lastTurn].highlight();
+    }
+
     context.font = "15pt Arial";
     context.fillStyle = "green";
     context.fillText(this.nTurnsString(), 6, viewHeight - 10);
@@ -68,7 +74,9 @@ function Puzzle() {
   }
 
   this.turn = function(handleId) {
+    this.lastTurn = handleId;
     if (handleId === -1) return;
+
     var neighborhood = getNeighborhood();
     var toggleSelf = getToggleSelf();
     this.nTurns += 1;
@@ -91,7 +99,7 @@ function Puzzle() {
   }
 
   this.scramble = function() {
-    this.resetState();
+    this.initializeState();
     var scrambleLength = 50;
     scrambleLength += Math.round(Math.random());
 
@@ -106,6 +114,7 @@ function Puzzle() {
     this.scrambledSolve = true;
     this.nTurns = 0;
 
+    this.lastTurn = -1;
     this.draw();
   }
 

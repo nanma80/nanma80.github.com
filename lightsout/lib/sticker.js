@@ -101,6 +101,26 @@ function Sticker(vertices, indices) {
     context.stroke();
   }
 
+  this.highlight = function() {
+    if (!this.visible()) {
+      return;
+    }
+
+    var points = this.points2d();
+
+    context.strokeStyle = 'rgba(255, 40, 255, 0.5)';
+    context.lineWidth = 5;
+    context.lineJoin = "round";
+    context.lineCap = "round";
+    context.beginPath();
+    context.moveTo(points[0].x, points[0].y);
+    for (var i = 1; i < points.length; i++) {
+      context.lineTo(points[i].x, points[i].y);
+    }
+    context.closePath();
+    context.stroke();
+  }
+
   this.center = function() {
     var points = this.points3d();
     var x = 0;
