@@ -7,12 +7,21 @@ function Puzzle() {
     return true;
   }
 
+  this.isAllOn = function() {
+    for (var i = 0; i < this.stickers.length; i++) {
+      if (this.stickers[i].isSolved()) return false;
+    };
+    return true;
+  }
+
   this.testSolved = function() {
     if (this.scrambledSolve && this.isSolved()) {
       alert('Congrats! You solved it in ' + this.nTurnsString() + '!');
       this.scrambledSolve = false;
       this.lastTurn = -1;
       this.draw();
+    } else if (this.isAllOn()) {
+      alert('Nice job! But the real objective is to turn all tiles OFF.');
     }
   }
 
