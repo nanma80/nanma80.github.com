@@ -4,6 +4,7 @@
   <title>Polyhedral Lights Out</title>
   <script src="lib/config.js"></script>
   <script src="lib/configWrapper.js"></script>
+  <script src="lib/storage.js"></script>
   <script src="lib/point3d.js"></script>
   <script src="lib/sticker.js"></script>
   <script src="lib/puzzle.js"></script>
@@ -81,6 +82,7 @@
   var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
 
   loadPuzzleDropdown();
+  var storage = new Storage();
   var puzzle = new Puzzle();
 
   onParameterChange();
