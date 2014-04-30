@@ -65,5 +65,5 @@ puzzleConfig = {
     }
   ],
 
-  "default_puzzle":"dodecahedron"
+  "defaultPuzzle":"dodecahedron"
 };
