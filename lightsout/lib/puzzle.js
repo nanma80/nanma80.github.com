@@ -25,8 +25,10 @@ function Puzzle() {
     }
   }
 
-  this.setParameters = function(shape) {
+  this.setParameters = function(shape, neighborhood, toggleSelf) {
     this.shape = shape;
+    this.neighborhood = neighborhood;
+    this.toggleSelf = toggleSelf;
   }
 
   this.initializeState = function() {
@@ -87,18 +89,16 @@ function Puzzle() {
   this.turn = function(handleId) {
     this.lastTurn = handleId;
     if (handleId === -1) return;
-
-    var neighborhood = getNeighborhood();
-    var toggleSelf = getToggleSelf();
+    
     this.nTurns += 1;
 
     for (var i = 0; i < this.stickers.length; i++) {
       var neighborLevel = this.stickers[handleId].neighbor(this.stickers[i]);
-      if (neighborLevel > 0 && neighborLevel <3 && neighborLevel >= neighborhood)
+      if (neighborLevel > 0 && neighborLevel <3 && neighborLevel >= this.neighborhood)
         this.stickers[i].changeState();
     };
 
-    if (toggleSelf)
+    if (this.toggleSelf)
       this.stickers[handleId].changeState();
   }
 

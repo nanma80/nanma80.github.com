@@ -5,12 +5,15 @@ function PuzzleBuilder() {
     [244,244,244] //background
   ];
 
-  this.setParameters = function(shape) {
+  this.setParameters = function(shape, neighborhood, toggleSelf) {
     this.shape = shape;
+    this.neighborhood = neighborhood;
+    this.toggleSelf = toggleSelf;
   }
 
   this.initializeState = function() {
     this.vertices = getVertices(this.shape);
+    console.log("Number of vertices: " + this.vertices.length);
 
     this.prototypeStickers = getPrototypeStickers(this.shape);
     this.stickersByType = [];
@@ -18,7 +21,7 @@ function PuzzleBuilder() {
       var stickersPerType = populateStickers(this.vertices, this.prototypeStickers[i], getSymmetry(this.shape));
       this.stickersByType.push(stickersPerType);
 
-      console.log(stickersPerType.length);
+      console.log("Number of stickers for this type: " + stickersPerType.length);
     }
   }
 
@@ -62,5 +65,9 @@ function PuzzleBuilder() {
 
   this.snap = function() {
 
+  }
+
+  this.scramble = function() {
+    this.resetState();
   }
 }

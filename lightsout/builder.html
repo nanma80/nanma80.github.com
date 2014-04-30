@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Lights Out</title>
+<script src="lib/config.js"></script>
 <script src="lib/point3d.js"></script>
 <script src="lib/sticker.js"></script>
 <script src="lib/puzzle.js"></script>
@@ -29,28 +30,28 @@ Your browser does not support the HTML5 canvas tag.
 </div>
 
 <div class="control">Shape:
-  <select id="shape" onchange="onShapeChange();">
+  <select id="shape" onchange="onParameterChange();">
     <option value="cube">Cube</option>
     <option value="octahedron">Octahedron</option>
-    <option value="dodecahedron">Dodecahedron</option>
+    <option value="dodecahedron" selected>Dodecahedron</option>
     <option value="icosahedron">Icosahedron</option>
-    <option value="vertex first cube">Cuboctahedron</option>
-    <option value="face first dodecahedron">Icosidodecahedron</option>
-    <option value="soccer">Soccer Ball</option>
+    <option value="cuboctahedron">Cuboctahedron</option>
+    <option value="icosidodecahedron">Icosidodecahedron</option>
+    <option value="soccer ball">Soccer Ball</option>
     <option value="rhombic dodecahedron">Rhombic Dodecahedron</option>
-    <option value="rhombic triacontahedron" selected>Rhombic Triacontahedron</option>
+    <option value="rhombic triacontahedron">Rhombic Triacontahedron</option>
   </select>
 </div>
 
 <div class="control">Neighbors defined as:
-  <select id="neighborhood">
+  <select id="neighborhood" onchange="onParameterChange();">
     <option value="2" selected>sharing an edge</option>
     <option value="1">sharing a vertex</option>
   </select>
 </div>
 
 <div class="control">
-  <input type="checkbox" id="toggleSelf">
+  <input type="checkbox" id="toggleSelf" onchange="onParameterChange();">
   <label for="toggleSelf">Also toggle clicked tile</label>
 </div>
 
@@ -68,7 +69,7 @@ Your browser does not support the HTML5 canvas tag.
   var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
 
   var puzzle = new PuzzleBuilder();
-  onShapeChange();
+  onParameterChange();
 
   canvas.addEventListener("mousedown", mouseDown, false);
   canvas.addEventListener("mousemove", mouseMove, false);

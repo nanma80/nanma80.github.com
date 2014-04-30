@@ -79,19 +79,13 @@ findMouse = function (e) {
   mousePos.y = y - canvas.offsetTop;
 }
 
-onShapeChange = function() {
+onParameterChange = function() {
   var shape = document.getElementById("shape").value;
-  puzzle.setParameters(shape);
-  puzzle.resetState();
+  var neighborhood = document.getElementById('neighborhood').value;
+  var toggleSelf = document.getElementById('toggleSelf').checked;
+
+  // document.getElementById('neighborhood').disabled = (!getPuzzleProperty(shape, "neighborhoodMakesDifference"));
+
+  puzzle.setParameters(shape, neighborhood, toggleSelf);
   puzzle.scramble();
-}
-
-getNeighborhood = function() {
-  var neighborhood = document.getElementById('neighborhood');
-  return neighborhood.value;
-}
-
-getToggleSelf = function() {
-  var toggleSelf = document.getElementById('toggleSelf');
-  return toggleSelf.checked;
 }
