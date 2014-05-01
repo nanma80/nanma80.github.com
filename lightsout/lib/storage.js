@@ -1,20 +1,21 @@
 // access to local storage
 function Storage() {
-  this.useLocalStorage = (typeof(localStorage) !== 'undefined');
+  this.useLocalStorage = (typeof(localStorage) !== "undefined");
+  this.fakeStorage = {}
 
-  this.key = function(shape, neighborhood, toggleSelf) {
-    return shape + ';' + neighborhood.toString() + ';' + toggleSelf.toString();
+  this.key = function(shape, toggleSelf, neighborhood) {
+    return shape + '-' + toggleSelf.toString() + '-' + neighborhood.toString();
   }
 
-  this.set = function(shape, neighborhood, toggleSelf) {
+  this.set = function(key) {
     if (this.useLocalStorage) {
-      localStorage.setItem(key(shape, neighborhood, toggleSelf), 'true');
+      localStorage.setItem(key, 'true');
     }
   }
 
-  this.get = function(shape, neighborhood, toggleSelf) {
+  this.get = function(key) {
     if (this.useLocalStorage) {
-      return localStorage.getItem(key(shape, neighborhood, toggleSelf));
+      return localStorage.getItem(key);
     }
   }
 }

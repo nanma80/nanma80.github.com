@@ -80,11 +80,9 @@ findMouse = function (e) {
 }
 
 onParameterChange = function() {
-  var shape = document.getElementById("shape").value;
-  var neighborhood = document.getElementById('neighborhood').value;
-  var toggleSelf = document.getElementById('toggleSelf').checked;
-
-  // document.getElementById('neighborhood').disabled = (!getPuzzleProperty(shape, "neighborhoodMakesDifference"));
+  var shape = $("#shape")[0].value;
+  var neighborhood = $('#neighborhood')[0].value;
+  var toggleSelf = $('#toggleSelf')[0].checked;
 
   puzzle.setParameters(shape, neighborhood, toggleSelf);
   puzzle.scramble();

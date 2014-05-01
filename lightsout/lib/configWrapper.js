@@ -20,5 +20,40 @@ loadPuzzleDropdown = function() {
     var option = '<option value="' + puzzle.id + '" ' + (isDefaultPuzzle? 'selected' : '') + '>' + puzzle.displayName + '</option>';
     options += option;
   };
-  document.getElementById("shape").innerHTML = options;
+  $("#shape").html(options);
+}
+
+loadPuzzleRecords = function() {
+  if (!storage.useLocalStorage) {
+    return;
+  }
+
+  var rows = '<tr><th>Toggle clicked tile?</th><th colspan="2">No</th><th colspan="2">Yes</th></tr>\
+    <tr><th>Neighborhood</th><th>Edge</th><th>Vertex</th><th>Edge</th><th>Vertex</th></tr>';
+  var toggleSelfOptions = [false, true];
+  var neighborhoodOptions = [2, 1];
+
+  for (var i = 0; i < puzzleConfig.puzzles.length; i++) {
+    var puzzle = puzzleConfig.puzzles[i];
+    var row = '<tr><td>' + puzzle.displayName + '</td>';
+    for (var j = 0; j < toggleSelfOptions.length; j++) {
+      var toggleSelfOption = toggleSelfOptions[j];
+      if (puzzle.neighborhoodMakesDifference) {
+        for (var k = 0; k < neighborhoodOptions.length; k++) {
+          var neighborhood = neighborhoodOptions[k];
+          var key = storage.key(puzzle.id, toggleSelfOption, neighborhood);
+          var solved = (storage.get(key) === 'true');
+          row += '<td id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '"></td>';
+        };
+      } else {
+        var key = storage.key(puzzle.id, toggleSelfOption, neighborhoodOptions[0]);
+        var solved = (storage.get(key) === 'true');
+        row += '<td colspan="2" id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '"></td>';
+      }
+    };
+    row += '</tr>';
+    rows += row;
+  };
+
+  $("#records").html(rows);
 }

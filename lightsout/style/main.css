@@ -22,6 +22,10 @@ button {
 div {
   margin: 0px;
 }
+
+div.centered {
+    text-align: center;}
+
 .heading:after {
   content: "";
   display: block;
@@ -40,13 +44,40 @@ canvas {
   margin-right: auto;
   display: block;}
 
+
+div.centered table {
+  border-collapse: collapse;
+  width: 320px;
+  margin: 0 auto; 
+  text-align: center; }
+
+table, th, td, th {
+  font-size: 15px;
+  font-weight: normal;
+  border: 1px solid #ccc; }
+
+td, th {
+  padding: 1px;
+}
+
+td {
+  max-width: 80px;
+}
+
+.solved-mark {
+  background: #007a00;
+}
+
+.unsolved-mark {
+  /*background: #7a0000;*/
+}
+
 .control {
   text-align:center;
   margin-left: auto;
   margin-right: auto;
   margin: 10px;
-  display:block;
-}
+  display:block; }
 
 p {
   margin: 5px;

@@ -14,8 +14,16 @@ function Puzzle() {
     return true;
   }
 
+  this.markAsSolved = function() {
+    var key = storage.key(this.shape, this.toggleSelf, this.neighborhood);
+    storage.set(key);
+    $('#' + key).removeClass('unsolved-mark');
+    $('#' + key).addClass('solved-mark');
+  }
+
   this.testSolved = function() {
     if (this.scrambledSolve && this.isSolved()) {
+      this.markAsSolved();
       alert('Congrats! You solved it in ' + this.nTurnsString() + '!');
       this.scrambledSolve = false;
       this.lastTurn = -1;
