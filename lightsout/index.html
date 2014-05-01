@@ -10,11 +10,13 @@
   <script src="lib/sticker.js"></script>
   <script src="lib/puzzle.js"></script>
   <script src="lib/mouse.js"></script>
+  <script src="lib/globalControl.js"></script>
   <script src="lib/puzzleBuilderHelper.js"></script>
   <script src="lib/puzzleBuilder.js"></script>
 
   <link rel="shortcut icon" href="../images/favicon.ico" />
-  <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="../images/lightsout.png">
+  <link rel="icon" href="../images/lightsout.png">
   <link href="style/main.css" rel="stylesheet" type="text/css">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -59,7 +61,7 @@
 
 <div class="comment">
   <p>Click or touch a tile to toggle its neighbors. Click Scramble and turn off all tiles to win. </p>
-  <p>Puzzles you have solved: (For some puzzles like Dodecahedron, whether neighbors are based on vertices or edges doesn't make any difference)</p>
+  <p>Puzzles you've solved:</p>
 </div>
 
 <div class="centered">
@@ -68,7 +70,7 @@
 </div>
 
 <div class="control">
-  <button type="button" class="large" onclick = "localStorage.clear();loadPuzzleRecords();">Clear Records</button> 
+  <button type="button" class="large" onclick = "onClearRecords();">Clear Records</button> 
 </div>
 
 <div class="comment">

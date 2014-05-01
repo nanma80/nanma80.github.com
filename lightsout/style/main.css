@@ -14,15 +14,13 @@ html, body {
 }
 
 button {
+  font-weight: bold;
   margin-left:10px;
   margin-right:10px;
   height:30px; 
   width:90px;} 
 
 button.large {
-  margin-left:10px;
-  margin-right:10px;
-  height:30px; 
   width:130px;} 
 
 div {
@@ -30,7 +28,7 @@ div {
 }
 
 div.centered {
-    text-align: center;}
+  text-align: center;}
 
 .heading:after {
   content: "";

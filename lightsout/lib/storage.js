@@ -1,4 +1,3 @@
-// access to local storage
 function Storage() {
   this.useLocalStorage = (typeof(localStorage) !== "undefined");
   this.fakeStorage = {}
