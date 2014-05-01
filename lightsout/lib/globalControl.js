@@ -1,10 +1,16 @@
-onParameterChange = function() {
-  if (puzzle.scrambledSolve && puzzle.nTurns > 10) {
+confirmResetPuzzle = function() {
+  var nTurnsTriggeringConfirmation = 10;
+  if (puzzle.scrambledSolve && puzzle.nTurns > nTurnsTriggeringConfirmation) {
     var r = confirm("You'll lose your progress. Are you sure?");
     if (r === false) {
-      return;
+      return false;
     }
   }
+  return true;
+}
+
+onParameterChange = function() {
+  if (!confirmResetPuzzle()) return;
 
   var shape = $("#shape")[0].value;
   var neighborhood = $('#neighborhood')[0].value;
@@ -21,3 +27,13 @@ onClearRecords = function() {
     loadPuzzleRecords();
   }
 };
+
+onReset = function() {
+  if (!confirmResetPuzzle()) return;
+  puzzle.resetState();
+}
+
+onScramble = function() {
+  if (!confirmResetPuzzle()) return;
+  puzzle.scramble();
+}
