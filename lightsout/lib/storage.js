@@ -3,7 +3,7 @@ function Storage() {
   this.fakeStorage = {}
 
   this.key = function(shape, toggleSelf, neighborhood) {
-    return shape + '-' + toggleSelf.toString() + '-' + neighborhood.toString();
+    return shape.replace(/ /g,"_") + '-' + toggleSelf.toString() + '-' + neighborhood.toString();
   }
 
   this.set = function(key) {
