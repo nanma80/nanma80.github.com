@@ -15,7 +15,8 @@ function Puzzle() {
   }
 
   this.markAsSolved = function() {
-    var key = storage.key(this.shape, this.toggleSelf, this.neighborhood);
+    var neighborhoodToStore = getNeighborhoodMakesDifference(this.shape) ? this.neighborhood : '2';
+    var key = storage.key(this.shape, this.toggleSelf, neighborhoodToStore);
     storage.set(key);
     $('#' + key).removeClass('unsolved-mark');
     $('#' + key).addClass('solved-mark');
@@ -29,7 +30,7 @@ function Puzzle() {
       this.lastTurn = -1;
       this.draw();
     } else if (this.isAllOn()) {
-      alert('Nice job! But the real objective is to turn all tiles OFF.');
+      alert('Nice job! But the real objective is to turn all tiles OFF. Keep on solving!');
     }
   }
 

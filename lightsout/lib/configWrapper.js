@@ -12,6 +12,10 @@ getSymmetry = function(shape) {
   return getPuzzleProperty(shape, 'symmetry');
 }
 
+getNeighborhoodMakesDifference = function(shape) {
+  return getPuzzleProperty(shape, 'neighborhoodMakesDifference');
+}
+
 loadPuzzleDropdown = function() {
   var options = '';
   for (var i = 0; i < puzzleConfig.puzzles.length; i++) {
