@@ -24,7 +24,9 @@ getVertices = function(shape) {
     return getAxes('face first cube');
   } else if (shape === 'soccer_ball') {
     return getSoccerVertices();
-  } else if (shape === 'rhombic_dodecahedron') {
+  } else if (shape === 'truncated_octahedron') {
+    return getTruncatedOctahedronVertices();
+  }else if (shape === 'rhombic_dodecahedron') {
     var output = [];
     var cubeVertices = getAxes('vertex first cube');
     var cubeFaces = getAxes('face first cube');
@@ -173,7 +175,18 @@ getPoints = function(symmetry) {
   return output;
 }
 
-getSoccerVertices = function() {
+getTruncatedOctahedronVerticesSeeds = function() {
+  var output = [];
+  output.push(new Point3D(0, 1, 2));
+  output.push(new Point3D(0, 2, 1));
+  output.push(new Point3D(1, 0, 2));
+  output.push(new Point3D(2, 0, 1));
+  output.push(new Point3D(1, 2, 0));
+  output.push(new Point3D(2, 1, 0));
+  return output;
+}
+
+getSoccerVerticesSeeds = function() {
   var output = [];
   output.push(new Point3D(0, 1, 3 * PHI));
   output.push(new Point3D(1, 3 * PHI, 0));
@@ -184,7 +197,11 @@ getSoccerVertices = function() {
   output.push(new Point3D(1, 2 + PHI, 2 * PHI));
   output.push(new Point3D(2 + PHI, 2 * PHI, 1));
   output.push(new Point3D(2 * PHI, 1, 2 + PHI));
+  return output;  
+}
 
+allPlusMinus = function(points) {
+  var output = points;
   output = output.concat(output.map(function(p) {
     return new Point3D(-p.x, p.y, p.z);
   }))
@@ -202,6 +219,14 @@ getSoccerVertices = function() {
   });
 
   return dedupOnInnerProd(output);
+}
+
+getSoccerVertices = function() {
+  return allPlusMinus(getSoccerVerticesSeeds()); 
+}
+
+getTruncatedOctahedronVertices = function() {
+  return allPlusMinus(getTruncatedOctahedronVerticesSeeds());
 }
 
 populateStickers = function(vertices, prototypeSticker, symmetry) {

@@ -43,6 +43,13 @@ puzzleConfig = {
       "prototypeStickers":[[1, 13, 27, 22, 3], [1, 4, 13]]
     },
     {
+      "id": "truncated_octahedron",
+      "displayName":"Truncated Octahedron",
+      "symmetry":"cube",
+      "neighborhoodMakesDifference":false,
+      "prototypeStickers":[[3, 13, 19, 5], [0, 2, 3, 5, 4, 1]]
+    },
+    {
       "id": "soccer_ball",
       "displayName":"Soccer Ball",
       "symmetry":"dodecahedron",
