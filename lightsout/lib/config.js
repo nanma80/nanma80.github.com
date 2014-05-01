@@ -43,21 +43,21 @@ puzzleConfig = {
       "prototypeStickers":[[1, 13, 27, 22, 3], [1, 4, 13]]
     },
     {
-      "id": "soccer ball",
+      "id": "soccer_ball",
       "displayName":"Soccer Ball",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":false,
       "prototypeStickers":[[2, 5, 8, 24, 21], [2, 21, 23, 52, 50, 33]]
     },
     {
-      "id": "rhombic dodecahedron",
+      "id": "rhombic_dodecahedron",
       "displayName":"Rhombic Dodecahedron",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[0, 8, 1, 10]]
     },
     {
-      "id": "rhombic triacontahedron",
+      "id": "rhombic_triacontahedron",
       "displayName":"Rhombic Triacontahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,

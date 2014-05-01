@@ -22,9 +22,9 @@ getVertices = function(shape) {
     return getAxes('vertex first cube');
   } else if (shape === 'octahedron') {
     return getAxes('face first cube');
-  } else if (shape === 'soccer ball') {
+  } else if (shape === 'soccer_ball') {
     return getSoccerVertices();
-  } else if (shape === 'rhombic dodecahedron') {
+  } else if (shape === 'rhombic_dodecahedron') {
     var output = [];
     var cubeVertices = getAxes('vertex first cube');
     var cubeFaces = getAxes('face first cube');
@@ -34,7 +34,7 @@ getVertices = function(shape) {
     };
     output = output.concat(cubeFaces);
     return output;
-  } else if (shape === 'rhombic triacontahedron') {
+  } else if (shape === 'rhombic_triacontahedron') {
     var output = [];
     var dodecahedronVertices = getAxes('vertex first dodecahedron');
     var dodecahedronFaces = getAxes('face first dodecahedron');

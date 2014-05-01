@@ -3,7 +3,8 @@ function Storage() {
   this.fakeStorage = {}
 
   this.key = function(shape, toggleSelf, neighborhood) {
-    return shape.replace(/ /g,"_") + '-' + toggleSelf.toString() + '-' + neighborhood.toString();
+    var unescapedKey = shape + '-' + toggleSelf.toString() + '-' + neighborhood.toString();
+    return unescapedKey.replace(/[^a-zA-Z0-9_-]/g, '_');
   }
 
   this.set = function(key) {
