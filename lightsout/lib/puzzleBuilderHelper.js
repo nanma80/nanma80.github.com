@@ -175,31 +175,6 @@ getPoints = function(symmetry) {
   return output;
 }
 
-getTruncatedOctahedronVerticesSeeds = function() {
-  var output = [];
-  output.push(new Point3D(0, 1, 2));
-  output.push(new Point3D(0, 2, 1));
-  output.push(new Point3D(1, 0, 2));
-  output.push(new Point3D(2, 0, 1));
-  output.push(new Point3D(1, 2, 0));
-  output.push(new Point3D(2, 1, 0));
-  return output;
-}
-
-getSoccerVerticesSeeds = function() {
-  var output = [];
-  output.push(new Point3D(0, 1, 3 * PHI));
-  output.push(new Point3D(1, 3 * PHI, 0));
-  output.push(new Point3D(3 * PHI, 0, 1));
-  output.push(new Point3D(2, 1 + 2 * PHI, PHI));
-  output.push(new Point3D(PHI, 2, 1 + 2 * PHI));
-  output.push(new Point3D(1 + 2 * PHI, PHI, 2));
-  output.push(new Point3D(1, 2 + PHI, 2 * PHI));
-  output.push(new Point3D(2 + PHI, 2 * PHI, 1));
-  output.push(new Point3D(2 * PHI, 1, 2 + PHI));
-  return output;  
-}
-
 allPlusMinus = function(points) {
   var output = points;
   output = output.concat(output.map(function(p) {
@@ -221,12 +196,34 @@ allPlusMinus = function(points) {
   return dedupOnInnerProd(output);
 }
 
+evenPermutations = function(p) {
+  var output = [p];
+  output.push(new Point3D(p.y, p.z, p.x));
+  output.push(new Point3D(p.z, p.x, p.y));
+  return output;
+}
+
+allPermutations = function(p) {
+  var output = [p];
+  output.push(new Point3D(p.x, p.z, p.y));
+  output.push(new Point3D(p.y, p.x, p.z));
+  output.push(new Point3D(p.z, p.x, p.y));
+  output.push(new Point3D(p.y, p.z, p.x));
+  output.push(new Point3D(p.z, p.y, p.x));
+  return output;
+}
+
 getSoccerVertices = function() {
-  return allPlusMinus(getSoccerVerticesSeeds()); 
+  var output = [];
+  output = output.concat(evenPermutations(new Point3D(0, 1, 3 * PHI)));
+  output = output.concat(evenPermutations(new Point3D(2, 1 + 2 * PHI, PHI)));
+  output = output.concat(evenPermutations(new Point3D(1, 2 + PHI, 2 * PHI)));
+  output = allPlusMinus(output); 
+  return output;
 }
 
 getTruncatedOctahedronVertices = function() {
-  return allPlusMinus(getTruncatedOctahedronVerticesSeeds());
+  return allPlusMinus(allPermutations(new Point3D(0, 1, 2)));
 }
 
 populateStickers = function(vertices, prototypeSticker, symmetry) {

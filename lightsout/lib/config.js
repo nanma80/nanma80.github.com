@@ -54,7 +54,7 @@ puzzleConfig = {
       "displayName":"Soccer Ball",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":false,
-      "prototypeStickers":[[2, 5, 8, 24, 21], [2, 21, 23, 52, 50, 33]]
+      "prototypeStickers":[[1, 3, 7, 38, 34], [5, 8, 4, 7, 3, 6]]
     },
     {
       "id": "rhombic_dodecahedron",
