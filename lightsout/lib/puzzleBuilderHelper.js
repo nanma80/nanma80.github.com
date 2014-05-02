@@ -26,7 +26,9 @@ getVertices = function(shape) {
     return getSoccerVertices();
   } else if (shape === 'truncated_octahedron') {
     return getTruncatedOctahedronVertices();
-  }else if (shape === 'rhombic_dodecahedron') {
+  } else if (shape === 'great_rhombicuboctahedron') {
+    return getGRCOVertices();
+  } else if (shape === 'rhombic_dodecahedron') {
     var output = [];
     var cubeVertices = getAxes('vertex first cube');
     var cubeFaces = getAxes('face first cube');
@@ -226,6 +228,10 @@ getTruncatedOctahedronVertices = function() {
   return allPlusMinus(allPermutations(new Point3D(0, 1, 2)));
 }
 
+getGRCOVertices = function() {
+  return allPlusMinus(allPermutations(new Point3D(1, 1 + Math.sqrt(2), 1 + 2 * Math.sqrt(2))));
+}
+
 populateStickers = function(vertices, prototypeSticker, symmetry) {
   var points = getPoints(symmetry);
   var stickers = [];
@@ -238,8 +244,6 @@ populateStickers = function(vertices, prototypeSticker, symmetry) {
 
   face_degree = Math.PI / 2.0;
   if (symmetry === 'dodecahedron') face_degree = Math.PI * 2.0 / 5.0;
-
-  
 
   for(var i = 0; i < symmetry_faces.length; i++) {
     var rotationImage = prototypeSticker.map(function(j) {

@@ -57,6 +57,13 @@ puzzleConfig = {
       "prototypeStickers":[[1, 3, 7, 38, 34], [5, 8, 4, 7, 3, 6]]
     },
     {
+      "id": "great_rhombicuboctahedron",
+      "displayName":"Great Rhombicuboctahedron",
+      "symmetry":"cube",
+      "neighborhoodMakesDifference":false,
+      "prototypeStickers":[[0, 1, 7, 6], [0, 2, 3, 5, 4, 1], [0, 6, 8, 20, 18, 12, 14, 2]]
+    },
+    {
       "id": "rhombic_dodecahedron",
       "displayName":"Rhombic Dodecahedron",
       "symmetry":"cube",
