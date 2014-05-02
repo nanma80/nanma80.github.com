@@ -60,4 +60,11 @@ loadPuzzleRecords = function() {
   };
 
   $("#records").html(rows);
+  updateRecordCount();
+}
+
+updateRecordCount = function() {
+  var nSolved = $(".solved-mark").length;
+  var nUnsolved = $(".unsolved-mark").length;
+  $("#records-count").html('' + nSolved + "/" + (nSolved + nUnsolved) + ' puzzles solved');
 }

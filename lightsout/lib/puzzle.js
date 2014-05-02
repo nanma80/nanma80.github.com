@@ -20,6 +20,7 @@ function Puzzle() {
     storage.set(key);
     $('#' + key).removeClass('unsolved-mark');
     $('#' + key).addClass('solved-mark');
+    updateRecordCount();
   }
 
   this.testSolved = function() {

@@ -37,7 +37,7 @@ puzzleConfig = {
     },
     {
       "id": "icosidodecahedron",
-      "displayName":"Icosidodecahedron",
+      "displayName":"Icosi&shy;dodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[1, 13, 27, 22, 3], [1, 4, 13]]
@@ -58,7 +58,7 @@ puzzleConfig = {
     },
     {
       "id": "great_rhombicuboctahedron",
-      "displayName":"Great Rhombicuboctahedron",
+      "displayName":"Great Rhombi&shy;cuboctahedron",
       "symmetry":"cube",
       "neighborhoodMakesDifference":false,
       "prototypeStickers":[[0, 1, 7, 6], [0, 2, 3, 5, 4, 1], [0, 6, 8, 20, 18, 12, 14, 2]]
