@@ -28,6 +28,10 @@ getVertices = function(shape) {
     return getTruncatedOctahedronVertices();
   } else if (shape === 'great_rhombicuboctahedron') {
     return getGRCOVertices();
+  } else if (shape === 'snub_cube') {
+    return getSnubCubeVertices();
+  } else if (shape === 'snub_dodecahedron') {
+    return getSnubDodecahedronVertices();
   } else if (shape === 'great_rhombicosidodecahedron') {
     var output = [];
     output = output.concat(allPlusMinus(allPermutations(new Point3D(1, 1, 4 * PHI + 1))));
@@ -214,10 +218,64 @@ allPlusMinus = function(points) {
   return dedupOnInnerProd(output);
 }
 
+evenPlus = function(points) {
+  var output = [];
+  output = output.concat(points.map(function(p) {
+    return new Point3D(-p.x, p.y, p.z);
+  }))
+
+  output = output.concat(points.map(function(p) {
+    return new Point3D(p.x, -p.y, p.z);
+  }))
+
+  output = output.concat(points.map(function(p) {
+    return new Point3D(p.x, p.y, -p.z);
+  }))
+
+  output = output.concat(points.map(function(p) {
+    return new Point3D(-p.x, -p.y, -p.z);
+  }))
+
+  output.forEach(function(point){
+    point.normalize();
+  });
+
+  return dedupOnInnerProd(output);
+}
+
+oddPlus = function(points) {
+  var output = points;
+  output = output.concat(points.map(function(p) {
+    return new Point3D(-p.x, -p.y, p.z);
+  }))
+
+  output = output.concat(points.map(function(p) {
+    return new Point3D(p.x, -p.y, -p.z);
+  }))
+
+  output = output.concat(points.map(function(p) {
+    return new Point3D(-p.x, p.y, -p.z);
+  }))
+
+  output.forEach(function(point){
+    point.normalize();
+  });
+
+  return dedupOnInnerProd(output);
+}
+
 evenPermutations = function(p) {
   var output = [p];
   output.push(new Point3D(p.y, p.z, p.x));
   output.push(new Point3D(p.z, p.x, p.y));
+  return output;
+}
+
+oddPermutations = function(p) {
+  var output = [];
+  output.push(new Point3D(p.x, p.z, p.y));
+  output.push(new Point3D(p.z, p.y, p.x));
+  output.push(new Point3D(p.y, p.x, p.z));
   return output;
 }
 
@@ -248,15 +306,49 @@ getGRCOVertices = function() {
   return allPlusMinus(allPermutations(new Point3D(1, 1 + Math.sqrt(2), 1 + 2 * Math.sqrt(2))));
 }
 
-populateStickers = function(vertices, prototypeSticker, symmetry) {
+getSnubCubeVertices = function() {
+  var xi = 1.0 / 3.0 * (Math.pow(17 + 3 * Math.sqrt(33), 1.0/3) - Math.pow(-17 + 3 * Math.sqrt(33), 1.0/3) - 1);
+  var seed = new Point3D(1, xi, 1/xi);
+  var output = [];
+  output = output.concat(evenPlus(evenPermutations(seed)));
+  output = output.concat(oddPlus(oddPermutations(seed)));
+  return output;
+}
+
+getSnubDodecahedronVertices = function() {
+  var tau = PHI;
+  var xi = Math.pow(tau/2 + 0.5 * Math.sqrt(tau - 5.0/27), 1.0/3) + Math.pow(tau/2 - 0.5 * Math.sqrt(tau - 5.0/27), 1.0/3);
+  var alpha = xi - 1.0 / xi;
+  var beta = xi * tau + tau * tau + tau / xi;
+  var seeds = [
+    [2 * alpha, 2, 2 * beta],
+    [alpha + beta / tau + tau, - alpha * tau + beta + 1 / tau, alpha /tau + beta * tau - 1],
+    [- alpha / tau + beta * tau + 1, - alpha + beta / tau - tau, alpha * tau + beta - 1 / tau],
+    [- alpha / tau + beta * tau - 1, alpha - beta / tau - tau, alpha * tau + beta + 1/ tau],
+    [alpha + beta / tau - tau, alpha * tau - beta + 1 / tau, alpha / tau + beta * tau + 1]
+  ]
+
+  var output = [];
+  seeds.forEach(function(s){
+    output = output.concat(oddPlus(oddPermutations(new Point3D(s[0], s[1], s[2]))));
+  })
+  return output;
+}
+
+populateStickers = function(vertices, prototypeSticker, symmetry, mirroring) {
+  if(typeof(mirroring)==='undefined') mirroring = false;
+
   var points = getPoints(symmetry);
   var stickers = [];
 
   stickers.push(new Sticker(vertices, prototypeSticker));
 
+  protytypeStickerObject = new Sticker(vertices, prototypeSticker);
+
   symmetry_faces = points[0];
   symmetry_edges = points[1];
   symmetry_vertices = points[2];
+
 
   face_degree = Math.PI / 2.0;
   if (symmetry === 'dodecahedron') face_degree = Math.PI * 2.0 / 5.0;
@@ -266,7 +358,11 @@ populateStickers = function(vertices, prototypeSticker, symmetry) {
       setRotationMatrix(symmetry_faces[i], face_degree);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
-      return newVertex.indexIn(vertices);
+      var index = newVertex.indexIn(vertices);
+      if (index < 0) {
+        throw "Vertex doesn't match after symmetry operation";
+      }
+      return index;
     });
     stickers.push(new Sticker(vertices, rotationImage));
 
@@ -302,14 +398,15 @@ populateStickers = function(vertices, prototypeSticker, symmetry) {
     stickers.push(new Sticker(vertices, rotationImage));
   }
 
-  var mirrorStickers = stickers.map(function(sticker) {
-    var image = sticker.indices.map(function(i) {
-      return vertices[i].reverse().indexIn(vertices);
-    });
-    return new Sticker(vertices, image.reverse());
-  })
-    
-  stickers = stickers.concat(mirrorStickers);
+  if (mirroring) {
+    var mirrorStickers = stickers.map(function(sticker) {
+      var image = sticker.indices.map(function(i) {
+        return vertices[i].reverse().indexIn(vertices);
+      });
+      return new Sticker(vertices, image.reverse());
+    })
+    stickers = stickers.concat(mirrorStickers);
+  }
 
   return dedupStickers(stickers);
 }

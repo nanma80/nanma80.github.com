@@ -85,6 +85,20 @@ puzzleConfig = {
       "prototypeStickers":[[2, 8, 20, 14], [2, 14, 62, 38, 26, 50], [2, 50, 96, 72, 24, 30, 78, 102, 56, 8]]
     },
     {
+      "id": "snub_cube",
+      "displayName":"Snub Cube",
+      "symmetry":"cube",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[1, 12, 7, 21], [1, 21, 2], [0, 1, 2]]
+    },
+    {
+      "id": "snub_dodecahedron",
+      "displayName":"Snub Dodecahedron",
+      "symmetry":"dodecahedron",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[3, 15, 27, 39, 51], [1, 55, 24], [1, 24, 13]]
+    },
+    {
       "id": "rhombic_dodecahedron",
       "displayName":"Rhombic Dodecahedron",
       "symmetry":"cube",
