@@ -12,6 +12,7 @@ function PuzzleBuilder() {
   }
 
   this.initializeState = function() {
+    console.log(this.shape);
     this.vertices = getVertices(this.shape);
     console.log("Number of vertices: " + this.vertices.length);
 
@@ -49,9 +50,9 @@ function PuzzleBuilder() {
       context.fillStyle = 'black';
       context.fillRect(vertex2d.x - halfSize, vertex2d.y - halfSize, size, size);
 
-      context.font = "8pt Arial";
+      context.font = "10pt Arial";
       context.fillStyle = "blue";
-      context.fillText(i, vertex2d.x, vertex2d.y);
+      context.fillText(i, vertex2d.x + 2, vertex2d.y + 2);
     }
   }
 

@@ -44,6 +44,7 @@ function Puzzle() {
   this.initializeState = function() {
     resetRotationMatrix();
     this.vertices = getVertices(this.shape);
+    console.log(this.shape);
     console.log("Number of vertices: " + this.vertices.length);
     
     this.prototypeStickers = getPrototypeStickers(this.shape);
@@ -53,7 +54,7 @@ function Puzzle() {
       var stickersPerType = populateStickers(this.vertices, this.prototypeStickers[i], getSymmetry(this.shape));
       this.stickers = this.stickers.concat(stickersPerType);
     }
-    console.log("Number of stickers: " + this.stickers.length);
+    console.log("Number of Faces: " + this.stickers.length);
     this.scrambledSolve = false;
     this.nTurns = 0;
 

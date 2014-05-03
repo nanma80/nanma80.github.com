@@ -28,6 +28,22 @@ getVertices = function(shape) {
     return getTruncatedOctahedronVertices();
   } else if (shape === 'great_rhombicuboctahedron') {
     return getGRCOVertices();
+  } else if (shape === 'great_rhombicosidodecahedron') {
+    var output = [];
+    output = output.concat(allPlusMinus(allPermutations(new Point3D(1, 1, 4 * PHI + 1))));
+    output = output.concat(allPlusMinus(evenPermutations(new Point3D(PHI * PHI * PHI, 1, 3 + 2 * PHI))));
+    output = output.concat(allPlusMinus(evenPermutations(new Point3D(PHI * PHI, 2, PHI * PHI * PHI * PHI))));
+    output = output.concat(allPlusMinus(evenPermutations(new Point3D(3 * PHI, PHI * PHI, 2 * PHI * PHI))));
+    output = output.concat(allPlusMinus(evenPermutations(new Point3D(1 + 3 * PHI, 2 * PHI, 2 + PHI))));
+    return output;
+  } else if (shape === 'rhombicosidodecahedron') {
+    var output = [];
+    output = output.concat(allPlusMinus(allPermutations(new Point3D(1, 1, PHI * PHI * PHI))));
+    output = output.concat(allPlusMinus(evenPermutations(new Point3D(PHI * PHI, 0, PHI * Math.sqrt(5)))));
+    output = output.concat(allPlusMinus(evenPermutations(new Point3D(2 * PHI, PHI, PHI * PHI))));
+    return output;
+  } else if (shape === 'rhombicuboctahedron') {
+    return allPlusMinus(allPermutations(new Point3D(1, 1, 1 + Math.sqrt(2))));
   } else if (shape === 'rhombic_dodecahedron') {
     var output = [];
     var cubeVertices = getAxes('vertex first cube');
