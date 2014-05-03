@@ -100,5 +100,5 @@ puzzleConfig = {
     }
   ],
 
-  "defaultPuzzle":"rhombicosidodecahedron"
+  "defaultPuzzle":"dodecahedron"
 };
