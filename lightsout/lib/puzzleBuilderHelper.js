@@ -20,6 +20,8 @@ getVertices = function(shape) {
     return getAxes('face first dodecahedron');
   } else if (shape === 'cube') {
     return getAxes('vertex first cube');
+  } else if (shape === 'tetrahedron') {
+    return getPoints('tetrahedron')[2];
   } else if (shape === 'octahedron') {
     return getAxes('face first cube');
   } else if (shape === 'soccer_ball') {
@@ -48,6 +50,17 @@ getVertices = function(shape) {
     return output;
   } else if (shape === 'rhombicuboctahedron') {
     return allPlusMinus(allPermutations(new Point3D(1, 1, 1 + Math.sqrt(2))));
+  } else if (shape === 'truncated_cube') {
+    return allPlusMinus(allPermutations(new Point3D(1, 1, -1 + Math.sqrt(2))));
+  } else if (shape === 'truncated_tetrahedron') {
+    return evenPlus(evenPermutations(new Point3D(1, 1, 3)));
+  } else if (shape === 'truncated_dodecahedron') {
+    var output = [];
+    output = output.concat(oddPermutations(new Point3D(0, 1, 1 + 3 * PHI)));
+    output = output.concat(oddPermutations(new Point3D(1, PHI * PHI, 2 * PHI * PHI)));
+    output = output.concat(oddPermutations(new Point3D(PHI * PHI, 2 * PHI, PHI * PHI * PHI)));
+    output = allPlusMinus(output); 
+    return output;
   } else if (shape === 'rhombic_dodecahedron') {
     var output = [];
     var cubeVertices = getAxes('vertex first cube');
@@ -131,7 +144,7 @@ getAxes = function(shape) {
     axis.normalize();
   });
 
-  return axes
+  return axes;
 }
 
 getIntersections = function(axes) {
@@ -188,12 +201,19 @@ getPoints = function(symmetry) {
     output.push(symmetryEdges);
     output.push(symmetryVertices);
   } else if (symmetry === 'cube') {
-    var cube_faces = getAxes('face first cube');
-    var cube_edges = getAxes('edge first cube');
-    var cube_vertices = getAxes('vertex first cube');
-    output.push(cube_faces);
-    output.push(cube_edges);
-    output.push(cube_vertices);
+    var cubeFaces = getAxes('face first cube');
+    var cubeEdges = getAxes('edge first cube');
+    var cubeVertices = getAxes('vertex first cube');
+    output.push(cubeFaces);
+    output.push(cubeEdges);
+    output.push(cubeVertices);
+  } else if (symmetry === 'tetrahedron') {
+    var tetraFaces = evenPlus([new Point3D(1, 1, 1)]);
+    var tetraEdges = getAxes('face first cube');
+    var tetraVertices = oddPlus([new Point3D(1, 1, 1)]);
+    output.push(tetraFaces);
+    output.push(tetraEdges);
+    output.push(tetraVertices);
   }
   return output;
 }
@@ -350,13 +370,21 @@ populateStickers = function(vertices, prototypeSticker, symmetry, mirroring) {
   symmetryEdges = points[1];
   symmetryVertices = points[2];
 
+  var faceDegree;
 
-  face_degree = Math.PI / 2.0; // symmetry === 'cube'
-  if (symmetry === 'dodecahedron') face_degree = Math.PI * 2.0 / 5.0;
+  if (symmetry === 'dodecahedron') {
+    faceDegree = Math.PI * 2.0 / 5.0;
+  } else if (symmetry === 'tetrahedron') {
+    faceDegree = Math.PI * 2.0 / 3.0;
+  } else if (symmetry === 'cube') {
+    faceDegree = Math.PI / 2.0;
+  } else {
+    throw 'Symmetry not supported for faceDegree';
+  }
 
   symmetryFaces.forEach(function(face) {
     var rotationImage = prototypeSticker.map(function(j) {
-      setRotationMatrix(face, face_degree);
+      setRotationMatrix(face, faceDegree);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       var index = newVertex.indexIn(vertices);
@@ -368,7 +396,7 @@ populateStickers = function(vertices, prototypeSticker, symmetry, mirroring) {
     stickers.push(new Sticker(vertices, rotationImage));
 
     var rotationImage2 = prototypeSticker.map(function(j) {
-      setRotationMatrix(face, face_degree * 2);
+      setRotationMatrix(face, faceDegree * 2);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       return newVertex.indexIn(vertices);
