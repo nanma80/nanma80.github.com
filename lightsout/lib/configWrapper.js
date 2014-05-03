@@ -18,10 +18,15 @@ getNeighborhoodMakesDifference = function(shape) {
 
 loadPuzzleDropdown = function() {
   var options = '';
-  puzzleConfig.puzzles.forEach(function(puzzle) {
-    var isDefaultPuzzle = (puzzle.id === puzzleConfig.defaultPuzzle);
+  puzzleConfig.groups.forEach(function(group) {
+    options += '<optgroup label="' + group.displayName + '">';
+    puzzleConfig.puzzles.forEach(function(puzzle) {
+      if(puzzle.group !== group.id) return;
+      var isDefaultPuzzle = (puzzle.id === puzzleConfig.defaultPuzzle);
       var option = '<option value="' + puzzle.id + '" ' + (isDefaultPuzzle? 'selected' : '') + '>' + puzzle.displayName + '</option>';
       options += option;
+    });
+    options += '</optgroup>';
   });
 
   $("#shape").html(options);
@@ -37,23 +42,26 @@ loadPuzzleRecords = function() {
   var toggleSelfOptions = [false, true];
   var neighborhoodOptions = [2, 1];
 
-  puzzleConfig.puzzles.forEach(function(puzzle) {
-    var row = '<tr><td>' + puzzle.displayName + '</td>';
-    toggleSelfOptions.forEach(function(toggleSelfOption) {
-      if (puzzle.neighborhoodMakesDifference) {
-        neighborhoodOptions.forEach(function(neighborhood) {
-          var key = storage.key(puzzle.id, toggleSelfOption, neighborhood);
+  puzzleConfig.groups.forEach(function(group) {
+    puzzleConfig.puzzles.forEach(function(puzzle) {
+      if(puzzle.group !== group.id) return;
+      var row = '<tr><td>' + puzzle.displayName + '</td>';
+      toggleSelfOptions.forEach(function(toggleSelfOption) {
+        if (puzzle.neighborhoodMakesDifference) {
+          neighborhoodOptions.forEach(function(neighborhood) {
+            var key = storage.key(puzzle.id, toggleSelfOption, neighborhood);
+            var solved = (storage.get(key) === 'true');
+            row += '<td id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '"></td>';
+          });
+        } else {
+          var key = storage.key(puzzle.id, toggleSelfOption, neighborhoodOptions[0]);
           var solved = (storage.get(key) === 'true');
-          row += '<td id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '"></td>';
-        });
-      } else {
-        var key = storage.key(puzzle.id, toggleSelfOption, neighborhoodOptions[0]);
-        var solved = (storage.get(key) === 'true');
-        row += '<td colspan="2" id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '"></td>';
-      }
+          row += '<td colspan="2" id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '"></td>';
+        }
+      });
+      row += '</tr>';
+      rows += row;
     });
-    row += '</tr>';
-    rows += row;
   });
 
   $("#records").html(rows);

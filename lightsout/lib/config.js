@@ -1,7 +1,23 @@
 puzzleConfig = {
+  "groups": [
+    {
+      "id": "platonic",
+      "displayName": "Platonic"
+    },
+    {
+      "id": "archimedean",
+      "displayName": "Archimedean"
+    },
+    {
+      "id": "catalan",
+      "displayName": "Catalan"
+    }
+  ],
+  
   "puzzles": [
     {
       "id": "cube",
+      "group": "platonic",
       "displayName":"Cube",
       "symmetry":"cube",
       "neighborhoodMakesDifference":false,
@@ -9,6 +25,7 @@ puzzleConfig = {
     },
     {
       "id": "octahedron",
+      "group": "platonic",
       "displayName":"Octahedron",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
@@ -16,6 +33,7 @@ puzzleConfig = {
     },
     {
       "id": "dodecahedron",
+      "group": "platonic",
       "displayName":"Dodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":false,
@@ -23,6 +41,7 @@ puzzleConfig = {
     },
     {
       "id": "icosahedron",
+      "group": "platonic",
       "displayName":"Icosahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
@@ -30,6 +49,7 @@ puzzleConfig = {
     },
     {
       "id": "cuboctahedron",
+      "group": "archimedean",
       "displayName":"Cuboctahedron",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
@@ -37,6 +57,7 @@ puzzleConfig = {
     },
     {
       "id": "icosidodecahedron",
+      "group": "archimedean",
       "displayName":"Icosi&shy;dodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
@@ -44,6 +65,7 @@ puzzleConfig = {
     },
     {
       "id": "truncated_octahedron",
+      "group": "archimedean",
       "displayName":"Truncated Octahedron",
       "symmetry":"cube",
       "neighborhoodMakesDifference":false,
@@ -51,6 +73,7 @@ puzzleConfig = {
     },
     {
       "id": "soccer_ball",
+      "group": "archimedean",
       "displayName":"Soccer Ball",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":false,
@@ -58,6 +81,7 @@ puzzleConfig = {
     },
     {
       "id": "rhombicuboctahedron",
+      "group": "archimedean",
       "displayName":"Expanded Cube",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
@@ -65,6 +89,7 @@ puzzleConfig = {
     },
     {
       "id": "great_rhombicuboctahedron",
+      "group": "archimedean",
       "displayName":"Truncated Cuboctahedron",
       "symmetry":"cube",
       "neighborhoodMakesDifference":false,
@@ -72,6 +97,7 @@ puzzleConfig = {
     },
     {
       "id": "rhombicosidodecahedron",
+      "group": "archimedean",
       "displayName":"Expanded Dodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
@@ -79,6 +105,7 @@ puzzleConfig = {
     },
     {
       "id": "great_rhombicosidodecahedron",
+      "group": "archimedean",
       "displayName":"Truncated Icosidodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":false,
@@ -86,6 +113,7 @@ puzzleConfig = {
     },
     {
       "id": "snub_cube",
+      "group": "archimedean",
       "displayName":"Snub Cube",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
@@ -93,6 +121,7 @@ puzzleConfig = {
     },
     {
       "id": "snub_dodecahedron",
+      "group": "archimedean",
       "displayName":"Snub Dodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
@@ -100,6 +129,7 @@ puzzleConfig = {
     },
     {
       "id": "rhombic_dodecahedron",
+      "group": "catalan",
       "displayName":"Rhombic Dodecahedron",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
@@ -107,6 +137,7 @@ puzzleConfig = {
     },
     {
       "id": "rhombic_triacontahedron",
+      "group": "catalan",
       "displayName":"Rhombic Triacontahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
