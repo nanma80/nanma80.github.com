@@ -158,12 +158,12 @@ dedupStickers = function(arr) {
 
   var currentSignature = '';
   var deduped = [];
-  for(var i = 0; i < arr.length; i++) {
-    if (arr[i].signature !== currentSignature) {
-      deduped.push(arr[i]);
+  arr.forEach(function(s) {
+    if (s.signature !== currentSignature) {
+      deduped.push(s);
     }
-    currentSignature = arr[i].signature;
-  }
+    currentSignature = s.signature;
+  });
 
   return deduped;
 }
@@ -171,21 +171,22 @@ dedupStickers = function(arr) {
 getPoints = function(symmetry) {
   var output = []
   if (symmetry === 'dodecahedron') {
-    var symmetry_faces = getAxes('face first dodecahedron');
+    var symmetryFaces = getAxes('face first dodecahedron');
+    var symmetryEdges = getIntersections(symmetryFaces);
 
-    var symmetry_edges = getIntersections(symmetry_faces);
-    var dodecahedron_all = getIntersections(symmetry_edges);
+    var dodecahedron_all = getIntersections(symmetryEdges);
 
-    var symmetry_vertices = [];
-    for(var i = 0; i < dodecahedron_all.length; i++) {
-      if (dodecahedron_all[i].indexIn(symmetry_faces) < 0 
-        && dodecahedron_all[i].indexIn(symmetry_edges) < 0) {
-        symmetry_vertices.push(dodecahedron_all[i]);
+    var symmetryVertices = [];
+    dodecahedron_all.forEach(function(p) {
+      if (p.indexIn(symmetryFaces) < 0 
+        && p.indexIn(symmetryEdges) < 0) {
+        symmetryVertices.push(p);
       }
-    }
-    output.push(symmetry_faces);
-    output.push(symmetry_edges);
-    output.push(symmetry_vertices);
+    });
+
+    output.push(symmetryFaces);
+    output.push(symmetryEdges);
+    output.push(symmetryVertices);
   } else if (symmetry === 'cube') {
     var cube_faces = getAxes('face first cube');
     var cube_edges = getAxes('edge first cube');
@@ -345,17 +346,17 @@ populateStickers = function(vertices, prototypeSticker, symmetry, mirroring) {
 
   protytypeStickerObject = new Sticker(vertices, prototypeSticker);
 
-  symmetry_faces = points[0];
-  symmetry_edges = points[1];
-  symmetry_vertices = points[2];
+  symmetryFaces = points[0];
+  symmetryEdges = points[1];
+  symmetryVertices = points[2];
 
 
-  face_degree = Math.PI / 2.0;
+  face_degree = Math.PI / 2.0; // symmetry === 'cube'
   if (symmetry === 'dodecahedron') face_degree = Math.PI * 2.0 / 5.0;
 
-  for(var i = 0; i < symmetry_faces.length; i++) {
+  symmetryFaces.forEach(function(face) {
     var rotationImage = prototypeSticker.map(function(j) {
-      setRotationMatrix(symmetry_faces[i], face_degree);
+      setRotationMatrix(face, face_degree);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       var index = newVertex.indexIn(vertices);
@@ -367,36 +368,35 @@ populateStickers = function(vertices, prototypeSticker, symmetry, mirroring) {
     stickers.push(new Sticker(vertices, rotationImage));
 
     var rotationImage2 = prototypeSticker.map(function(j) {
-      setRotationMatrix(symmetry_faces[i], face_degree * 2);
+      setRotationMatrix(face, face_degree * 2);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       return newVertex.indexIn(vertices);
     });
     stickers.push(new Sticker(vertices, rotationImage2));
-  }
+  });
 
-  for(var i = 0; i < symmetry_vertices.length; i++) {
+  symmetryVertices.forEach(function(vertex){
     var rotationImage3 = prototypeSticker.map(function(j) {
-      setRotationMatrix(symmetry_vertices[i], Math.PI * 2.0 / 3.0);
+      setRotationMatrix(vertex, Math.PI * 2.0 / 3.0);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       return newVertex.indexIn(vertices);
     });
     stickers.push(new Sticker(vertices, rotationImage3));
-  }
+  });
 
-  for(var i = 0; i < symmetry_edges.length; i++) {
-    var edge = symmetry_edges[i];
-    if (edge.x * 243 + edge.y * 19 + edge.z > 0) continue;
+  symmetryEdges.forEach(function(edge) {
+    if (edge.x * 243 + edge.y * 19 + edge.z > 0) return;
 
     var rotationImage = prototypeSticker.map(function(j) {
-      setRotationMatrix(symmetry_edges[i], Math.PI);
+      setRotationMatrix(edge, Math.PI);
       var newVertex = vertices[j].clone();
       newVertex.rotate();
       return newVertex.indexIn(vertices);
     });
     stickers.push(new Sticker(vertices, rotationImage));
-  }
+  });
 
   if (mirroring) {
     var mirrorStickers = stickers.map(function(sticker) {

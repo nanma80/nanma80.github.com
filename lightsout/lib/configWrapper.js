@@ -18,12 +18,12 @@ getNeighborhoodMakesDifference = function(shape) {
 
 loadPuzzleDropdown = function() {
   var options = '';
-  for (var i = 0; i < puzzleConfig.puzzles.length; i++) {
-    var puzzle = puzzleConfig.puzzles[i];
+  puzzleConfig.puzzles.forEach(function(puzzle) {
     var isDefaultPuzzle = (puzzle.id === puzzleConfig.defaultPuzzle);
-    var option = '<option value="' + puzzle.id + '" ' + (isDefaultPuzzle? 'selected' : '') + '>' + puzzle.displayName + '</option>';
-    options += option;
-  };
+      var option = '<option value="' + puzzle.id + '" ' + (isDefaultPuzzle? 'selected' : '') + '>' + puzzle.displayName + '</option>';
+      options += option;
+  });
+
   $("#shape").html(options);
 }
 
@@ -37,27 +37,24 @@ loadPuzzleRecords = function() {
   var toggleSelfOptions = [false, true];
   var neighborhoodOptions = [2, 1];
 
-  for (var i = 0; i < puzzleConfig.puzzles.length; i++) {
-    var puzzle = puzzleConfig.puzzles[i];
+  puzzleConfig.puzzles.forEach(function(puzzle) {
     var row = '<tr><td>' + puzzle.displayName + '</td>';
-    for (var j = 0; j < toggleSelfOptions.length; j++) {
-      var toggleSelfOption = toggleSelfOptions[j];
+    toggleSelfOptions.forEach(function(toggleSelfOption) {
       if (puzzle.neighborhoodMakesDifference) {
-        for (var k = 0; k < neighborhoodOptions.length; k++) {
-          var neighborhood = neighborhoodOptions[k];
+        neighborhoodOptions.forEach(function(neighborhood) {
           var key = storage.key(puzzle.id, toggleSelfOption, neighborhood);
           var solved = (storage.get(key) === 'true');
           row += '<td id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '"></td>';
-        };
+        });
       } else {
         var key = storage.key(puzzle.id, toggleSelfOption, neighborhoodOptions[0]);
         var solved = (storage.get(key) === 'true');
         row += '<td colspan="2" id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '"></td>';
       }
-    };
+    });
     row += '</tr>';
     rows += row;
-  };
+  });
 
   $("#records").html(rows);
   updateRecordCount();

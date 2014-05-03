@@ -41,11 +41,11 @@ setRotationMatrix = function(axis, t) {
 
 dedupOnInnerProd = function(inputArray) {
   var outputArray = [];
-  for (var i = 0; i < inputArray.length; i++) {
-    if (inputArray[i].indexIn(outputArray) < 0) {
-      outputArray.push(inputArray[i]);
+  inputArray.forEach(function(input) {
+    if (input.indexIn(outputArray) < 0) {
+      outputArray.push(input);
     }
-  }
+  });
   return outputArray;
 }
 

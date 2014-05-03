@@ -1,17 +1,15 @@
 function Puzzle() {
 
   this.isSolved = function() {
-    for (var i = 0; i < this.stickers.length; i++) {
-      if (!this.stickers[i].isSolved()) return false;
-    };
-    return true;
+    return this.stickers.every(function(s) { 
+      return s.isSolved(); 
+    });
   }
 
   this.isAllOn = function() {
-    for (var i = 0; i < this.stickers.length; i++) {
-      if (this.stickers[i].isSolved()) return false;
-    };
-    return true;
+    return this.stickers.every(function(s) { 
+      return (!s.isSolved()); 
+    });
   }
 
   this.markAsSolved = function() {
@@ -42,6 +40,7 @@ function Puzzle() {
   }
 
   this.initializeState = function() {
+    var self = this;
     resetRotationMatrix();
     this.vertices = getVertices(this.shape);
     console.log(this.shape);
@@ -50,10 +49,11 @@ function Puzzle() {
     this.prototypeStickers = getPrototypeStickers(this.shape);
     this.stickersByType = [];
     this.stickers = [];
-    for(var i = 0; i < this.prototypeStickers.length; i++) {
-      var stickersPerType = populateStickers(this.vertices, this.prototypeStickers[i], getSymmetry(this.shape));
-      this.stickers = this.stickers.concat(stickersPerType);
-    }
+    this.prototypeStickers.forEach(function(prototypeSticker) {
+      var stickersPerType = populateStickers(self.vertices, prototypeSticker, getSymmetry(self.shape));
+      self.stickers = self.stickers.concat(stickersPerType);
+    });
+
     console.log("Number of Faces: " + this.stickers.length);
     this.scrambledSolve = false;
     this.nTurns = 0;
@@ -76,9 +76,7 @@ function Puzzle() {
     context.fillStyle = "white";
     context.fillRect(0, 0, viewWidth,viewHeight);
 
-    for (var i = 0; i < this.stickers.length; i++) {
-      this.stickers[i].draw();
-    }
+    this.stickers.forEach(function(s) { s.draw(); })
 
     if (this.lastTurn !== -1) {
       this.stickers[this.lastTurn].highlight();
@@ -91,10 +89,7 @@ function Puzzle() {
 
   this.rotate = function(axis, angle) {
     setRotationMatrix(axis, angle);
-
-    for (var i = 0; i < this.vertices.length; i++) {
-      this.vertices[i].rotate();
-    }
+    this.vertices.forEach(function(v) { v.rotate(); })
   }
 
   this.turn = function(handleId) {
@@ -103,14 +98,18 @@ function Puzzle() {
     
     this.nTurns += 1;
 
-    for (var i = 0; i < this.stickers.length; i++) {
-      var neighborLevel = this.stickers[handleId].neighbor(this.stickers[i]);
-      if (neighborLevel > 0 && neighborLevel <3 && neighborLevel >= this.neighborhood)
-        this.stickers[i].changeState();
-    };
+    var handleSticker = this.stickers[handleId];
+    var neighborhood = this.neighborhood;
+    this.stickers.forEach(function(s) {
+      var neighborLevel = handleSticker.neighbor(s);
+      if (neighborLevel > 0 && neighborLevel <3 && neighborLevel >= neighborhood) {
+        s.changeState();
+      }
+    });
 
-    if (this.toggleSelf)
-      this.stickers[handleId].changeState();
+    if (this.toggleSelf) {
+      handleSticker.changeState();
+    }
   }
 
   this.snap = function(mouse) {

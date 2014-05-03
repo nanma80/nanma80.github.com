@@ -95,9 +95,9 @@ function Sticker(vertices, indices) {
     context.fillStyle = this.color();
     context.beginPath();
     context.moveTo(points[0].x, points[0].y);
-    for (var i = 1; i < points.length; i++) {
-      context.lineTo(points[i].x, points[i].y);
-    }
+    points.forEach(function(p) {
+      context.lineTo(p.x, p.y);
+    })
     context.closePath();
     context.fill();
     context.stroke();
@@ -116,9 +116,9 @@ function Sticker(vertices, indices) {
     context.lineCap = "round";
     context.beginPath();
     context.moveTo(points[0].x, points[0].y);
-    for (var i = 1; i < points.length; i++) {
-      context.lineTo(points[i].x, points[i].y);
-    }
+    points.forEach(function(p) {
+      context.lineTo(p.x, p.y);
+    })
     context.closePath();
     context.stroke();
   }
