@@ -27,6 +27,7 @@ function Puzzle() {
       alert('Congrats! You solved it in ' + this.nTurnsString() + '!');
       this.scrambledSolve = false;
       this.lastTurn = -1;
+      this.lastNeighbors = [];
       this.draw();
     } else if (this.isAllOn()) {
       alert('Nice job! But the real objective is to turn all tiles OFF. Keep on solving!');
@@ -59,6 +60,7 @@ function Puzzle() {
     this.nTurns = 0;
 
     this.lastTurn = -1;
+    this.lastNeighbors = [];
   }
 
   this.resetState = function() {
@@ -78,8 +80,12 @@ function Puzzle() {
 
     this.stickers.forEach(function(s) { s.draw(); })
 
+    // this.lastNeighbors.forEach(function(s) {
+    //   s.highlight('neighbor');
+    // })
+
     if (this.lastTurn !== -1) {
-      this.stickers[this.lastTurn].highlight();
+      this.stickers[this.lastTurn].highlight('handle');
     }
 
     context.font = "15pt Arial";
@@ -93,9 +99,10 @@ function Puzzle() {
   }
 
   this.turn = function(handleId) {
+    var self = this;
     this.lastTurn = handleId;
     if (handleId === -1) return;
-    
+    this.lastNeighbors = [];
     this.nTurns += 1;
 
     var handleSticker = this.stickers[handleId];
@@ -104,6 +111,7 @@ function Puzzle() {
       var neighborLevel = handleSticker.neighbor(s);
       if (neighborLevel > 0 && neighborLevel <3 && neighborLevel >= neighborhood) {
         s.changeState();
+        self.lastNeighbors.push(s);
       }
     });
 
@@ -136,6 +144,7 @@ function Puzzle() {
     this.nTurns = 0;
 
     this.lastTurn = -1;
+    this.lastNeighbors = [];
     this.draw();
   }
 

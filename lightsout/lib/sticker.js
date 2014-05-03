@@ -13,6 +13,16 @@ var colors = {
   10: {0: [40, 0, 40], 1: [255, 60, 255]}
 }
 
+var highlightColor = {
+  'handle': 'rgba(255, 40, 255, 0.5)',
+  'neighbor': 'gray',
+}
+
+var highlightWidth = {
+  'handle': 5,
+  'neighbor': 3,
+}
+
 function Sticker(vertices, indices) {
   this.modulo = 2;
   this.vertices = vertices;
@@ -82,44 +92,38 @@ function Sticker(vertices, indices) {
   }
 
   this.draw = function() {
-    if (!this.visible()) {
-      return;
-    }
-
-    var points = this.points2d();
-
     context.strokeStyle = 'black';
     context.lineWidth = 3;
-    context.lineJoin = "round";
-    context.lineCap = "round";
     context.fillStyle = this.color();
-    context.beginPath();
-    context.moveTo(points[0].x, points[0].y);
-    points.forEach(function(p) {
-      context.lineTo(p.x, p.y);
-    })
-    context.closePath();
-    context.fill();
-    context.stroke();
+    this.drawSticker(true);
   }
 
-  this.highlight = function() {
+  this.highlight = function(style) {
+    context.strokeStyle = highlightColor[style];
+    context.lineWidth = highlightWidth[style];
+    this.drawSticker(false);
+  }
+
+  this.drawSticker = function(filling) {
     if (!this.visible()) {
       return;
     }
 
     var points = this.points2d();
 
-    context.strokeStyle = 'rgba(255, 40, 255, 0.5)';
-    context.lineWidth = 5;
+    // common style
     context.lineJoin = "round";
     context.lineCap = "round";
+
     context.beginPath();
     context.moveTo(points[0].x, points[0].y);
     points.forEach(function(p) {
       context.lineTo(p.x, p.y);
     })
     context.closePath();
+    if (filling) {
+      context.fill();
+    }
     context.stroke();
   }
 
