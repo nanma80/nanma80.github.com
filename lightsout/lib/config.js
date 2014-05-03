@@ -194,5 +194,5 @@ puzzleConfig = {
     }
   ],
 
-  "defaultPuzzle":"truncated_tetrahedron"
+  "defaultPuzzle":"dodecahedron"
 };
