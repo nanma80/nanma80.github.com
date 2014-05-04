@@ -58,10 +58,17 @@ mouseMove = function(e) {
 }
 
 touchMove = function(e) {
-  e.preventDefault();
+  e.returnValue = false;
+  e.cancelBubble = true;
+  if (e.preventDefault)
+  {
+      e.preventDefault();
+      e.stopPropagation();
+  }
   if (mouseIsDown) {
     mouseDrag(e);
   }
+  return false;
 }
 
 findMouse = function (e) {
