@@ -32,7 +32,7 @@
 </div>
 
 <div id="content">
-  <canvas id="canvas" width="550" height="550" oncontextmenu="return false;" onselectstart='return false;'>
+  <canvas id="canvas" oncontextmenu="return false;" onselectstart='return false;'>
     Your browser does not support the HTML5 canvas tag.
   </canvas>
 </div>
@@ -97,12 +97,8 @@
   canvas.width = size;
   canvas.height = size;
 
-
   var viewHeight = canvas.height;
   var viewWidth = canvas.width;
-
-
-  var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
 
   loadPuzzleDropdown();
   var storage = new Storage();
