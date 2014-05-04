@@ -3,6 +3,7 @@ mouseInRegion = false;
 mouseIsDown = false;
 mousePos = new Point2D(0,0);
 dragging = false;
+lastClick = 0;
 
 mouseDown = function(e){
   mouseIsDown = true;
@@ -23,10 +24,13 @@ touchUp = function(e){
 }
 
 click = function(e){
-  var layer;
-  puzzle.turn(puzzle.snap(mousePos));
-  puzzle.draw();
-  puzzle.testSolved();
+  currentClick = new Date().getTime();
+  if (currentClick - lastClick > 100) {
+    puzzle.turn(puzzle.snap(mousePos));
+    puzzle.draw();
+    puzzle.testSolved();
+  }
+  lastClick = currentClick;
 }
 
 mouseDrag = function(e){
