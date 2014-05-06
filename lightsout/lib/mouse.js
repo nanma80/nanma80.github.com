@@ -25,6 +25,7 @@ touchUp = function(e){
 
 click = function(e){
   currentClick = new Date().getTime();
+  $('#log').html(currentClick - lastClick);
   if (currentClick - lastClick > 250) {
     puzzle.turn(puzzle.snap(mousePos));
     puzzle.draw();
