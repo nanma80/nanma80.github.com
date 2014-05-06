@@ -25,7 +25,7 @@ touchUp = function(e){
 
 click = function(e){
   currentClick = new Date().getTime();
-  if (currentClick - lastClick > 100) {
+  if (currentClick - lastClick > 250) {
     puzzle.turn(puzzle.snap(mousePos));
     puzzle.draw();
     puzzle.testSolved();
