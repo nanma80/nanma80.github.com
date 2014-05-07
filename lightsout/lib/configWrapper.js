@@ -33,10 +33,6 @@ loadPuzzleDropdown = function() {
 }
 
 loadPuzzleRecords = function() {
-  if (!storage.useLocalStorage) {
-    return;
-  }
-
   var rows = '<tr><th>Toggle clicked tile?</th><th colspan="2">No</th><th colspan="2">Yes</th></tr>\
     <tr><th>Neighborhood</th><th>Edge</th><th>Vertex</th><th>Edge</th><th>Vertex</th></tr>';
   var toggleSelfOptions = [false, true];
