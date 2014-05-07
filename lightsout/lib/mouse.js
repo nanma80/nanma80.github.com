@@ -3,35 +3,52 @@ mouseInRegion = false;
 mouseIsDown = false;
 mousePos = new Point2D(0,0);
 dragging = false;
-lastClick = 0;
+lastClickTimeStamp = 0;
+
+onCanvasClick = function(e) {
+  $('#log').append("" + e.timeStamp + " click<br>");
+  e.preventDefault();
+  return false;
+}
 
 mouseDown = function(e){
+  $('#log').append("" + e.timeStamp + " mouse down<br>");
+  mouseIsDown = true;
+  findMouse(e);
+  dragging = false;
+}
+
+touchStart = function(e){
+  $('#log').append("" + e.timeStamp + " touch start<br>");
   mouseIsDown = true;
   findMouse(e);
   dragging = false;
 }
 
 mouseUp = function(e){
+  $('#log').append("" + e.timeStamp + " mouse up<br>");
   mouseIsDown = false;
-  if (!dragging && mouseInRegion) {
-    click(e);
-  }
-  dragging = false;
 }
 
-touchUp = function(e){
+touchEnd = function(e){
+  $('#log').append("" + e.timeStamp + " touch end<br>");
   mouseIsDown = false;
 }
 
 click = function(e){
-  currentClick = new Date().getTime();
-  $('#log').html(currentClick - lastClick);
-  if (currentClick - lastClick > 250) {
-    puzzle.turn(puzzle.snap(mousePos));
-    puzzle.draw();
-    puzzle.testSolved();
+  if (dragging) {
+    dragging = false;
+    return;
   }
-  lastClick = currentClick;
+
+  // currentClickTimeStamp = e.timeStamp;
+  $('#log').append("" + e.timeStamp + " click<br>");
+  // if (currentClickTimeStamp - lastClickTimeStamp > 250) {
+  puzzle.turn(puzzle.snap(mousePos));
+  puzzle.draw();
+  puzzle.testSolved();
+  // }
+  // lastClickTimeStamp = currentClickTimeStamp;
 }
 
 mouseDrag = function(e){
@@ -44,6 +61,7 @@ mouseDrag = function(e){
 }
 
 mouseOut = function(e){
+  $('#log').append("" + e.timeStamp + " mouse out<br>");
   mouseInRegion = false;
   if (dragging) {
     dragging = false;
@@ -63,6 +81,7 @@ mouseMove = function(e) {
 }
 
 touchMove = function(e) {
+  $('#log').append("" + e.timeStamp + " touch move<br>");
   e.returnValue = false;
   e.cancelBubble = true;
   if (e.preventDefault)
