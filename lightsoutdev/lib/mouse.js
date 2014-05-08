@@ -33,6 +33,9 @@ mouseUp = function(e){
 touchEnd = function(e){
   $('#log').append("" + e.timeStamp + " touch end<br>");
   mouseIsDown = false;
+  if (dragging) return;
+  puzzle.lastTurn = puzzle.snap(mousePos);
+  puzzle.draw();
 }
 
 click = function(e){
