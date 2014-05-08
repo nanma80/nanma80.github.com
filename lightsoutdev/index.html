@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lights Out</title>
+  <script src="lib/jquery-2.1.0.min.js"></script>
+  <script src="lib/config.js"></script>
+  <script src="lib/configWrapper.js"></script>
+  <script src="lib/storage.js"></script>
+  <script src="lib/point3d.js"></script>
+  <script src="lib/sticker.js"></script>
+  <script src="lib/puzzle.js"></script>
+  <script src="lib/mouse.js"></script>
+  <script src="lib/globalControl.js"></script>
+  <script src="lib/puzzleBuilderHelper.js"></script>
+  <script src="lib/puzzleBuilder.js"></script>
+
+  <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"/>
+  <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+  <link rel="icon" href="../images/apple-touch-icon.png">
+  <link href="style/main.css" rel="stylesheet" type="text/css">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+</head>
+<body onselectstart='return false;'>
+
+<div class="title">
+  Polyhedral Lights Out<br>
+</div>
+
+<div id="content">
+  <canvas id="canvas" oncontextmenu="return false;" onselectstart='return false;'>
+    Your browser does not support the HTML5 canvas tag.
+  </canvas>
+</div>
+
+<p id="log"></p>
+
+<div class="control">
+  <button type="button" onclick = "onReset();">Reset</button> 
+  <button type="button" onclick = "onScramble();">Scramble</button>
+</div>
+
+<div class="control">Shape:
+  <select id="shape" onchange="onParameterChange();">
+  </select>
+</div>
+
+<div class="control">Neighbors defined as:
+  <select id="neighborhood" onchange="onParameterChange();">
+    <option value="2" selected>sharing an edge</option>
+    <option value="1">sharing a vertex</option>
+  </select>
+</div>
+
+<div class="control">
+  <input type="checkbox" id="toggleSelf" onchange="onParameterChange();">
+  <label for="toggleSelf">Also toggle clicked tile</label>
+</div>
+
+<div class="comment">
+  <p>Click or touch a tile to toggle its neighbors. Click Scramble and turn off all tiles to win. </p>
+</div>
+
+<div class="centered">
+  <p id="records-count"></p>
+  <table id="records">
+  </table>
+</div>
+
+<div class="control">
+  <button type="button" class="large" onclick = "onClearRecords();">Clear Records</button> 
+</div>
+
+<div class="comment">
+  <p>The puzzle uses html5 canvas, which is not supported directly by IE 8 or lower. Try using the latest version of Chrome for the best experience.</p>
+  <p>Nan Ma, May 2014</p>
+  
+</div>
+
+<script type="text/javascript">
+  var canvas = $("#canvas")[0];
+  var context = canvas.getContext("2d");
+  var size = 550;
+
+  var limits = [window.innerWidth, window.outerWidth, screen.width, screen.availWidth, window.innerHeight, window.outerHeight, screen.height, screen.availHeight];
+
+  for (var i = 0; i < limits.length; i++) {
+    var limit = limits[i];
+    if (limit !== undefined && limits[i] < size) {
+      size = limit;
+    }
+  };
+
+  size -= 2;
+  canvas.width = size;
+  canvas.height = size;
+
+  var viewHeight = canvas.height;
+  var viewWidth = canvas.width;
+
+  loadPuzzleDropdown();
+  var storage = new Storage();
+  loadPuzzleRecords();
+
+  var puzzle = new Puzzle();
+
+  onParameterChange();
+  canvas.addEventListener("mousedown", mouseDown, false);
+  canvas.addEventListener("mousemove", mouseMove, false);
+  canvas.addEventListener("mouseover", mouseOver, false);
+  canvas.addEventListener("mouseout", mouseOut, false);
+
+  canvas.addEventListener("touchstart", touchStart, false);
+  canvas.addEventListener("touchmove", touchMove, true);
+  canvas.addEventListener("touchend", touchEnd, false);
+  canvas.addEventListener("click", click, false);
+
+  document.body.addEventListener("mouseup", mouseUp, false);
+  document.body.addEventListener("touchcancel", touchEnd, false);
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  color: #776e65;
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px; 
+  width:  100%;
+  height: 100%;
+}
+
+button {
+  font-weight: bold;
+  margin-left:10px;
+  margin-right:10px;
+  height:30px; 
+  width:90px;} 
+
+button.large {
+  width:130px;} 
+
+div {
+  margin: 0px;
+}
+
+div.centered {
+  text-align: center;}
+
+.heading:after {
+  content: "";
+  display: block;
+  clear: both; }
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+  margin: 0;
+  margin-left: 10px;
+  display: block;}
+
+canvas {
+  -webkit-tap-highlight-color:rgba(0,0,0,0);
+  -ms-touch-action: double-tap-zoom;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;}
+
+
+div.centered table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto; 
+  text-align: center; }
+
+table, th, td, th {
+  font-size: 15px;
+  font-weight: normal;
+  border: 1px solid #ccc; }
+
+td, th {
+  padding: 1px;
+}
+
+td {
+  max-width: 80px;
+}
+
+.solved-mark {
+  background: #007a00;
+}
+
+.unsolved-mark {
+  /*background: #7a0000;*/
+}
+
+.control {
+  text-align:center;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 10px;
+  display:block; }
+
+p {
+  margin: 5px;
+  line-height: 1.65; }
+
+a {
+  color: #776e65;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer; }
+
+strong.important {
+  text-transform: uppercase; }
+
+hr {
+  border: none;
+  border-bottom: 1px solid #d8d4d0;
+  margin-top: 20px;
+  margin-bottom: 30px; }
+
+.container {
+  width: 500px;
+  margin: 0 auto; }
+
+.restart-button {
+  display: inline-block;
+  background: #8f7a66;
+  border-radius: 3px;
+  padding: 0 20px;
+  text-decoration: none;
+  color: #f9f6f2;
+  height: 40px;
+  line-height: 42px;
+  display: block;
+  text-align: center;
+  float: right; }
+
+.game-explanation {
+  margin-top: 50px; }
+
+@media screen and (max-width: 550px) {
+  html, body {
+    font-size: 15px; }
+
+  body {
+    margin: 0;
+    padding: 0; }
+
+  .title {
+    font-size: 20px;
+    margin-top: 0px; }
+
+  .container {
+    width: 280px;
+    margin: 0 auto; }
+
+  .heading {
+    margin-bottom: 10px; }
+ }
