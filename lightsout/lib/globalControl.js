@@ -37,3 +37,23 @@ onScramble = function() {
   if (!confirmResetPuzzle()) return;
   puzzle.scramble();
 }
+
+onResize = function() {
+  var limits = [window.innerWidth, window.outerWidth, screen.width, screen.availWidth, window.innerHeight, window.outerHeight, screen.height, screen.availHeight];
+
+  for (var i = 0; i < limits.length; i++) {
+    var limit = limits[i];
+    if (limit !== undefined && limits[i] < size) {
+      size = limit;
+    }
+  };
+
+  size -= 2;
+  canvas.width = size;
+  canvas.height = size;
+
+  viewHeight = canvas.height;
+  viewWidth = canvas.width;
+
+  if(puzzle) puzzle.draw();
+}

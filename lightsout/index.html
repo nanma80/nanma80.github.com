@@ -86,22 +86,9 @@
   var canvas = $("#canvas")[0];
   var context = canvas.getContext("2d");
   var size = 550;
+  var viewHeight, viewWidth;
+  onResize();  
 
-  var limits = [window.innerWidth, window.outerWidth, screen.width, screen.availWidth, window.innerHeight, window.outerHeight, screen.height, screen.availHeight];
-
-  for (var i = 0; i < limits.length; i++) {
-    var limit = limits[i];
-    if (limit !== undefined && limits[i] < size) {
-      size = limit;
-    }
-  };
-
-  size -= 2;
-  canvas.width = size;
-  canvas.height = size;
-
-  var viewHeight = canvas.height;
-  var viewWidth = canvas.width;
 
   loadPuzzleDropdown();
   var storage = new Storage();
@@ -110,6 +97,7 @@
   var puzzle = new Puzzle();
 
   onParameterChange();
+
   canvas.addEventListener("mousedown", mouseDown, false);
   canvas.addEventListener("mousemove", mouseMove, false);
   canvas.addEventListener("mouseover", mouseOver, false);
@@ -122,6 +110,9 @@
 
   document.body.addEventListener("mouseup", mouseUp, false);
   document.body.addEventListener("touchcancel", touchEnd, false);
+
+  window.addEventListener('resize', onResize, false);
+  window.addEventListener('orientationchange', onResize, false);
 </script>
 
 
