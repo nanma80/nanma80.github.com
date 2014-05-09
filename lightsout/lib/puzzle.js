@@ -24,11 +24,11 @@ function Puzzle() {
   this.testSolved = function() {
     if (this.scrambledSolve && this.isSolved()) {
       this.markAsSolved();
-      alert('Congrats! You solved it in ' + this.nTurnsString() + '!');
       this.scrambledSolve = false;
       this.lastTurn = -1;
       this.lastNeighbors = [];
-      // this.draw();
+      this.draw();
+      alert('Congrats! You solved it in ' + this.nTurnsString() + '!');
     } else if (this.isAllOn()) {
       alert('Nice job! But the real objective is to turn all tiles OFF. Keep on solving!');
     }

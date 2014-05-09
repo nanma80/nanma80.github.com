@@ -5,12 +5,6 @@ mousePos = new Point2D(0,0);
 dragging = false;
 lastClickTimeStamp = 0;
 
-onCanvasClick = function(e) {
-  $('#log').append("" + e.timeStamp + " click<br>");
-  e.preventDefault();
-  return false;
-}
-
 onOriginalClick = function(e) {
   $('#log').append("" + e.timeStamp + " click<br>");
   e.preventDefault();
@@ -25,6 +19,7 @@ mouseDown = function(e){
 }
 
 touchStart = function(e) {
+  e.preventDefault();
   $('#log').append("" + e.timeStamp + " touch start<br>");
   mouseIsDown = true;
   findMouse(e);
@@ -53,19 +48,11 @@ touchEnd = function(e){
 }
 
 click = function(e){
-  $('#log').append("" + e.timeStamp + " click<br>");
+  $('#log').append("" + e.timeStamp + " toggling<br>");
   if (dragging) {
     dragging = false;
     return;
   }
-  var oldMousePos = mousePos.clone();
-  $('#log').append("" + e.timeStamp + " there<br>");
-  findMouse(e);
-  $('#log').append("" + e.timeStamp + " after find<br>");
-  if (oldMousePos.distance(mousePos) > 0) {
-    $('#log').append("" + e.timeStamp + " too far<br>");
-    return;
-  }  
 
   puzzle.turn(puzzle.snap(mousePos));
   puzzle.draw();
@@ -102,23 +89,16 @@ mouseMove = function(e) {
 }
 
 touchMove = function(e) {
-  $('#log').append("" + e.timeStamp + " touch move<br>");
-  e.returnValue = false;
-  e.cancelBubble = true;
-  if (e.preventDefault)
-  {
-      e.preventDefault();
-      e.stopPropagation();
-  }
+  // $('#log').append("" + e.timeStamp + " touch move<br>");
+  e.preventDefault();
   if (mouseIsDown) {
     mouseDrag(e);
   }
-  return false;
 }
 
 findMouse = function (e) {
   var x,y;
-
+  
   if(e.touches){
     x = e.touches[0].pageX;
     y = e.touches[0].pageY;
