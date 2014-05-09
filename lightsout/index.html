@@ -38,7 +38,7 @@
   </canvas>
 </div>
 
-<!-- <p id="log"></p> -->
+<p id="log"></p>
 
 <div class="control">
   <button type="button" onclick = "onReset();">Reset</button> 
@@ -106,10 +106,10 @@
   canvas.addEventListener("touchstart", touchStart, false);
   canvas.addEventListener("touchmove", touchMove, true);
   canvas.addEventListener("touchend", touchEnd, false);
-  canvas.addEventListener("click", click, false);
+  canvas.addEventListener("click", onOriginalClick, false);
 
   document.body.addEventListener("mouseup", mouseUp, false);
-  document.body.addEventListener("touchcancel", touchEnd, false);
+  document.body.addEventListener("touchcancel", touchCancel, false);
 
   window.addEventListener('resize', onResize, false);
   window.addEventListener('orientationchange', onResize, false);

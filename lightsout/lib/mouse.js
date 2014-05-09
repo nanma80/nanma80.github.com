@@ -11,6 +11,12 @@ onCanvasClick = function(e) {
   return false;
 }
 
+onOriginalClick = function(e) {
+  $('#log').append("" + e.timeStamp + " click<br>");
+  e.preventDefault();
+  return false;
+}
+
 mouseDown = function(e){
   $('#log').append("" + e.timeStamp + " mouse down<br>");
   mouseIsDown = true;
@@ -18,40 +24,52 @@ mouseDown = function(e){
   dragging = false;
 }
 
-touchStart = function(e){
+touchStart = function(e) {
   $('#log').append("" + e.timeStamp + " touch start<br>");
   mouseIsDown = true;
   findMouse(e);
   dragging = false;
 }
 
+touchCancel = function(e) {
+  $('#log').append("" + e.timeStamp + " touch cancel<br>");
+  e.preventDefault();
+  return false;
+}
+
 mouseUp = function(e){
   $('#log').append("" + e.timeStamp + " mouse up<br>");
   mouseIsDown = false;
+  if (mouseInRegion) {
+    click(e);
+  }
 }
 
 touchEnd = function(e){
+  e.preventDefault();
   $('#log').append("" + e.timeStamp + " touch end<br>");
   mouseIsDown = false;
-  if (dragging) return;
-  puzzle.lastTurn = puzzle.snap(mousePos);
-  puzzle.draw();
+  click(e);
 }
 
 click = function(e){
+  $('#log').append("" + e.timeStamp + " click<br>");
   if (dragging) {
     dragging = false;
     return;
   }
+  var oldMousePos = mousePos.clone();
+  $('#log').append("" + e.timeStamp + " there<br>");
+  findMouse(e);
+  $('#log').append("" + e.timeStamp + " after find<br>");
+  if (oldMousePos.distance(mousePos) > 0) {
+    $('#log').append("" + e.timeStamp + " too far<br>");
+    return;
+  }  
 
-  // currentClickTimeStamp = e.timeStamp;
-  $('#log').append("" + e.timeStamp + " click<br>");
-  // if (currentClickTimeStamp - lastClickTimeStamp > 250) {
   puzzle.turn(puzzle.snap(mousePos));
   puzzle.draw();
   puzzle.testSolved();
-  // }
-  // lastClickTimeStamp = currentClickTimeStamp;
 }
 
 mouseDrag = function(e){
