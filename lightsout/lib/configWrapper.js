@@ -23,7 +23,14 @@ loadPuzzleDropdown = function() {
     puzzleConfig.puzzles.forEach(function(puzzle) {
       if(puzzle.group !== group.id) return;
       var isDefaultPuzzle = (puzzle.id === puzzleConfig.defaultPuzzle);
-      var option = '<option value="' + puzzle.id + '" ' + (isDefaultPuzzle? 'selected' : '') + '>' + puzzle.displayName + '</option>';
+      var option = '<option value="' 
+        + puzzle.id 
+        + '" ' 
+        + (isDefaultPuzzle? 'selected' : '') 
+        + '>' 
+        + puzzle.displayName 
+        + (puzzle.neighborhoodMakesDifference ? ' &dagger;' : '') 
+        + '</option>';
       options += option;
     });
     options += '</optgroup>';
