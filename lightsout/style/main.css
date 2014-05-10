@@ -42,6 +42,8 @@ canvas {
   -webkit-tap-highlight-color:rgba(0,0,0,0);
   -ms-touch-action: double-tap-zoom;
   touch-action: double-tap-zoom;
+  width:100%;
+  max-width: 550px;
   margin-left: auto;
   margin-right: auto;
   display: block;}

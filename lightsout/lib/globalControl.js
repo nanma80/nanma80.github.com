@@ -40,19 +40,12 @@ onScramble = function() {
 
 onResize = function() {
   size = 550;
-  var limits = [window.innerWidth, window.outerWidth, screen.width, screen.availWidth, window.innerHeight, window.outerHeight, screen.height, screen.availHeight];
-
-  for (var i = 0; i < limits.length; i++) {
-    var limit = limits[i];
-    if (limit !== undefined && limits[i] < size) {
-      size = limit;
-    }
-  };
-
-  size -= 2;
+  var canvasJquery = $('canvas');
+  var size = canvasJquery.width();
+  canvasJquery.height(size);
   canvas.width = size;
   canvas.height = size;
-
+  
   viewHeight = canvas.height;
   viewWidth = canvas.width;
 
