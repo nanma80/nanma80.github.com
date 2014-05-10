@@ -39,6 +39,7 @@ onScramble = function() {
 }
 
 onResize = function() {
+  size = 550;
   var limits = [window.innerWidth, window.outerWidth, screen.width, screen.availWidth, window.innerHeight, window.outerHeight, screen.height, screen.availHeight];
 
   for (var i = 0; i < limits.length; i++) {
