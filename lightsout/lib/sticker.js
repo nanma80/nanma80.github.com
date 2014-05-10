@@ -13,6 +13,11 @@ var colors = {
   10: {0: [40, 0, 40], 1: [255, 60, 255]}
 }
 
+var opacities = {
+  0: 0.9,
+  1: 1
+}
+
 var highlightColor = {
   'handle': 'rgba(255, 40, 255, 0.5)',
   'neighbor': 'gray',
@@ -83,7 +88,9 @@ function Sticker(vertices, indices) {
     colorArray = colorArray.map(function(x){return Math.floor(x * (0.8 + innerProd * 0.17 ))  });
     var displayColor = colorArray.map(function(x){return Math.max(0,Math.min(255,x))  });
 
-    return "rgb(" + displayColor[0] + "," + displayColor[1] + "," + displayColor[2] + ")";
+    var opacity = opacities[this.state];
+
+    return "rgba(" + displayColor[0] + "," + displayColor[1] + "," + displayColor[2] + ", " + opacity + ")";
   }
 
   this.visible = function() {
@@ -91,21 +98,21 @@ function Sticker(vertices, indices) {
     return (area(points[0], points[1], points[2]) < 0 );
   }
 
-  this.draw = function() {
+  this.draw = function(visible) {
     context.strokeStyle = 'black';
     context.lineWidth = 3;
     context.fillStyle = this.color();
-    this.drawSticker(true);
+    this.drawSticker(visible, true);
   }
 
   this.highlight = function(style) {
     context.strokeStyle = highlightColor[style];
     context.lineWidth = highlightWidth[style];
-    this.drawSticker(false);
+    this.drawSticker(true, false);
   }
 
-  this.drawSticker = function(filling) {
-    if (!this.visible()) {
+  this.drawSticker = function(visible, filling) {
+    if (this.visible() !== visible) {
       return;
     }
 
