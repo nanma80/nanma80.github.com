@@ -75,7 +75,8 @@ function Puzzle() {
   }
 
   this.draw = function() {
-    context.clearRect(0, 0, viewWidth,viewHeight);
+    context.fillStyle = "#f6f6f6";
+    context.fillRect(0, 0, viewWidth,viewHeight);
 
     this.stickers.forEach(function(s) { s.draw(false); })
     this.stickers.forEach(function(s) { s.draw(true); })
