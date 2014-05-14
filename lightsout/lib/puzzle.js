@@ -22,7 +22,11 @@ function Puzzle() {
   }
 
   this.testSolved = function() {
-    if (this.scrambledSolve && this.isSolved()) {
+    if (!this.scrambledSolve) {
+      return;
+    }
+
+    if (this.isSolved()) {
       this.markAsSolved();
       alert('Congrats! You solved it in ' + this.nTurnsString() + '!\nTry more shapes!');
       this.scrambledSolve = false;
@@ -30,7 +34,7 @@ function Puzzle() {
       this.lastNeighbors = [];
       this.draw();
       $('#shape').focus();
-    } else if (this.scrambledSolve && this.isAllOn()) {
+    } else if (this.isAllOn()) {
       alert('Nice job! But the real objective is to turn all tiles OFF. Keep on solving!');
     }
   }
