@@ -18,7 +18,10 @@
   <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"/>
   <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
   <link rel="icon" href="../images/apple-touch-icon.png">
+  
+  <link href="style/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="style/main.css" rel="stylesheet" type="text/css">
+
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="HandheldFriendly" content="True">
@@ -46,8 +49,8 @@
 <!-- <p id="log"></p> -->
 
 <div class="control">
-  <button type="button" onclick = "onReset();">Reset</button> 
-  <button type="button" onclick = "onScramble();">Scramble</button>
+  <button type="button" class="btn btn-primary" onclick = "onReset();">Reset</button> 
+  <button type="button" class="btn btn-primary" onclick = "onScramble();">Scramble</button>
 </div>
 
 <div class="control">Shape:
@@ -78,7 +81,7 @@
 </div>
 
 <div class="control">
-  <button type="button" class="large" onclick = "onClearRecords();">Clear Records</button> 
+  <button type="button" class="large btn btn-primary"  onclick = "onClearRecords();">Clear Records</button> 
 </div>
 
 <div class="comment">
@@ -117,6 +120,8 @@
 
   window.addEventListener('resize', onResize, false);
   window.addEventListener('orientationchange', onResize, false);
+
+  canvas.focus();
 </script>
 
 

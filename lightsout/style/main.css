@@ -10,11 +10,8 @@ html, body {
 }
 
 button {
-  font-weight: bold;
-  margin-left:10px;
-  margin-right:10px;
-  height:30px; 
-  width:90px;} 
+  width:90px;
+}
 
 button.large {
   width:130px;} 
