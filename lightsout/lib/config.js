@@ -153,7 +153,7 @@ puzzleConfig = {
     {
       "id": "great_rhombicosidodecahedron",
       "group": "archimedean_three_color",
-      "displayName":"Truncated Icosidodecahedron",
+      "displayName":"Truncated Icosi&shy;dodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":false,
       "prototypeStickers":[[2, 8, 20, 14], [2, 14, 62, 38, 26, 50], [2, 50, 96, 72, 24, 30, 78, 102, 56, 8]]
