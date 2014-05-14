@@ -30,7 +30,7 @@ function Puzzle() {
       this.lastNeighbors = [];
       this.draw();
       $('#shape').focus();
-    } else if (this.isAllOn()) {
+    } else if (this.scrambledSolve && this.isAllOn()) {
       alert('Nice job! But the real objective is to turn all tiles OFF. Keep on solving!');
     }
   }
