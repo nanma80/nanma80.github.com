@@ -5,6 +5,10 @@ puzzleConfig = {
       "displayName": "Platonic"
     },
     {
+      "id": "prism",
+      "displayName": "Prisms & Antiprisms"
+    },
+    {
       "id": "archimedean_quasi_regular",
       "displayName": "Archimedean: Quasiregular"
     },
@@ -68,6 +72,14 @@ puzzleConfig = {
       "prototypeStickers":[[0, 4, 6]]
     },
 
+    {
+      "id": "triangular_prism",
+      "group": "prism",
+      "displayName":"Triangular Prism",
+      "symmetry":"triangle",
+      "neighborhoodMakesDifference":false,
+      "prototypeStickers":[]
+    },
     {
       "id": "cuboctahedron",
       "group": "archimedean_quasi_regular",
@@ -194,5 +206,5 @@ puzzleConfig = {
     }
   ],
 
-  "defaultPuzzle":"dodecahedron"
+  "defaultPuzzle":"triangular_prism"
 };

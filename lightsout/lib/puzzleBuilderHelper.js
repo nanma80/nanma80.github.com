@@ -34,6 +34,8 @@ getVertices = function(shape) {
     return getSnubCubeVertices();
   } else if (shape === 'snub_dodecahedron') {
     return getSnubDodecahedronVertices();
+  } else if (shape === 'triangular_prism') {
+    return getPrismVertices(3, false);
   } else if (shape === 'great_rhombicosidodecahedron') {
     var output = [];
     output = output.concat(allPlusMinus(allPermutations(new Point3D(1, 1, 4 * PHI + 1))));
@@ -356,6 +358,46 @@ getSnubDodecahedronVertices = function() {
   return output;
 }
 
+getPrismVertices = function(nSides, isAntiprism) {
+  var output = [];
+  var phase, h;
+  if (isAntiprism) {
+    h = 1;
+    phase = 0;
+  } else {
+    h = Math.sin(Math.PI / nSides);
+    phase = 0;
+  }
+
+  for(var i = 0; i < nSides; i++) {
+    var theta = Math.PI * 2.0 / nSides * i + phase;
+    output.push(new Point3D(Math.cos(theta), Math.sin(theta), h));
+  }
+
+  var bottomVertices = output.map(function(p) {
+    return new Point3D(p.x, - p.y, - p.z);
+  });
+  output = output.concat(bottomVertices);
+
+  output.forEach(function(point){
+    point.normalize();
+  });
+  return output;
+}
+
+getFaceSymmetryDegree= function(symmetry) {
+  switch (symmetry) {
+    case 'tetrahedron':
+      return 3;
+    case 'cube':
+      return 4;
+    case 'dodecahedron':
+      return 5;
+    default:
+      throw 'Symmetry not supported for faceDegree';
+  }
+}
+
 populateStickers = function(vertices, prototypeSticker, symmetry, mirroring) {
   if(typeof(mirroring)==='undefined') mirroring = false;
 
@@ -370,17 +412,7 @@ populateStickers = function(vertices, prototypeSticker, symmetry, mirroring) {
   symmetryEdges = points[1];
   symmetryVertices = points[2];
 
-  var faceDegree;
-
-  if (symmetry === 'dodecahedron') {
-    faceDegree = Math.PI * 2.0 / 5.0;
-  } else if (symmetry === 'tetrahedron') {
-    faceDegree = Math.PI * 2.0 / 3.0;
-  } else if (symmetry === 'cube') {
-    faceDegree = Math.PI / 2.0;
-  } else {
-    throw 'Symmetry not supported for faceDegree';
-  }
+  var faceDegree = Math.PI * 2.0 / getFaceSymmetryDegree(symmetry);
 
   symmetryFaces.forEach(function(face) {
     var rotationImage = prototypeSticker.map(function(j) {
