@@ -116,6 +116,13 @@ td {
   margin: 10px;
   display:block; }
 
+.explain {
+  text-align:center;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 10px;
+  display:block; }
+
 p {
   margin: 5px;
   line-height: 1.65; }
