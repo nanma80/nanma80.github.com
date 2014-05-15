@@ -38,6 +38,10 @@ getVertices = function(shape) {
     return getPrismVerticesEdges(3, false)[0];
   } else if (shape === 'pentagonal_prism') {
     return getPrismVerticesEdges(5, false)[0];
+  } else if (shape === 'pentagonal_antiprism') {
+    return getPrismVerticesEdges(5, true)[0];
+  } else if (shape === 'square_antiprism') {
+    return getPrismVerticesEdges(4, true)[0];
   } else if (shape === 'great_rhombicosidodecahedron') {
     var output = [];
     output = output.concat(allPlusMinus(allPermutations(new Point3D(1, 1, 4 * PHI + 1))));
@@ -220,7 +224,7 @@ getPoints = function(symmetry) {
     output.push(tetraVertices);
   } else if (symmetry === 'triangle' || symmetry === 'square' || symmetry === 'pentagon') {
     output.push([new Point3D(0, 0, 1), new Point3D(0, 0, -1)]);
-    output.push(getPrismVerticesEdges(getFaceSymmetryDegree(symmetry), false)[1]);
+    output.push(getPrismVerticesEdges(getFaceSymmetryDegree(symmetry), true)[1]);
     output.push([]); 
   }
   return output;
@@ -368,14 +372,15 @@ getPrismVerticesEdges = function(nSides, isAntiprism) {
   var pVertices = [];
   var pEdges = [];
   var phaseVertices, h, phaseEdges;
+  
+  phaseEdges = 0;
 
   if (isAntiprism) {
-    h = 1;
-    phase = 0;
+    h = Math.sqrt( (Math.cos(Math.PI / nSides) - Math.cos(Math.PI * 2 / nSides)) / 2.0 );
+    phaseVertices = Math.PI * 2.0 / nSides / 4.0;
   } else {
     h = Math.sin(Math.PI / nSides);
     phaseVertices = 0;
-    phaseEdges = 0;
   }
 
   for(var i = 0; i < nSides; i++) {
@@ -384,6 +389,10 @@ getPrismVerticesEdges = function(nSides, isAntiprism) {
 
     theta = Math.PI * 2.0 / nSides * i + phaseEdges;
     pEdges.push(new Point3D(Math.cos(theta), Math.sin(theta), 0));
+
+    theta += Math.PI * 2.0 / nSides / 2.0;
+    pEdges.push(new Point3D(Math.cos(theta), Math.sin(theta), 0));
+  
   }
 
   var bottomVertices = pVertices.map(function(p) {

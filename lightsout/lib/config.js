@@ -89,6 +89,22 @@ puzzleConfig = {
       "prototypeStickers":[[0, 1, 2, 3, 4], [1, 0, 5, 9]]
     },
     {
+      "id": "square_antiprism",
+      "group": "prism",
+      "displayName":"Square Antiprism",
+      "symmetry":"square",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 1, 2, 3], [1, 0, 7]]
+    },
+    {
+      "id": "pentagonal_antiprism",
+      "group": "prism",
+      "displayName":"Pentagonal Antiprism",
+      "symmetry":"pentagon",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 1, 2, 3, 4], [1, 0, 9]]
+    },
+    {
       "id": "cuboctahedron",
       "group": "archimedean_quasi_regular",
       "displayName":"Cuboctahedron",
@@ -214,5 +230,5 @@ puzzleConfig = {
     }
   ],
 
-  "defaultPuzzle":"pentagonal_prism"
+  "defaultPuzzle":"dodecahedron"
 };
