@@ -78,7 +78,15 @@ puzzleConfig = {
       "displayName":"Triangular Prism",
       "symmetry":"triangle",
       "neighborhoodMakesDifference":false,
-      "prototypeStickers":[]
+      "prototypeStickers":[[0, 1, 2], [1, 0, 3, 5]]
+    },
+    {
+      "id": "pentagonal_prism",
+      "group": "prism",
+      "displayName":"Pentagonal Prism",
+      "symmetry":"pentagon",
+      "neighborhoodMakesDifference":false,
+      "prototypeStickers":[[0, 1, 2, 3, 4], [1, 0, 5, 9]]
     },
     {
       "id": "cuboctahedron",
@@ -206,5 +214,5 @@ puzzleConfig = {
     }
   ],
 
-  "defaultPuzzle":"triangular_prism"
+  "defaultPuzzle":"pentagonal_prism"
 };

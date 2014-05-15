@@ -35,7 +35,9 @@ getVertices = function(shape) {
   } else if (shape === 'snub_dodecahedron') {
     return getSnubDodecahedronVertices();
   } else if (shape === 'triangular_prism') {
-    return getPrismVertices(3, false);
+    return getPrismVerticesEdges(3, false)[0];
+  } else if (shape === 'pentagonal_prism') {
+    return getPrismVerticesEdges(5, false)[0];
   } else if (shape === 'great_rhombicosidodecahedron') {
     var output = [];
     output = output.concat(allPlusMinus(allPermutations(new Point3D(1, 1, 4 * PHI + 1))));
@@ -216,6 +218,10 @@ getPoints = function(symmetry) {
     output.push(tetraFaces);
     output.push(tetraEdges);
     output.push(tetraVertices);
+  } else if (symmetry === 'triangle' || symmetry === 'square' || symmetry === 'pentagon') {
+    output.push([new Point3D(0, 0, 1), new Point3D(0, 0, -1)]);
+    output.push(getPrismVerticesEdges(getFaceSymmetryDegree(symmetry), false)[1]);
+    output.push([]); 
   }
   return output;
 }
@@ -358,31 +364,38 @@ getSnubDodecahedronVertices = function() {
   return output;
 }
 
-getPrismVertices = function(nSides, isAntiprism) {
-  var output = [];
-  var phase, h;
+getPrismVerticesEdges = function(nSides, isAntiprism) {
+  var pVertices = [];
+  var pEdges = [];
+  var phaseVertices, h, phaseEdges;
+
   if (isAntiprism) {
     h = 1;
     phase = 0;
   } else {
     h = Math.sin(Math.PI / nSides);
-    phase = 0;
+    phaseVertices = 0;
+    phaseEdges = 0;
   }
 
   for(var i = 0; i < nSides; i++) {
-    var theta = Math.PI * 2.0 / nSides * i + phase;
-    output.push(new Point3D(Math.cos(theta), Math.sin(theta), h));
+    var theta = Math.PI * 2.0 / nSides * i + phaseVertices;
+    pVertices.push(new Point3D(Math.cos(theta), Math.sin(theta), h));
+
+    theta = Math.PI * 2.0 / nSides * i + phaseEdges;
+    pEdges.push(new Point3D(Math.cos(theta), Math.sin(theta), 0));
   }
 
-  var bottomVertices = output.map(function(p) {
+  var bottomVertices = pVertices.map(function(p) {
     return new Point3D(p.x, - p.y, - p.z);
   });
-  output = output.concat(bottomVertices);
+  pVertices = pVertices.concat(bottomVertices);
 
-  output.forEach(function(point){
+
+  pVertices.forEach(function(point){
     point.normalize();
   });
-  return output;
+  return [pVertices, pEdges];
 }
 
 getFaceSymmetryDegree= function(symmetry) {
@@ -392,6 +405,12 @@ getFaceSymmetryDegree= function(symmetry) {
     case 'cube':
       return 4;
     case 'dodecahedron':
+      return 5;
+    case 'triangle':
+      return 3;
+    case 'square':
+      return 4;
+    case 'pentagon':
       return 5;
     default:
       throw 'Symmetry not supported for faceDegree';
