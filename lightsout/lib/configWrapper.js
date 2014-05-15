@@ -40,9 +40,9 @@ loadPuzzleDropdown = function() {
 }
 
 loadPuzzleRecords = function() {
-  var rows = '<tr><th>Toggle clicked tile?</th><th colspan="2">No</th><th colspan="2">Yes</th></tr>\
+  var rows = '<tr><th>Toggle clicked tile?</th><th colspan="2">Yes</th><th colspan="2">No</th></tr>\
     <tr><th>Neighborhood</th><th>Edge</th><th>Vertex</th><th>Edge</th><th>Vertex</th></tr>';
-  var toggleSelfOptions = [false, true];
+  var toggleSelfOptions = [true, false];
   var neighborhoodOptions = [2, 1];
 
   puzzleConfig.groups.forEach(function(group) {
