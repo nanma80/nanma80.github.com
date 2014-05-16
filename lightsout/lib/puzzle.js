@@ -21,14 +21,14 @@ function Puzzle() {
   }
 
   this.testSolved = function() {
-    if (!this.scrambledSolve) {
+    if (this.status !== 'solving') {
       return;
     }
 
     if (this.isSolved()) {
       this.markAsSolved();
       alert('Congrats! You solved it in ' + this.nTurnsString() + '!\nTry more shapes!');
-      this.scrambledSolve = false;
+      this.status = 'solved';
       this.lastTurn = -1;
       this.lastNeighbors = [];
       this.draw();
@@ -63,7 +63,7 @@ function Puzzle() {
 
     console.log("Number of Faces: " + this.stickers.length);
 
-    this.scrambledSolve = options.scrambledSolve || false;
+    this.status = options.status || 'investigating';
     this.nTurns = options.nTurns || 0;
     this.lastTurn = options.lastTurn || -1;
     this.lastNeighbors = [];
@@ -103,7 +103,11 @@ function Puzzle() {
 
     context.font = "15pt Arial";
     context.fillStyle = "green";
+    context.textAlign = 'start';
     context.fillText(this.nTurnsString(), 6, viewHeight - 10);
+
+    context.textAlign = 'end';
+    context.fillText(this.statusString(), viewWidth - 10, viewHeight - 10);
   }
 
   this.rotate = function(axis, angle) {
@@ -154,7 +158,7 @@ function Puzzle() {
       this.turn(0);
     }
     
-    this.scrambledSolve = true;
+    this.status = 'solving';
     this.nTurns = 0;
 
     this.lastTurn = -1;
@@ -167,12 +171,16 @@ function Puzzle() {
     return this.nTurns.toString() + " move" + (this.nTurns !== 1 ? "s" : "");
   }
 
+  this.statusString = function () {
+    return this.status.charAt(0).toUpperCase() + this.status.slice(1);
+  }
+
   this.save = function() {
     var saveContent = {};
     saveContent.shape = this.shape;
     saveContent.neighborhood = this.neighborhood;
     saveContent.toggleSelf = this.toggleSelf;
-    saveContent.scrambledSolve = this.scrambledSolve;
+    saveContent.status = this.status;
     saveContent.nTurns = this.nTurns;
     saveContent.lastTurn = this.lastTurn;
     saveContent.stickerState = this.stickers.map(function(s) {return s.state});
@@ -199,11 +207,7 @@ function Puzzle() {
 
   this.initialLoad = function() {
     if (this.load()) {
-      if (this.isSolved()) {
-        this.scramble();
-      } else {
-        this.draw();
-      }
+      this.draw();
     } else {
       onParameterChange();
     }

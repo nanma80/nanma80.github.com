@@ -1,6 +1,6 @@
 confirmResetPuzzle = function() {
   var nTurnsTriggeringConfirmation = 10;
-  if (puzzle.scrambledSolve && puzzle.nTurns > nTurnsTriggeringConfirmation) {
+  if (puzzle.status === 'solving' && puzzle.nTurns > nTurnsTriggeringConfirmation) {
     var r = confirm("You'll lose your progress. Are you sure?");
     if (r === false) {
       return false;
