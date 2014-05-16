@@ -17,12 +17,12 @@ puzzleConfig = {
       "displayName": "Archimedean: Truncated Platonic"
     },
     {
-      "id": "archimedean_three_color",
-      "displayName": "Archimedean: Three Colors"
-    },
-    {
       "id": "archimedean_snub",
       "displayName": "Archimedean: Snub"
+    },
+    {
+      "id": "archimedean_three_color",
+      "displayName": "Archimedean: Misc."
     },
     {
       "id": "catalan",
