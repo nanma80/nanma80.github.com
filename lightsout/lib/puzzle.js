@@ -138,7 +138,14 @@ function Puzzle() {
     this.save();
   }
 
+  this.isTurnable = function() {
+    return (this.status !== 'solved');
+  }
+
   this.snap = function(mouse) {
+    if (!this.isTurnable()) {
+      return -1;
+    }
     for (var i = 0; i < this.stickers.length; i++) {
       if (this.stickers[i].contains(mouse)) return i;
     };
@@ -188,21 +195,16 @@ function Puzzle() {
   }
 
   this.load = function() {
+    // returns whether the loading is successful
     var loadContent = storage.load();
     if (loadContent !== false && loadContent !== null) {
-      if (loadContent.shape !== null 
-          && loadContent.neighborhood !== null 
-          && loadContent.toggleSelf !== null ) {
+      if (('shape' in loadContent) && ('neighborhood' in loadContent) && ('toggleSelf' in loadContent)) {
         setParameters(loadContent.shape, loadContent.neighborhood, loadContent.toggleSelf);
-      } else {
-        return false;
+        this.resetState(loadContent);
+        return true;
       }
-
-      this.resetState(loadContent);
-      return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   this.initialLoad = function() {
