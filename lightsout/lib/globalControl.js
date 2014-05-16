@@ -30,7 +30,7 @@ setParameters = function(shape, neighborhood, toggleSelf) {
 onClearRecords = function() {
   var r = confirm("List of solved puzzles will be cleared. Are you sure?");
   if (r === true) {
-    localStorage.clear();
+    storage.clearRecords();
     loadPuzzleRecords();
   }
 };

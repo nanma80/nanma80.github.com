@@ -37,4 +37,10 @@ function Storage() {
       return false;
     }
   }
+
+  this.clearRecords = function() {
+    var saveGame = this.load();
+    localStorage.clear();
+    this.save(saveGame);
+  }
 }

@@ -32,6 +32,7 @@ function Puzzle() {
       this.lastTurn = -1;
       this.lastNeighbors = [];
       this.draw();
+      this.save();
       $('#shape').focus();
     } else if (this.isAllOn()) {
       alert('Nice job! But the real objective is to turn all tiles OFF. Keep on solving!');
@@ -181,7 +182,9 @@ function Puzzle() {
   this.load = function() {
     var loadContent = storage.load();
     if (loadContent !== false && loadContent !== null) {
-      if (loadContent.shape && loadContent.neighborhood && loadContent.toggleSelf) {
+      if (loadContent.shape !== null 
+          && loadContent.neighborhood !== null 
+          && loadContent.toggleSelf !== null ) {
         setParameters(loadContent.shape, loadContent.neighborhood, loadContent.toggleSelf);
       } else {
         return false;
@@ -196,7 +199,11 @@ function Puzzle() {
 
   this.initialLoad = function() {
     if (this.load()) {
-      this.draw();
+      if (this.isSolved()) {
+        this.scramble();
+      } else {
+        this.draw();
+      }
     } else {
       onParameterChange();
     }
