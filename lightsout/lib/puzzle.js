@@ -208,7 +208,7 @@ function Puzzle() {
   }
 
   this.initialLoad = function() {
-    if (this.load()) {
+    if (this.load() && this.status != 'solved') {
       this.draw();
     } else {
       onParameterChange();
