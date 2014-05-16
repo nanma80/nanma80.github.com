@@ -1,5 +1,4 @@
 function Puzzle() {
-
   this.isSolved = function() {
     return this.stickers.every(function(s) { 
       return s.isSolved(); 
@@ -22,17 +21,18 @@ function Puzzle() {
   }
 
   this.testSolved = function() {
-    if (!this.scrambledSolve) {
+    if (this.status !== 'solving') {
       return;
     }
 
     if (this.isSolved()) {
       this.markAsSolved();
       alert('Congrats! You solved it in ' + this.nTurnsString() + '!\nTry more shapes!');
-      this.scrambledSolve = false;
+      this.status = 'solved';
       this.lastTurn = -1;
       this.lastNeighbors = [];
       this.draw();
+      this.save();
       $('#shape').focus();
     } else if (this.isAllOn()) {
       alert('Nice job! But the real objective is to turn all tiles OFF. Keep on solving!');
@@ -45,7 +45,8 @@ function Puzzle() {
     this.toggleSelf = toggleSelf;
   }
 
-  this.initializeState = function() {
+  this.initializeState = function(options) {
+    if(typeof(options)==='undefined') options = {};
     var self = this;
     resetRotationMatrix();
     this.vertices = getVertices(this.shape);
@@ -61,15 +62,21 @@ function Puzzle() {
     });
 
     console.log("Number of Faces: " + this.stickers.length);
-    this.scrambledSolve = false;
-    this.nTurns = 0;
 
-    this.lastTurn = -1;
+    this.status = options.status || 'investigating';
+    this.nTurns = options.nTurns || 0;
+    this.lastTurn = options.lastTurn || -1;
     this.lastNeighbors = [];
+
+    if (options.stickerState) {
+      for(var i = 0; i < options.stickerState.length; i++) {
+        this.stickers[i].state = options.stickerState[i];
+      }
+    }
   }
 
-  this.resetState = function() {
-    this.initializeState();
+  this.resetState = function(options) {
+    this.initializeState(options);
 
     this.rotate(new Point3D(-1,0,0), 1.3);
     this.rotate(new Point3D(0,-1,0), 1.7);
@@ -77,15 +84,14 @@ function Puzzle() {
     this.rotate(new Point3D(0,0,-1), 0.2);
     
     this.draw();
+    this.save();
   }
 
   this.draw = function() {
-    // context.fillStyle = "#f6f6f6";
     context.clearRect(0, 0, viewWidth,viewHeight);
 
     this.stickers.forEach(function(s) { s.draw(false); })
     this.stickers.forEach(function(s) { s.draw(true); })
-
 
     // this.lastNeighbors.forEach(function(s) {
     //   s.highlight('neighbor');
@@ -97,7 +103,11 @@ function Puzzle() {
 
     context.font = "15pt Arial";
     context.fillStyle = "green";
+    context.textAlign = 'start';
     context.fillText(this.nTurnsString(), 6, viewHeight - 10);
+
+    context.textAlign = 'end';
+    context.fillText(this.statusString(), viewWidth - 10, viewHeight - 10);
   }
 
   this.rotate = function(axis, angle) {
@@ -125,6 +135,7 @@ function Puzzle() {
     if (this.toggleSelf) {
       handleSticker.changeState();
     }
+    this.save();
   }
 
   this.snap = function(mouse) {
@@ -147,15 +158,58 @@ function Puzzle() {
       this.turn(0);
     }
     
-    this.scrambledSolve = true;
+    this.status = 'solving';
     this.nTurns = 0;
 
     this.lastTurn = -1;
     this.lastNeighbors = [];
     this.draw();
+    this.save();
   }
 
   this.nTurnsString = function() {
     return this.nTurns.toString() + " move" + (this.nTurns !== 1 ? "s" : "");
+  }
+
+  this.statusString = function () {
+    return this.status.charAt(0).toUpperCase() + this.status.slice(1);
+  }
+
+  this.save = function() {
+    var saveContent = {};
+    saveContent.shape = this.shape;
+    saveContent.neighborhood = this.neighborhood;
+    saveContent.toggleSelf = this.toggleSelf;
+    saveContent.status = this.status;
+    saveContent.nTurns = this.nTurns;
+    saveContent.lastTurn = this.lastTurn;
+    saveContent.stickerState = this.stickers.map(function(s) {return s.state});
+    storage.save(saveContent);
+  }
+
+  this.load = function() {
+    var loadContent = storage.load();
+    if (loadContent !== false && loadContent !== null) {
+      if (loadContent.shape !== null 
+          && loadContent.neighborhood !== null 
+          && loadContent.toggleSelf !== null ) {
+        setParameters(loadContent.shape, loadContent.neighborhood, loadContent.toggleSelf);
+      } else {
+        return false;
+      }
+
+      this.resetState(loadContent);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  this.initialLoad = function() {
+    if (this.load()) {
+      this.draw();
+    } else {
+      onParameterChange();
+    }
   }
 }
