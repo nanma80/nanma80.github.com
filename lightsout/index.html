@@ -104,9 +104,8 @@
   loadPuzzleRecords();
 
   var puzzle = new Puzzle();
-
-  onParameterChange();
-
+  puzzle.initialLoad();
+  
   canvas.addEventListener("mousedown", mouseDown, false);
   canvas.addEventListener("mousemove", mouseMove, false);
   canvas.addEventListener("mouseover", mouseOver, false);

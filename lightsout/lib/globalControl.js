@@ -20,6 +20,12 @@ onParameterChange = function() {
   puzzle.scramble();
 };
 
+setParameters = function(shape, neighborhood, toggleSelf) {
+  $("#shape")[0].value = shape;
+  $('#neighborhood')[0].value = neighborhood;
+  $('#toggleSelf')[0].checked = toggleSelf;
+}
+
 onClearRecords = function() {
   var r = confirm("List of solved puzzles will be cleared. Are you sure?");
   if (r === true) {

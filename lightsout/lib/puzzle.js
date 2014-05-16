@@ -1,5 +1,4 @@
 function Puzzle() {
-
   this.isSolved = function() {
     return this.stickers.every(function(s) { 
       return s.isSolved(); 
@@ -77,15 +76,14 @@ function Puzzle() {
     this.rotate(new Point3D(0,0,-1), 0.2);
     
     this.draw();
+    this.save();
   }
 
   this.draw = function() {
-    // context.fillStyle = "#f6f6f6";
     context.clearRect(0, 0, viewWidth,viewHeight);
 
     this.stickers.forEach(function(s) { s.draw(false); })
     this.stickers.forEach(function(s) { s.draw(true); })
-
 
     // this.lastNeighbors.forEach(function(s) {
     //   s.highlight('neighbor');
@@ -125,6 +123,7 @@ function Puzzle() {
     if (this.toggleSelf) {
       handleSticker.changeState();
     }
+    this.save();
   }
 
   this.snap = function(mouse) {
@@ -153,9 +152,51 @@ function Puzzle() {
     this.lastTurn = -1;
     this.lastNeighbors = [];
     this.draw();
+    this.save();
   }
 
   this.nTurnsString = function() {
     return this.nTurns.toString() + " move" + (this.nTurns !== 1 ? "s" : "");
+  }
+
+  this.save = function() {
+    var saveContent = {};
+    saveContent.shape = this.shape;
+    saveContent.neighborhood = this.neighborhood;
+    saveContent.toggleSelf = this.toggleSelf;
+    saveContent.scrambledSolve = this.scrambledSolve;
+    saveContent.nTurns = this.nTurns;
+    saveContent.lastTurn = this.lastTurn;
+    saveContent.stickerState = this.stickers.map(function(s) {return s.state});
+    storage.save(saveContent);
+  }
+
+  this.load = function() {
+    var loadContent = storage.load();
+    if (loadContent !== false && loadContent !== null) {
+      this.shape = loadContent.shape;
+      this.neighborhood = loadContent.neighborhood;
+      this.toggleSelf = loadContent.toggleSelf;
+      setParameters(this.shape, this.neighborhood, this.toggleSelf);
+      this.initializeState();
+
+      this.scrambledSolve = loadContent.scrambledSolve;
+      this.nTurns = loadContent.nTurns;
+      this.lastTurn = loadContent.lastTurn;
+      for(var i = 0; i < loadContent.stickerState.length; i++) {
+        this.stickers[i].state = loadContent.stickerState[i];
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  this.initialLoad = function() {
+    if (this.load()) {
+      this.draw();
+    } else {
+      onParameterChange();
+    }
   }
 }
