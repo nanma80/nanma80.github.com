@@ -44,7 +44,8 @@ function Puzzle() {
     this.toggleSelf = toggleSelf;
   }
 
-  this.initializeState = function() {
+  this.initializeState = function(options) {
+    if(typeof(options)==='undefined') options = {};
     var self = this;
     resetRotationMatrix();
     this.vertices = getVertices(this.shape);
@@ -60,15 +61,21 @@ function Puzzle() {
     });
 
     console.log("Number of Faces: " + this.stickers.length);
-    this.scrambledSolve = false;
-    this.nTurns = 0;
 
-    this.lastTurn = -1;
+    this.scrambledSolve = options.scrambledSolve || false;
+    this.nTurns = options.nTurns || 0;
+    this.lastTurn = options.lastTurn || -1;
     this.lastNeighbors = [];
+
+    if (options.stickerState) {
+      for(var i = 0; i < options.stickerState.length; i++) {
+        this.stickers[i].state = options.stickerState[i];
+      }
+    }
   }
 
-  this.resetState = function() {
-    this.initializeState();
+  this.resetState = function(options) {
+    this.initializeState(options);
 
     this.rotate(new Point3D(-1,0,0), 1.3);
     this.rotate(new Point3D(0,-1,0), 1.7);
@@ -174,18 +181,13 @@ function Puzzle() {
   this.load = function() {
     var loadContent = storage.load();
     if (loadContent !== false && loadContent !== null) {
-      this.shape = loadContent.shape;
-      this.neighborhood = loadContent.neighborhood;
-      this.toggleSelf = loadContent.toggleSelf;
-      setParameters(this.shape, this.neighborhood, this.toggleSelf);
-      this.initializeState();
-
-      this.scrambledSolve = loadContent.scrambledSolve;
-      this.nTurns = loadContent.nTurns;
-      this.lastTurn = loadContent.lastTurn;
-      for(var i = 0; i < loadContent.stickerState.length; i++) {
-        this.stickers[i].state = loadContent.stickerState[i];
+      if (loadContent.shape && loadContent.neighborhood && loadContent.toggleSelf) {
+        setParameters(loadContent.shape, loadContent.neighborhood, loadContent.toggleSelf);
+      } else {
+        return false;
       }
+
+      this.resetState(loadContent);
       return true;
     } else {
       return false;

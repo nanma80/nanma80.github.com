@@ -24,6 +24,7 @@ setParameters = function(shape, neighborhood, toggleSelf) {
   $("#shape")[0].value = shape;
   $('#neighborhood')[0].value = neighborhood;
   $('#toggleSelf')[0].checked = toggleSelf;
+  puzzle.setParameters(shape, neighborhood, toggleSelf);
 }
 
 onClearRecords = function() {
