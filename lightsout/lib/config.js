@@ -27,6 +27,10 @@ puzzleConfig = {
     {
       "id": "catalan",
       "displayName": "Catalan"
+    },
+    {
+      "id": "misc",
+      "displayName": "Miscellaneous"
     }
   ],
 
@@ -227,8 +231,17 @@ puzzleConfig = {
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[2, 20, 16, 24]]
+    },
+    
+    {
+      "id": "volleyball",
+      "group": "misc",
+      "displayName":"Volleyball",
+      "symmetry":"tetrahedron",
+      "neighborhoodMakesDifference":false,
+      "prototypeStickers":[[0, 8, 20, 4, 22, 10], [13, 10, 22, 25]]
     }
   ],
 
-  "defaultPuzzle":"dodecahedron"
+  "defaultPuzzle":"volleyball"
 };

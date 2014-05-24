@@ -97,6 +97,17 @@ getVertices = function(shape) {
     };
     output = output.concat(dodecahedronFaces);
     return output;
+  } else if (shape === 'volleyball') {
+    var output = [];
+    
+    var cubeVertices = allPlusMinus([new Point3D(1, 1, 1)], false);
+    var otherVertices = allPlusMinus(oddPermutations(new Point3D(1, 1, 1.0/3)), false)
+    output = output.concat(cubeVertices);
+    output = output.concat(otherVertices);
+    output = output.map(function(p) {
+      return p.scale(Math.sqrt(1.0/3.0));
+    })
+    return output;
   } else {
     return [];
   }
@@ -230,7 +241,9 @@ getPoints = function(symmetry) {
   return output;
 }
 
-allPlusMinus = function(points) {
+allPlusMinus = function(points, normalizing) {
+  if(typeof(normalizing)==='undefined') normalizing = true;
+
   var output = points;
   output = output.concat(output.map(function(p) {
     return new Point3D(-p.x, p.y, p.z);
@@ -244,14 +257,18 @@ allPlusMinus = function(points) {
     return new Point3D(p.x, p.y, -p.z);
   }))
 
-  output.forEach(function(point){
-    point.normalize();
-  });
+  if (normalizing) {
+    output.forEach(function(point){
+      point.normalize();
+    });
+  }
 
   return dedupOnInnerProd(output);
 }
 
-evenPlus = function(points) {
+evenPlus = function(points, normalizing) {
+  if(typeof(normalizing)==='undefined') normalizing = true;
+
   var output = [];
   output = output.concat(points.map(function(p) {
     return new Point3D(-p.x, p.y, p.z);
@@ -269,14 +286,18 @@ evenPlus = function(points) {
     return new Point3D(-p.x, -p.y, -p.z);
   }))
 
-  output.forEach(function(point){
-    point.normalize();
-  });
+  if (normalizing) {
+    output.forEach(function(point){
+      point.normalize();
+    });
+  }
 
   return dedupOnInnerProd(output);
 }
 
-oddPlus = function(points) {
+oddPlus = function(points, normalizing) {
+  if(typeof(normalizing)==='undefined') normalizing = true;
+
   var output = points;
   output = output.concat(points.map(function(p) {
     return new Point3D(-p.x, -p.y, p.z);
@@ -290,9 +311,11 @@ oddPlus = function(points) {
     return new Point3D(-p.x, p.y, -p.z);
   }))
 
-  output.forEach(function(point){
-    point.normalize();
-  });
+  if (normalizing) {
+    output.forEach(function(point){
+      point.normalize();
+    });
+  }
 
   return dedupOnInnerProd(output);
 }
