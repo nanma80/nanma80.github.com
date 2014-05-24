@@ -236,7 +236,7 @@ puzzleConfig = {
     {
       "id": "volleyball",
       "group": "misc",
-      "displayName":"Volleyball",
+      "displayName":"Volley Cube",
       "symmetry":"tetrahedron",
       "neighborhoodMakesDifference":false,
       "prototypeStickers":[[0, 8, 20, 4, 22, 10], [13, 10, 22, 25]]
