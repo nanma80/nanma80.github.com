@@ -243,5 +243,5 @@ puzzleConfig = {
     }
   ],
 
-  "defaultPuzzle":"volleyball"
+  "defaultPuzzle":"dodecahedron"
 };
