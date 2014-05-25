@@ -33,6 +33,9 @@ function Puzzle() {
       this.lastNeighbors = [];
       this.draw();
       this.save();
+      if(typeof(_gaq) !== 'undefined') {
+        _gaq.push(['_trackEvent', 'Puzzle', 'Solved', storage.key(this.shape, this.toggleSelf, this.neighborhood)]);
+      }
       $('#shape').focus();
     } else if (this.isAllOn()) {
       alert('Nice job! But the real objective is to turn all tiles OFF. Keep on solving!');
@@ -172,6 +175,9 @@ function Puzzle() {
     this.lastNeighbors = [];
     this.draw();
     this.save();
+    if(typeof(_gaq) !== 'undefined') {
+      _gaq.push(['_trackEvent', 'Puzzle', 'Scrambled', storage.key(this.shape, this.toggleSelf, this.neighborhood)]);
+    }
   }
 
   this.nTurnsString = function() {
