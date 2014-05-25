@@ -119,6 +119,31 @@ getVertices = function(shape) {
       return p.scale(Math.sqrt(1.0/3.0));
     })
     return output;
+  } else if (shape === 'chamfered_dodecahedron') {
+    var output = [];
+    var t = 0.5;
+
+    var cubeVertices = allPlusMinus([new Point3D(PHI*PHI, PHI*PHI, PHI*PHI)], false);
+    var otherVertices = allPlusMinus(oddPermutations(new Point3D(0, PHI, PHI * PHI * PHI)), false);
+
+    // var otherVerticesPermuted = allPlusMinus(oddPermutations(new Point3D(PHI * PHI * PHI, 0, PHI)), false);
+    
+    var dodecahedronFaces = allPlusMinus(oddPermutations(new Point3D(PHI * PHI, 0, PHI * PHI * PHI)), false); // * t
+
+    var otherVertices2 = allPlusMinus(oddPermutations(new Point3D(PHI * PHI * t, PHI * (1 - t), PHI * PHI * PHI)), false);
+    var otherVertices3 = allPlusMinus(oddPermutations(new Point3D(PHI * PHI, PHI * PHI * (1 - t), PHI * PHI * PHI * t + PHI*PHI*(1-t))), false);
+    var otherVertices4 = allPlusMinus(oddPermutations(new Point3D(PHI * PHI * t + PHI * PHI* PHI*(1-t), 0, PHI * PHI * PHI * t + PHI*(1-t))), false);
+
+    output = output.concat(cubeVertices);
+    output = output.concat(otherVertices);
+    output = output.concat(otherVertices2);
+    output = output.concat(otherVertices3);
+    output = output.concat(otherVertices4);
+
+    output = output.map(function(p) {
+      return p.scale(Math.sqrt(1.0/3.0)/PHI/PHI);
+    })
+    return output;
   } else {
     return [];
   }

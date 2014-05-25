@@ -255,7 +255,7 @@ puzzleConfig = {
       "displayName":"Chamfered Dodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":false,
-      "prototypeStickers":[]
+      "prototypeStickers":[[33, 39, 63, 76, 57], [6, 64, 40, 17, 76, 63]]
     }
   ],
 
