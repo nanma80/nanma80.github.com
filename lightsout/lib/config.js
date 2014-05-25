@@ -240,6 +240,22 @@ puzzleConfig = {
       "symmetry":"tetrahedron",
       "neighborhoodMakesDifference":false,
       "prototypeStickers":[[0, 8, 20, 4, 22, 10], [13, 10, 22, 25]]
+    },
+    {
+      "id": "chamfered_cube",
+      "group": "misc",
+      "displayName":"Chamfered Cube",
+      "symmetry":"cube",
+      "neighborhoodMakesDifference":false,
+      "prototypeStickers":[[0, 9, 12, 1, 11, 8], [9, 21, 24, 12]]
+    },
+    {
+      "id": "chamfered_dodecahedron",
+      "group": "misc",
+      "displayName":"Chamfered Dodecahedron",
+      "symmetry":"dodecahedron",
+      "neighborhoodMakesDifference":false,
+      "prototypeStickers":[]
     }
   ],
 

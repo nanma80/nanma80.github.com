@@ -108,6 +108,17 @@ getVertices = function(shape) {
       return p.scale(Math.sqrt(1.0/3.0));
     })
     return output;
+  } else if (shape === 'chamfered_cube') {
+    var output = [];
+    
+    var cubeVertices = allPlusMinus([new Point3D(1, 1, 1)], false);
+    var otherVertices = allPlusMinus(allPermutations(new Point3D(0.5, 0.5, 1.5)), false)
+    output = output.concat(cubeVertices);
+    output = output.concat(otherVertices);
+    output = output.map(function(p) {
+      return p.scale(Math.sqrt(1.0/3.0));
+    })
+    return output;
   } else {
     return [];
   }
