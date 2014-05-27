@@ -38,6 +38,9 @@ onClearRecords = function() {
 onReset = function() {
   if (!confirmResetPuzzle()) return;
   puzzle.resetState();
+  if(typeof(_gaq) !== 'undefined') {
+    _gaq.push(['_trackEvent', 'Puzzle', 'Reset', storage.key(puzzle.shape, puzzle.toggleSelf, puzzle.neighborhood)]);
+  }
 }
 
 onScramble = function() {

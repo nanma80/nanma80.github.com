@@ -77,5 +77,6 @@ updateRecordCount = function() {
   $("#records-count").html('' + nSolved + "/" + (nSolved + nUnsolved) + ' puzzles solved');
   if(typeof(_gaq) !== 'undefined') {
     _gaq.push(['_trackEvent', 'Record', 'Updated', '' + nSolved + "/" + (nSolved + nUnsolved)]);
+    _gaq.push(['_trackEvent', 'Record', 'Stats', 'SolvedPuzzles', nSolved]);
   }
 }
