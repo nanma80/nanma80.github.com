@@ -103,9 +103,10 @@ function Puzzle() {
   this.draw = function() {
     var markingStickers = this.markingStickers();
     context.clearRect(0, 0, viewWidth,viewHeight);
+    var self = this;
 
-    this.stickers.forEach(function(s) { s.draw(false, markingStickers); })
-    this.stickers.forEach(function(s) { s.draw(true, markingStickers); })
+    this.stickers.forEach(function(s) { s.draw(false, markingStickers, self.lastNeighbors.indexOf(s) > -1); })
+    this.stickers.forEach(function(s) { s.draw(true, markingStickers, self.lastNeighbors.indexOf(s)> -1); })
 
     // this.lastNeighbors.forEach(function(s) {
     //   s.highlight('neighbor');
@@ -148,6 +149,7 @@ function Puzzle() {
 
     if (this.toggleSelf) {
       handleSticker.changeState();
+      self.lastNeighbors.push(handleSticker);
     }
     
     handleSticker.click();

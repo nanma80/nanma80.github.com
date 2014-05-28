@@ -86,14 +86,25 @@ function Sticker(vertices, indices) {
     this.state = (this.state + 1) % this.modulo;
   }
 
-  this.color = function() {
-    var colorArray = colors[this.indices.length][this.state];
+  this.color = function(turning) {
+    var colorArray = colors[this.indices.length][this.state].slice(0);
+    var opacity = opacities[this.state];
+
+    if(animating && turning) {
+      var otherState = (this.state + 1) % this.modulo;
+      var otherColorArray = colors[this.indices.length][otherState].slice(0);
+      var otherOpacity = opacities[otherState];
+      var animationFactor = (animationFrames - animationFrameIndex + 1) / animationFrames;
+      for (var i = 0; i < colorArray.length; i++) {
+        colorArray[i] += (otherColorArray[i] - colorArray[i]) * animationFactor;
+      };
+      opacity = (otherOpacity - opacity ) * animationFactor + opacity;
+    }
+
     var innerProd = this.center().innerProd(this.lighting); // between -1 and 1
     
     colorArray = colorArray.map(function(x){return Math.floor(x * (0.8 + innerProd * 0.17 ))  });
     var displayColor = colorArray.map(function(x){return Math.max(0,Math.min(255,x))  });
-
-    var opacity = opacities[this.state];
 
     return "rgba(" + displayColor[0] + "," + displayColor[1] + "," + displayColor[2] + ", " + opacity + ")";
   }
@@ -103,11 +114,11 @@ function Sticker(vertices, indices) {
     return (area(points[0], points[1], points[2]) < 0 );
   }
 
-  this.draw = function(visible, marked) {
+  this.draw = function(visible, marked, turning) {
     if(typeof(marked) === 'undefined') marked = false;
     context.strokeStyle = 'black';
     context.lineWidth = 3;
-    context.fillStyle = this.color();
+    context.fillStyle = this.color(turning);
     this.drawSticker(visible, true, marked);
   }
 

@@ -4,6 +4,10 @@ mouseIsDown = false;
 mousePos = new Point2D(0,0);
 dragging = false;
 lastClickTimeStamp = 0;
+animating = false;
+animationFrameIndex = 0;
+animationFrames = 3;
+animationDuration = 200;
 
 onCanvasClick = function(e) {
   $('#log').append("" + e.timeStamp + " click<br>");
@@ -44,14 +48,31 @@ click = function(e){
     return;
   }
 
-  // currentClickTimeStamp = e.timeStamp;
   $('#log').append("" + e.timeStamp + " click<br>");
-  // if (currentClickTimeStamp - lastClickTimeStamp > 250) {
-  puzzle.turn(puzzle.snap(mousePos));
-  puzzle.draw();
+
+  var snap = puzzle.snap(mousePos);
+  puzzle.turn(snap);
   puzzle.testSolved();
-  // }
-  // lastClickTimeStamp = currentClickTimeStamp;
+
+  if (snap === -1) {
+    puzzle.draw();
+    return;
+  }
+  animating = true;
+  animationFrameIndex = 1;
+  puzzle.draw();
+
+  var animationInterval = setInterval(
+    function() {
+      animationFrameIndex ++;
+      puzzle.draw();
+      if( animationFrameIndex > animationFrames) {
+        animating = false;
+        puzzle.draw();
+        clearInterval(animationInterval);
+      }
+    }
+  , animationDuration / animationFrames);
 }
 
 mouseDrag = function(e){
