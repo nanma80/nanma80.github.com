@@ -34,9 +34,14 @@ function Sticker(vertices, indices) {
   this.indices = indices;
   this.state = 0;
   this.lighting = new Point3D(1, 1, 1);
+  this.clicked = false;
 
   this.isSolved = function() {
     return (this.state === 0);
+  }
+
+  this.click = function() {
+    this.clicked = !this.clicked;
   }
 
   this.getSignature = function(){
@@ -98,20 +103,21 @@ function Sticker(vertices, indices) {
     return (area(points[0], points[1], points[2]) < 0 );
   }
 
-  this.draw = function(visible) {
+  this.draw = function(visible, marked) {
+    if(typeof(marked) === 'undefined') marked = false;
     context.strokeStyle = 'black';
     context.lineWidth = 3;
     context.fillStyle = this.color();
-    this.drawSticker(visible, true);
+    this.drawSticker(visible, true, marked);
   }
 
   this.highlight = function(style) {
     context.strokeStyle = highlightColor[style];
     context.lineWidth = highlightWidth[style];
-    this.drawSticker(true, false);
+    this.drawSticker(true, false, false);
   }
 
-  this.drawSticker = function(visible, filling) {
+  this.drawSticker = function(visible, filling, marked) {
     if (this.visible() !== visible) {
       return;
     }
@@ -132,6 +138,17 @@ function Sticker(vertices, indices) {
       context.fill();
     }
     context.stroke();
+
+    if (marked && this.clicked) {
+      var center = this.center().project();
+      var radius = 2;
+      // context.fillRect(center.x - size / 2, center.y - size / 2, size, size);
+      context.beginPath();
+      context.arc(center.x, center.y, radius, 0, 2 * Math.PI, false);
+      context.lineWidth = radius ;
+      context.strokeStyle = 'white';
+      context.stroke();
+    }
   }
 
   this.center = function() {

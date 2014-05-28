@@ -76,6 +76,12 @@ function Puzzle() {
         this.stickers[i].state = options.stickerState[i];
       }
     }
+
+    if (options.clickedStickers) {
+      for(var i = 0; i < options.clickedStickers.length; i++) {
+        this.stickers[i].clicked = options.clickedStickers[i];
+      }
+    }
   }
 
   this.resetState = function(options) {
@@ -90,11 +96,16 @@ function Puzzle() {
     this.save();
   }
 
+  this.markingStickers = function() {
+    return (this.status === 'investigating');
+  }
+
   this.draw = function() {
+    var markingStickers = this.markingStickers();
     context.clearRect(0, 0, viewWidth,viewHeight);
 
-    this.stickers.forEach(function(s) { s.draw(false); })
-    this.stickers.forEach(function(s) { s.draw(true); })
+    this.stickers.forEach(function(s) { s.draw(false, markingStickers); })
+    this.stickers.forEach(function(s) { s.draw(true, markingStickers); })
 
     // this.lastNeighbors.forEach(function(s) {
     //   s.highlight('neighbor');
@@ -138,6 +149,8 @@ function Puzzle() {
     if (this.toggleSelf) {
       handleSticker.changeState();
     }
+    
+    handleSticker.click();
     this.save();
   }
 
@@ -157,6 +170,7 @@ function Puzzle() {
 
   this.scramble = function() {
     this.resetState();
+
     var scrambleLength = 50;
     scrambleLength += Math.round(Math.random());
 
@@ -185,7 +199,8 @@ function Puzzle() {
   }
 
   this.statusString = function () {
-    return this.status.charAt(0).toUpperCase() + this.status.slice(1);
+    var statusToDisplay = (this.status === 'investigating' ? 'exploring' : this.status);
+    return statusToDisplay.charAt(0).toUpperCase() + statusToDisplay.slice(1);
   }
 
   this.save = function() {
@@ -197,6 +212,9 @@ function Puzzle() {
     saveContent.nTurns = this.nTurns;
     saveContent.lastTurn = this.lastTurn;
     saveContent.stickerState = this.stickers.map(function(s) {return s.state});
+    if (this.markingStickers()) {
+      saveContent.clickedStickers = this.stickers.map(function(s) {return s.clicked});
+    }
     storage.save(saveContent);
   }
 
