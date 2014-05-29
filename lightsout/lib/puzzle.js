@@ -123,6 +123,11 @@ function Puzzle() {
 
     context.textAlign = 'end';
     context.fillText(this.statusString(), viewWidth - 10, viewHeight - 10);
+
+    if (this.status === 'solved') {
+      context.fillStyle = "rgba(138, 128, 118, 0.5)";
+      context.fillRect(0, 0, viewWidth,viewHeight);
+    }
   }
 
   this.rotate = function(axis, angle) {
