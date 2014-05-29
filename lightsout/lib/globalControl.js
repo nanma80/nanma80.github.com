@@ -20,6 +20,11 @@ onParameterChange = function() {
   puzzle.scramble();
 };
 
+onAllowAnimation = function() {
+  allowAnimation = $('#allowAnimation')[0].checked;
+};
+
+
 setParameters = function(shape, neighborhood, toggleSelf) {
   $("#shape")[0].value = shape;
   $('#neighborhood')[0].value = neighborhood;

@@ -8,6 +8,7 @@ animating = false;
 animationFrameIndex = 0;
 animationFrames = 3;
 animationDuration = 200;
+allowAnimation = true;
 
 onCanvasClick = function(e) {
   $('#log').append("" + e.timeStamp + " click<br>");
@@ -54,10 +55,11 @@ click = function(e){
   puzzle.turn(snap);
   puzzle.testSolved();
 
-  if (snap === -1) {
+  if (snap === -1 || !allowAnimation) {
     puzzle.draw();
     return;
   }
+
   animating = true;
   animationFrameIndex = 1;
   puzzle.draw();
