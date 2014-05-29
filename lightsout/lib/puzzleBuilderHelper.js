@@ -97,6 +97,27 @@ getVertices = function(shape) {
     };
     output = output.concat(dodecahedronFaces);
     return output;
+  } else if (shape === 'deltoidal_icositetrahedron') {
+    var output = [];
+    output = output.concat(allPlusMinus([new Point3D(1, 1, 1)], false));
+    output = output.concat(allPlusMinus(allPermutations(new Point3D(1, 1, 0)), false));
+    output = output.concat(allPlusMinus(allPermutations(new Point3D(1, 0, 0)), false));
+    output = output.map(function(p) {
+      return p.scale(Math.sqrt(1.0/3.0));
+    })
+    return output;
+  } else if (shape === 'deltoidal_hexecontahedron') {
+    var output = [];
+    var dodecahedronPoints = getPoints('dodecahedron');
+    var vertexRadius = Math.sqrt(3)/4*(1 + Math.sqrt(5));
+    var faceRadius = 0.5 * Math.sqrt(2.5 + 1.1 * Math.sqrt(5));
+    var edgeRadius = 0.25 * (3 + Math.sqrt(5.0));
+
+    output = output.concat(dodecahedronPoints[0].map(function(p) {return p.scale(faceRadius/vertexRadius)})); // face
+    output = output.concat(dodecahedronPoints[1].map(function(p) {return p.scale(edgeRadius/vertexRadius)})); // edge
+    output = output.concat(dodecahedronPoints[2]); // vertices
+
+    return output;
   } else if (shape === 'volleyball') {
     var output = [];
     

@@ -232,6 +232,22 @@ puzzleConfig = {
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[2, 20, 16, 24]]
     },
+    {
+      "id": "deltoidal_icositetrahedron",
+      "group": "catalan",
+      "displayName":"2x2x2",
+      "symmetry":"cube",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 9, 20, 8]]
+    },
+    {
+      "id": "deltoidal_hexecontahedron",
+      "group": "catalan",
+      "displayName":"Kilominx",
+      "symmetry":"dodecahedron",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 39, 58, 28]]
+    },
     
     {
       "id": "volleyball",
