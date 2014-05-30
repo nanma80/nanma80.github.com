@@ -248,7 +248,23 @@ puzzleConfig = {
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[0, 39, 58, 28]]
     },
-    
+    {
+      "id": "pentagonal_icositetrahedron",
+      "group": "catalan",
+      "displayName":"Dual of Snub Cube",
+      "symmetry":"cube",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 18, 32, 9, 6]]
+    },
+    {
+      "id": "pentagonal_hexecontahedron",
+      "group": "catalan",
+      "displayName":"Dual of Snub Dodecahedron",
+      "symmetry":"dodecahedron",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 44, 35, 13, 66]]
+    },
+
     {
       "id": "volleyball",
       "group": "misc",

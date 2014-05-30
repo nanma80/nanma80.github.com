@@ -34,6 +34,69 @@ getVertices = function(shape) {
     return getSnubCubeVertices();
   } else if (shape === 'snub_dodecahedron') {
     return getSnubDodecahedronVertices();
+  } else if (shape === "pentagonal_icositetrahedron") {
+    var originalShape = 'snub_cube';
+    var originalVertices = getVertices(originalShape);
+    var originalPrototypeStickers = getPrototypeStickers(originalShape);
+    var stickersByType = [];
+
+    originalPrototypeStickers.forEach(function(prototypeSticker) {
+      var stickersPerType = populateStickers(originalVertices, prototypeSticker, getSymmetry(originalShape));
+      stickersByType.push(stickersPerType);
+    });
+
+    var rawVertices = [];
+    for (var i = 0; i < stickersByType.length; i++) {
+      var stickers = stickersByType[i];
+      stickers.forEach(function(s) {
+        rawVertices.push(s.normalizedCenter());
+      })
+    };
+
+    var pmid1 = rawVertices[6];
+    var pmid2 = rawVertices[18];
+    var pbot1 = rawVertices[9];
+    var pbot2 = rawVertices[32];
+    var midx = (pmid1.x + pmid2.x) / 2;
+    var midz = (pmid1.z + pmid2.z) / 2;
+    var botx = (pbot1.x + pbot2.x) / 2;
+    var botz = (pbot1.z + pbot2.z) / 2;
+    var factor = (midz - botz)/(botx - midx) * midx + midz;
+    var norms = [factor, 1.0, 1.0];
+    
+    return dualize(originalShape, norms);
+
+  } else if (shape === "pentagonal_hexecontahedron") {
+    var originalShape = 'snub_dodecahedron';
+    var originalVertices = getVertices(originalShape);
+    var originalPrototypeStickers = getPrototypeStickers(originalShape);
+    var stickersByType = [];
+
+    originalPrototypeStickers.forEach(function(prototypeSticker) {
+      var stickersPerType = populateStickers(originalVertices, prototypeSticker, getSymmetry(originalShape));
+      stickersByType.push(stickersPerType);
+    });
+
+    var rawVertices = [];
+    for (var i = 0; i < stickersByType.length; i++) {
+      var stickers = stickersByType[i];
+      stickers.forEach(function(s) {
+        rawVertices.push(s.normalizedCenter());
+      })
+    };
+    var pmid1 = rawVertices[47];
+    var pmid2 = rawVertices[45];
+    var pbot1 = rawVertices[46];
+    var pbot2 = rawVertices[16];
+    var midx = (pmid1.x + pmid2.x) / 2;
+    var midz = (pmid1.z + pmid2.z) / 2;
+    var botx = (pbot1.x + pbot2.x) / 2;
+    var botz = (pbot1.z + pbot2.z) / 2;
+    var factor = (midz - botz)/(botx - midx) * midx + midz;
+    factor = factor * Math.sqrt(1 + 1/PHI/PHI);
+    var norms = [factor, 1.0, 1.0];
+    
+    return dualize(originalShape, norms);
   } else if (shape === 'triangular_prism') {
     return getPrismVerticesEdges(3, false)[0];
   } else if (shape === 'pentagonal_prism') {
@@ -168,6 +231,27 @@ getVertices = function(shape) {
   } else {
     return [];
   }
+}
+
+dualize = function(originalShape, norms) {
+  var output = [];
+  var originalVertices = getVertices(originalShape);
+  var originalPrototypeStickers = getPrototypeStickers(originalShape);
+  var stickersByType = [];
+  originalPrototypeStickers.forEach(function(prototypeSticker) {
+    var stickersPerType = populateStickers(originalVertices, prototypeSticker, getSymmetry(originalShape));
+    stickersByType.push(stickersPerType);
+  });
+
+  for (var i = 0; i < stickersByType.length; i++) {
+    var stickers = stickersByType[i];
+    var norm = norms[i];
+    stickers.forEach(function(s) {
+      output.push(s.normalizedCenter().scale(norm));
+    })
+  };
+
+  return output;
 }
 
 getAxes = function(shape) {
