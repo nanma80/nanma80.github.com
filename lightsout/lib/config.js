@@ -25,8 +25,16 @@ puzzleConfig = {
       "displayName": "Archimedean: Misc."
     },
     {
-      "id": "catalan",
-      "displayName": "Catalan"
+      "id": "catalan_triangular",
+      "displayName": "Catalan: Triangular Faces"
+    },
+    {
+      "id": "catalan_quadrilateral",
+      "displayName": "Catalan: Quadrilateral Faces"
+    },
+    {
+      "id": "catalan_pentagonal",
+      "displayName": "Catalan: Pentagonal Faces"
     },
     {
       "id": "misc",
@@ -216,9 +224,67 @@ puzzleConfig = {
       "prototypeStickers":[[3, 15, 27, 39, 51], [1, 55, 24], [1, 24, 13]]
     },
 
+
+    {
+      "id": "kleetope_tetrahedron",
+      "group": "catalan_triangular",
+      "displayName":"Kleetop of Tetrahedron",
+      "symmetry":"tetrahedron",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 1, 4]]
+    },
+    {
+      "id": "kleetope_cube",
+      "group": "catalan_triangular",
+      "displayName":"Kleetop of Cube",
+      "symmetry":"cube",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 1, 9]]
+    },
+    {
+      "id": "kleetope_octahedron",
+      "group": "catalan_triangular",
+      "displayName":"Kleetop of Octahedron",
+      "symmetry":"cube",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 2, 6]]
+    },
+    {
+      "id": "kleetope_dodecahedron",
+      "group": "catalan_triangular",
+      "displayName":"Kleetop of Dodecahedron",
+      "symmetry":"dodecahedron",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 3, 20]]
+    },
+    {
+      "id": "kleetope_icosahedron",
+      "group": "catalan_triangular",
+      "displayName":"Kleetop of Icosahedron",
+      "symmetry":"dodecahedron",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 2, 12]]
+    },
+    {
+      "id": "disdyakis_dodecahedron",
+      "group": "catalan_triangular",
+      "displayName":"Symmetry of Cube",
+      "symmetry":"cube",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 9, 20], [0, 20, 8]]
+    },
+    {
+      "id": "disdyakis_triacontahedron",
+      "group": "catalan_triangular",
+      "displayName":"Symmetry of Dodecahedron",
+      "symmetry":"dodecahedron",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 51, 39], [0, 39, 58]]
+    },
+
     {
       "id": "rhombic_dodecahedron",
-      "group": "catalan",
+      "group": "catalan_quadrilateral",
       "displayName":"Rhombic Dodecahedron",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
@@ -226,7 +292,7 @@ puzzleConfig = {
     },
     {
       "id": "rhombic_triacontahedron",
-      "group": "catalan",
+      "group": "catalan_quadrilateral",
       "displayName":"Rhombic Triacontahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
@@ -234,7 +300,7 @@ puzzleConfig = {
     },
     {
       "id": "deltoidal_icositetrahedron",
-      "group": "catalan",
+      "group": "catalan_quadrilateral",
       "displayName":"2x2x2",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
@@ -242,7 +308,7 @@ puzzleConfig = {
     },
     {
       "id": "deltoidal_hexecontahedron",
-      "group": "catalan",
+      "group": "catalan_quadrilateral",
       "displayName":"Kilominx",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
@@ -250,7 +316,7 @@ puzzleConfig = {
     },
     {
       "id": "pentagonal_icositetrahedron",
-      "group": "catalan",
+      "group": "catalan_pentagonal",
       "displayName":"Dual of Snub Cube",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
@@ -258,7 +324,7 @@ puzzleConfig = {
     },
     {
       "id": "pentagonal_hexecontahedron",
-      "group": "catalan",
+      "group": "catalan_pentagonal",
       "displayName":"Dual of Snub Dodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,

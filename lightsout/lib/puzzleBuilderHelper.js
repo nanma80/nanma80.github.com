@@ -34,6 +34,16 @@ getVertices = function(shape) {
     return getSnubCubeVertices();
   } else if (shape === 'snub_dodecahedron') {
     return getSnubDodecahedronVertices();
+  } else if (shape === 'kleetope_tetrahedron') {
+    return getKleetope('tetrahedron');
+  } else if (shape === 'kleetope_cube') {
+    return getKleetope('cube');
+  } else if (shape === 'kleetope_octahedron') {
+    return getKleetope('octahedron');
+  } else if (shape === 'kleetope_dodecahedron') {
+    return getKleetope('dodecahedron');
+  } else if (shape === 'kleetope_icosahedron') {
+    return getKleetope('icosahedron');
   } else if (shape === "pentagonal_icositetrahedron") {
     var originalShape = 'snub_cube';
     var originalVertices = getVertices(originalShape);
@@ -160,7 +170,7 @@ getVertices = function(shape) {
     };
     output = output.concat(dodecahedronFaces);
     return output;
-  } else if (shape === 'deltoidal_icositetrahedron') {
+  } else if (shape === 'deltoidal_icositetrahedron' || shape === 'disdyakis_dodecahedron') {
     var output = [];
     output = output.concat(allPlusMinus([new Point3D(1, 1, 1)], false));
     output = output.concat(allPlusMinus(allPermutations(new Point3D(1, 1, 0)), false));
@@ -169,7 +179,7 @@ getVertices = function(shape) {
       return p.scale(Math.sqrt(1.0/3.0));
     })
     return output;
-  } else if (shape === 'deltoidal_hexecontahedron') {
+  } else if (shape === 'deltoidal_hexecontahedron' || shape === 'disdyakis_triacontahedron') {
     var output = [];
     var dodecahedronPoints = getPoints('dodecahedron');
     var vertexRadius = Math.sqrt(3)/4*(1 + Math.sqrt(5));
@@ -231,6 +241,23 @@ getVertices = function(shape) {
   } else {
     return [];
   }
+}
+
+getKleetope = function(originalShape) {
+  var output = [];
+  var originalVertices = getVertices(originalShape);
+  var originalPrototypeStickers = getPrototypeStickers(originalShape);
+  var originalStickers = [];
+  originalPrototypeStickers.forEach(function(prototypeSticker) {
+    var stickersPerType = populateStickers(originalVertices, prototypeSticker, getSymmetry(originalShape));
+    originalStickers = originalStickers.concat(stickersPerType);
+  });
+
+  output = output.concat(originalVertices);
+  originalStickers.forEach(function(s) {
+    output.push(s.center());
+  })
+  return output;
 }
 
 dualize = function(originalShape, norms) {
