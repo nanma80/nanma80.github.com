@@ -228,7 +228,7 @@ puzzleConfig = {
     {
       "id": "kleetope_tetrahedron",
       "group": "catalan_triangular",
-      "displayName":"Kleetop of Tetrahedron",
+      "displayName":"Kleetope of Tetrahedron",
       "symmetry":"tetrahedron",
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[0, 1, 4]]
@@ -236,7 +236,7 @@ puzzleConfig = {
     {
       "id": "kleetope_cube",
       "group": "catalan_triangular",
-      "displayName":"Kleetop of Cube",
+      "displayName":"Kleetope of Cube",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[0, 1, 9]]
@@ -244,7 +244,7 @@ puzzleConfig = {
     {
       "id": "kleetope_octahedron",
       "group": "catalan_triangular",
-      "displayName":"Kleetop of Octahedron",
+      "displayName":"Kleetope of Octahedron",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[0, 2, 6]]
@@ -252,7 +252,7 @@ puzzleConfig = {
     {
       "id": "kleetope_dodecahedron",
       "group": "catalan_triangular",
-      "displayName":"Kleetop of Dodecahedron",
+      "displayName":"Kleetope of Dodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[0, 3, 20]]
@@ -260,7 +260,7 @@ puzzleConfig = {
     {
       "id": "kleetope_icosahedron",
       "group": "catalan_triangular",
-      "displayName":"Kleetop of Icosahedron",
+      "displayName":"Kleetope of Icosahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[0, 2, 12]]
