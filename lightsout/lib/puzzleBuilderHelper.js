@@ -109,12 +109,79 @@ getVertices = function(shape) {
     return dualize(originalShape, norms);
   } else if (shape === 'triangular_prism') {
     return getPrismVerticesEdges(3, false)[0];
+  } else if (shape === 'triangular_bipyramid') {
+    return dualize('triangular_prism', [1.0, 1.0])
   } else if (shape === 'pentagonal_prism') {
     return getPrismVerticesEdges(5, false)[0];
+  } else if (shape === 'pentagonal_bipyramid') {
+    return dualize('pentagonal_prism', [1.0, 1.0])
   } else if (shape === 'pentagonal_antiprism') {
     return getPrismVerticesEdges(5, true)[0];
   } else if (shape === 'square_antiprism') {
     return getPrismVerticesEdges(4, true)[0];
+  } else if (shape === 'square_antidipyramid') {
+    var originalShape = 'square_antiprism';
+    var originalVertices = getVertices(originalShape);
+    var originalPrototypeStickers = getPrototypeStickers(originalShape);
+    var stickersByType = [];
+
+    originalPrototypeStickers.forEach(function(prototypeSticker) {
+      var stickersPerType = populateStickers(originalVertices, prototypeSticker, getSymmetry(originalShape));
+      stickersByType.push(stickersPerType);
+    });
+
+    var rawVertices = [];
+    for (var i = 0; i < stickersByType.length; i++) {
+      var stickers = stickersByType[i];
+      stickers.forEach(function(s) {
+        rawVertices.push(s.normalizedCenter());
+      })
+    };
+
+    var pmid1 = rawVertices[3];
+    var pmid2 = rawVertices[2];
+    var pbot = rawVertices[4];
+    var midx = (pmid1.x + pmid2.x) / 2;
+    var midz = (pmid1.z + pmid2.z) / 2;
+    var botx = pbot.x;
+    var botz = pbot.z;
+
+    var factor = (midz - botz)/(botx - midx) * midx + midz;
+    var scale_xy = 1.2;
+    var norms = [1.0, 1.0 / factor];
+    return dualize(originalShape, norms).map(function(p) {return new Point3D(p.x * scale_xy, p.y * scale_xy, p.z)});
+
+  } else if (shape === 'pentagonal_antidipyramid') {
+    var originalShape = 'pentagonal_antiprism';
+    var originalVertices = getVertices(originalShape);
+    var originalPrototypeStickers = getPrototypeStickers(originalShape);
+    var stickersByType = [];
+
+    originalPrototypeStickers.forEach(function(prototypeSticker) {
+      var stickersPerType = populateStickers(originalVertices, prototypeSticker, getSymmetry(originalShape));
+      stickersByType.push(stickersPerType);
+    });
+
+    var rawVertices = [];
+    for (var i = 0; i < stickersByType.length; i++) {
+      var stickers = stickersByType[i];
+      stickers.forEach(function(s) {
+        rawVertices.push(s.normalizedCenter());
+      })
+    };
+    var pmid1 = rawVertices[3];
+    var pmid2 = rawVertices[2];
+    var pbot = rawVertices[4];
+    
+    var midx = (pmid1.x + pmid2.x) / 2;
+    var midz = (pmid1.z + pmid2.z) / 2;
+    var botx = pbot.x;
+    var botz = pbot.z;
+    var factor = (midz - botz)/(botx - midx) * midx + midz;
+    var scale_xy = 1.4;
+    var norms = [1.0, 1.0 / factor];
+    return dualize(originalShape, norms).map(function(p) {return new Point3D(p.x * scale_xy, p.y * scale_xy, p.z)});
+
   } else if (shape === 'great_rhombicosidodecahedron') {
     var output = [];
     output = output.concat(allPlusMinus(allPermutations(new Point3D(1, 1, 4 * PHI + 1))));

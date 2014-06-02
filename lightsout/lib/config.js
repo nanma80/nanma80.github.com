@@ -6,7 +6,7 @@ puzzleConfig = {
     },
     {
       "id": "prism",
-      "displayName": "Prisms & Antiprisms"
+      "displayName": "Prisms & Duals"
     },
     {
       "id": "archimedean_quasi_regular",
@@ -116,6 +116,39 @@ puzzleConfig = {
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[0, 1, 2, 3, 4], [1, 0, 9]]
     },
+    {
+      "id": "triangular_bipyramid",
+      "group": "prism",
+      "displayName":"Triangular Bipyramid",
+      "symmetry":"triangle",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 3, 2]]
+    },
+    {
+      "id": "pentagonal_bipyramid",
+      "group": "prism",
+      "displayName":"Pentagonal Bipyramid",
+      "symmetry":"pentagon",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 3, 2]]
+    },
+    {
+      "id": "square_antidipyramid",
+      "group": "prism",
+      "displayName":"Square Antidipyramid",
+      "symmetry":"square",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 3, 4, 2]]
+    },
+    {
+      "id": "pentagonal_antidipyramid",
+      "group": "prism",
+      "displayName":"Pentagonal Antidipyramid",
+      "symmetry":"pentagon",
+      "neighborhoodMakesDifference":true,
+      "prototypeStickers":[[0, 3, 4, 2]]
+    },
+
     {
       "id": "cuboctahedron",
       "group": "archimedean_quasi_regular",
