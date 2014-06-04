@@ -82,6 +82,8 @@ function Puzzle() {
         this.stickers[i].clicked = options.clickedStickers[i];
       }
     }
+
+    this.generateAdjacencyMatrix();
   }
 
   this.resetState = function(options) {
@@ -133,6 +135,28 @@ function Puzzle() {
   this.rotate = function(axis, angle) {
     setRotationMatrix(axis, angle);
     this.vertices.forEach(function(v) { v.rotate(); })
+  }
+
+  this.generateAdjacencyMatrix = function() {
+    this.adjacencyMatrix = [];
+    
+    var nStickers = this.stickers.length;
+    for (var i = 0; i < nStickers; i++) {
+      var row = [];
+      var handleSticker = this.stickers[i];
+      for (var j = 0; j < nStickers; j++) {
+        var targetSticker = this.stickers[j];
+        var neighborLevel = handleSticker.neighbor(targetSticker);
+        if (neighborLevel > 0 && neighborLevel <3 && neighborLevel >= this.neighborhood) {
+          row.push(1);
+        } else if (i === j && this.toggleSelf) {
+          row.push(1);
+        } else {
+          row.push(0);
+        }
+      };
+      this.adjacencyMatrix.push(row);
+    };
   }
 
   this.turn = function(handleId) {
