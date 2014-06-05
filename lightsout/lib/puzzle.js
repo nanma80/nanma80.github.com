@@ -127,6 +127,11 @@ function Puzzle() {
     context.textAlign = 'start';
     context.fillText(this.nTurnsString(), 6, viewHeight - 10);
 
+    if (typeof(ranks) !== "undefined") {
+      context.textAlign = 'end';
+      context.fillText("Difficulty: " + ranks[puzzle.key()], viewWidth - 10, 20);
+    }
+
     context.textAlign = 'end';
     context.fillText(this.statusString(), viewWidth - 10, viewHeight - 10);
 

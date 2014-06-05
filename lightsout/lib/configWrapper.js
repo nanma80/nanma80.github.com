@@ -54,12 +54,14 @@ loadPuzzleRecords = function() {
           neighborhoodOptions.forEach(function(neighborhood) {
             var key = storage.key(puzzle.id, toggleSelfOption, neighborhood);
             var solved = (storage.get(key) === 'true');
-            row += '<td id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '"></td>';
+            var rank = ranks[key];
+            row += '<td id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '">' + rank +'</td>';
           });
         } else {
           var key = storage.key(puzzle.id, toggleSelfOption, neighborhoodOptions[0]);
           var solved = (storage.get(key) === 'true');
-          row += '<td colspan="2" id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '"></td>';
+          var rank = ranks[key];
+          row += '<td colspan="2" id="' + key + '" class="' + (solved ? 'solved-mark' : 'unsolved-mark') + '">' + rank +'</td>';
         }
       });
       row += '</tr>';
@@ -103,7 +105,6 @@ allPuzzles = function(callback) {
 
 allAdjacencyMatrices = function() {
   var matrices = {};
-  // return "test string";
   
   allPuzzles(function(puzzle) {
     puzzle.initializeState();
