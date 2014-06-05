@@ -6,6 +6,11 @@ function Storage() {
     return unescapedKey.replace(/[^a-zA-Z0-9_-]/g, '_');
   }
 
+  this.parseKey = function(key) {
+    var parameters = key.split('-');
+    return [parameters[0], parameters[1] === 'true', parseInt(parameters[2]) ]
+  }
+
   this.set = function(key) {
     try {
       localStorage.setItem(key, 'true');

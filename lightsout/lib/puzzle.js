@@ -88,6 +88,9 @@ function Puzzle() {
     }
 
     this.generateAdjacencyMatrix();
+
+    $('.solving-mark').removeClass('solving-mark');
+    $('#' + this.key()).addClass('solving-mark');
   }
 
   this.resetState = function(options) {

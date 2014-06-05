@@ -99,6 +99,11 @@ td {
   background: #6C6;
 }
 
+.solving-mark {
+  outline-offset: -3px;
+  outline: #888 dotted;
+}
+
 .unsolved-mark {
   /*background: #7a0000;*/
 }

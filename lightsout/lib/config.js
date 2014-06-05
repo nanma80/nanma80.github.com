@@ -301,7 +301,7 @@ puzzleConfig = {
     {
       "id": "disdyakis_dodecahedron",
       "group": "catalan_triangular",
-      "displayName":"Symmetry of Cube",
+      "displayName":"Symmetries of Cube",
       "symmetry":"cube",
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[0, 9, 20], [0, 20, 8]]
@@ -309,7 +309,7 @@ puzzleConfig = {
     {
       "id": "disdyakis_triacontahedron",
       "group": "catalan_triangular",
-      "displayName":"Symmetry of Dodecahedron",
+      "displayName":"Symmetries of Dodecahedron",
       "symmetry":"dodecahedron",
       "neighborhoodMakesDifference":true,
       "prototypeStickers":[[0, 51, 39], [0, 39, 58]]

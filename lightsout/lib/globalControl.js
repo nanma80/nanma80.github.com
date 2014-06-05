@@ -66,3 +66,19 @@ onResize = function() {
 
   if(puzzle) puzzle.draw();
 }
+
+switchPuzzleById = function(key) {
+  var parameters = storage.parseKey(key);
+  var shape = parameters[0];
+  var toggleSelf = parameters[1];
+  var neighborhood = parameters[2];
+
+  if (!confirmResetPuzzle()) return;
+  setParameters(shape, neighborhood, toggleSelf);
+  puzzle.scramble();
+}
+
+$(function() {
+  $('.unsolved-mark').click(function() { switchPuzzleById(this.id) });
+  $('.solved-mark').click(function() { switchPuzzleById(this.id) });
+});
