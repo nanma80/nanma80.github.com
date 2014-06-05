@@ -11,6 +11,10 @@ function Puzzle() {
     });
   }
 
+  this.key = function() {
+    return storage.key(this.shape, this.toggleSelf, this.neighborhood);
+  }
+
   this.markAsSolved = function() {
     var neighborhoodToStore = getNeighborhoodMakesDifference(this.shape) ? this.neighborhood : '2';
     var key = storage.key(this.shape, this.toggleSelf, neighborhoodToStore);

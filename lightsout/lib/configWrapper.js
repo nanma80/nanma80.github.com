@@ -80,3 +80,40 @@ updateRecordCount = function() {
     _gaq.push(['_trackEvent', 'Record', 'Stats', 'SolvedPuzzles', nSolved]);
   }
 }
+
+allPuzzles = function(callback) {
+  var counter = 0;
+  var toggleSelfOptions = [true, false];
+  var neighborhoodOptions = [2, 1];
+
+  puzzleConfig.groups.forEach(function(group) {
+    puzzleConfig.puzzles.forEach(function(puzzleConfig) {
+      if(puzzleConfig.group !== group.id) return;
+      toggleSelfOptions.forEach(function(toggleSelfOption) {
+        neighborhoodOptions.forEach(function(neighborhood) {
+          var key = storage.key(puzzleConfig.id, toggleSelfOption, neighborhood);
+          var puzzle = new Puzzle();
+          puzzle.setParameters(puzzleConfig.id, neighborhood, toggleSelfOption);
+          callback(puzzle);
+        });
+      });
+    });
+  });
+}
+
+allAdjacencyMatrices = function() {
+  var matrices = {};
+  // return "test string";
+  
+  allPuzzles(function(puzzle) {
+    puzzle.initializeState();
+    matrices[puzzle.key()] = puzzle.adjacencyMatrix;
+  });
+
+  return JSON.stringify(matrices);
+}
+
+exportAllAdjacencyMatrices = function() {
+  var content = allAdjacencyMatrices();
+  $('.adjacency-matrix').html(content);
+}

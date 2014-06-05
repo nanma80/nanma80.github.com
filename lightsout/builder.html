@@ -13,13 +13,6 @@
 <script src="lib/globalControl.js"></script>
 <script src="lib/puzzleBuilderHelper.js"></script>
 <script src="lib/puzzleBuilder.js"></script>
-<style type = "text/css">
-  button {
-    margin: 10px;
-    height:30px; 
-    width:90px;
-  } 
-</style>
 </head>
 <body onselectstart='return false;'>
 
@@ -50,6 +43,17 @@ Your browser does not support the HTML5 canvas tag.
   <label for="toggleSelf">Also toggle clicked tile</label>
 </div>
 
+<button type="button" class="large btn"  onclick = "exportAllAdjacencyMatrices();">Generate Adjacency Matrices</button>
+
+
+<div>
+  <textarea class="adjacency-matrix">
+  </textarea>
+  <p>
+    Save it as lib/adjacencyMatrices.txt
+  </p>
+</div>
+
 <div id="content" style="font-size:small;float:left;font-family:Arial, Helvetica, sans-serif">
 <p>The puzzle uses html5 canvas, which is not supported directly by IE 8 or lower. I also apologize if the animation is jumpy on some browsers. Try using the latest version of Chrome for the best experience.</p>
 <p>Nan Ma, 2014</p>
@@ -63,6 +67,8 @@ Your browser does not support the HTML5 canvas tag.
 
   var invertMirrorX = false; // For mirror X mode and the mirror X moves in the full puzzle. When false: clicked corner will move, when true, clicked corner will not move
   loadPuzzleDropdown();
+  var storage = new Storage();
+
   var puzzle = new PuzzleBuilder();
   onParameterChange();
 
