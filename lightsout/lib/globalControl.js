@@ -10,8 +10,6 @@ confirmResetPuzzle = function() {
 }
 
 onParameterChange = function() {
-  if (!confirmResetPuzzle()) return;
-
   var shape = $("#shape")[0].value;
   var neighborhood = $('#neighborhood')[0].value;
   var toggleSelf = $('#toggleSelf')[0].checked;
