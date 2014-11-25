@@ -19,7 +19,7 @@ getNeighborhoodMakesDifference = function(shape) {
 loadPuzzleDropdown = function() {
   var options = '';
   puzzleConfig.groups.forEach(function(group) {
-    options += '<optgroup label="' + group.displayName + '">';
+    // options += '<optgroup label="' + group.displayName + '">';
     puzzleConfig.puzzles.forEach(function(puzzle) {
       if(puzzle.group !== group.id) return;
       var isDefaultPuzzle = (puzzle.id === puzzleConfig.defaultPuzzle);
@@ -33,7 +33,7 @@ loadPuzzleDropdown = function() {
         + '</option>';
       options += option;
     });
-    options += '</optgroup>';
+    // options += '</optgroup>';
   });
 
   $("#shape").html(options);
