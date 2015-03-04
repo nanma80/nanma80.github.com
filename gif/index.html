@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GIF</title>
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script>
+    getGif = function() {
+      var keyword = $('#input').val();
+      var urlEncodedWKeyword = encodeURIComponent(keyword);
+
+      $.ajax({
+        url: "http://api.giphy.com/v1/gifs/translate?api_key=dc6zaTOxFJmzC&s=" + urlEncodedWKeyword
+      }).success(function(response) {
+        var imageUrl = response.data.images.original.url;
+
+        var img = $("<img />").attr('src', imageUrl)
+        .load(function() {
+            $("#gif").html('');
+            $("#gif").append(img);
+        });
+      });
+    }
+  </script>
+</head>
+<body>
+  <input type="text" id="input">
+  <button type="button" onclick = "getGif();">Find GIF</button>
+  <div id="gif">
+  </div>
+</body>
+</html>
