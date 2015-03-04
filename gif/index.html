@@ -12,13 +12,17 @@
       $.ajax({
         url: "http://api.giphy.com/v1/gifs/translate?api_key=dc6zaTOxFJmzC&s=" + urlEncodedWKeyword
       }).success(function(response) {
-        var imageUrl = response.data.images.original.url;
+        if (response.data.images) {
+          var imageUrl = response.data.images.original.url;
 
-        var img = $("<img />").attr('src', imageUrl)
-        .load(function() {
-            $("#gif").html('');
-            $("#gif").append(img);
-        });
+          var img = $("<img />").attr('src', imageUrl)
+          .load(function() {
+              $("#gif").html('');
+              $("#gif").append(img);
+          });
+        } else {
+          $("#gif").html('No result. Try other keywords!');
+        }
       });
     }
   </script>
