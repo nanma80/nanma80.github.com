@@ -32,16 +32,17 @@ loadRecords = function() {
       var tableLength = 0;
       $.each(resp.records, function (index, record) {
         if (tableLength < topN)
-          $(".new-records-table").find('tbody')
-            .append($('<tr>')
-              .append($('<td>')
-                .text(record.target + "#" + record.digits)
-              ).append($('<td>')
-                .text(record.digits_count)
-              ).append($('<td>')
-                .text(record.date)
-              )
-            );
+          if (record.digits > '0')
+            $(".new-records-table").find('tbody')
+              .append($('<tr>')
+                .append($('<td>')
+                  .text(record.target + "#" + record.digits)
+                ).append($('<td>')
+                  .text(record.digits_count)
+                ).append($('<td>')
+                  .text(record.date)
+                )
+              );
         tableLength ++;
       });
     }
