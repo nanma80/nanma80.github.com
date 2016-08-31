@@ -30,7 +30,7 @@
 
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#new-records">New records</a></li>
-      <li><a data-toggle="tab" href="#single-record">Single record query</a></li>
+      <li><a data-toggle="tab" href="#single-record">Query</a></li>
       <li><a data-toggle="tab" href="#contest">Contest</a></li>
     </ul>
 
@@ -57,8 +57,7 @@
 
       <div id="single-record" class="tab-pane fade">
         <div>
-          Target number:
-          <input type="number" id="target-number" min="1" value="1024">
+          <input type="number" id="target-number" min="1" max="1000000" value="1024">
           </input>
           #
           <input type="number" id="digit" min="1" max="9" value="7">
@@ -84,12 +83,12 @@
       <div id="contest" class="tab-pane fade">
         <div>
           Today's contest is:
-          <span id="contest-number">
+          <span id="contest-number" class="contest-info">
           </span>
           . The total digit count needs to be 
-          <span id="contest-gold"></span> for gold,
-          <span id="contest-silver"></span> for silver,
-          <span id="contest-bronze"></span> for bronze.
+          <span id="contest-gold" class="contest-info"></span> for gold,
+          <span id="contest-silver" class="contest-info"></span> for silver,
+          <span id="contest-bronze" class="contest-info"></span> for bronze.
           The world records for this number are as follows.
         </div>
         <table class="table table-striped contest-table">

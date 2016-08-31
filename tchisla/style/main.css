@@ -5,3 +5,7 @@ body {
 .tab-content {
   padding-top: 10px;
 }
+
+.contest-info {
+  text-decoration: underline;
+}
