@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tchisla</title>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+    <div class="introduction">
+      <h3>Introduction
+      </h3>
+      <p>
+        <a href="https://itunes.apple.com/us/app/tchisla-calculator-game-numbers/id1100623105?mt=8"  target="_blank">
+          Tchisla
+        </a>
+        is a number puzzle game on iOS. You need to construct target numbers using one of the digits from 1 to 9, with operators +, -, *, /, √ (square root), ^ (power), and ! (factorial). The fewer digits you use, the better. For each challenge, the world record is the least number of digits used.
+      </p>
+    </div>
+
+    <div class="new-records">
+      <h3>Recent records
+      </h3>
+      <div>100 most recent records for target numbers from 1 to
+      <input type="number" id="upperbound" min="1" max="10000" value="1000">
+      </input>
+      <button type="button" id="reload-record" onclick = "loadRecords();">Reload</button>
+      </div>
+      <table class="table table-striped new-records-table">
+        <thead>
+          <tr>
+            <th>Challenge</th>
+            <th>Record</th>
+            <th>Updated at</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </body>
+    <script>
+      $("#upperbound").keyup(function(event){
+          if(event.keyCode == 13){
+              $("#reload-record").click();
+          }
+      });
+
+      loadRecords = function() {
+        var topN = 100;
+        $(".new-records-table > tbody > tr").remove();
+        var upperbound = parseInt($("#upperbound").val());
+        var queryRange = [1, upperbound];
+        var query = "{gte:" + queryRange[0] + ",lte:" + queryRange[1] + "}";
+
+        $.ajax({
+          url: "http://www.euclidea.xyz/api/v1/game/numbers/solutions/records?&query=" + query
+        }).success(function(resp) {
+          if (resp.records) {
+            $.each(resp.records, function (index, record) { record.date = new Date(record.update_date); });
+            resp.records.sort(function(record1, record2) { return record2.date - record1.date;});
+            var tableLength = 0
+            $.each(resp.records, function (index, record) {
+              if (tableLength < topN)
+                $(".new-records-table").find('tbody')
+                  .append($('<tr>')
+                    .append($('<td>')
+                      .text(record.target + "#" + record.digits)
+                    ).append($('<td>')
+                      .text(record.digits_count)
+                    ).append($('<td>')
+                      .text(record.date)
+                    )
+                  );
+              tableLength ++;
+            });
+          } else {
+          }
+        });
+      }
+      loadRecords();
+    </script>
+</html>
