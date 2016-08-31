@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Tchisla</title>
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link href="style/main.css" rel="stylesheet" type="text/css">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,8 +18,6 @@
   </head>
   <body>
     <div class="introduction">
-      <img src="http://a1.mzstatic.com/us/r30/Purple71/v4/61/fd/20/61fd20a1-ec32-fb5e-f291-3a17a1a0e989/icon175x175.png">
-      </img>
       <h3>Introduction
       </h3>
       <p>
@@ -28,66 +28,84 @@
       </p>
     </div>
 
-    <div class="new-records">
-      <h3>Recent records
-      </h3>
-      <div>100 most recent records for target numbers from 1 to
-      <input type="number" id="upperbound" min="1" max="10000" value="1000">
-      </input>
-      <button type="button" class="btn btn-primary btn-sm" id="reload-record" onclick = "loadRecords();">Reload</button>
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#new-records">New records</a></li>
+      <li><a data-toggle="tab" href="#single-record">Single record query</a></li>
+      <li><a data-toggle="tab" href="#contest">Contest</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="new-records" class="tab-pane fade in active">
+        <div>
+          100 most recent records for target numbers from 1 to
+          <input type="number" id="upperbound" min="1" max="10000" value="1000">
+          </input>
+          <button type="button" class="btn btn-primary btn-sm" id="reload-record" onclick = "loadRecords();">Reload</button>
+        </div>
+        <table class="table table-striped new-records-table">
+          <thead>
+            <tr>
+              <th>Challenge</th>
+              <th>Record</th>
+              <th>Updated at</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
       </div>
-      <table class="table table-striped new-records-table">
-        <thead>
-          <tr>
-            <th>Challenge</th>
-            <th>Record</th>
-            <th>Updated at</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+
+      <div id="single-record" class="tab-pane fade">
+        <div>
+          Target number:
+          <input type="number" id="target-number" min="1" value="1024">
+          </input>
+          #
+          <input type="number" id="digit" min="1" max="9" value="7">
+          </input>
+
+          <button type="button" class="btn btn-primary btn-sm" id="single-record-query" onclick = "singleRecordQuery();">Query</button>
+          <button type="button" class="btn btn-danger btn-sm" id="clear-query-history" onclick = "clearQueryHistory();">Clear</button>
+
+        </div>
+        <table class="table table-striped single-record-table">
+          <thead>
+            <tr>
+              <th>Challenge</th>
+              <th>Record</th>
+              <th>Updated at</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="contest" class="tab-pane fade">
+        <div>
+          Today's contest is:
+          <span id="contest-number">
+          </span>
+          . The total digit count needs to be 
+          <span id="contest-gold"></span> for gold,
+          <span id="contest-silver"></span> for silver,
+          <span id="contest-bronze"></span> for bronze.
+          The world records for this number are as follows.
+        </div>
+        <table class="table table-striped contest-table">
+          <thead>
+            <tr>
+              <th>Challenge</th>
+              <th>Record</th>
+              <th>Updated at</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
+
   </body>
-    <script>
-      $("#upperbound").keyup(function(event){
-          if(event.keyCode == 13){
-              $("#reload-record").click();
-          }
-      });
-
-      loadRecords = function() {
-        var topN = 100;
-        $(".new-records-table > tbody > tr").remove();
-        var upperbound = parseInt($("#upperbound").val());
-        var queryRange = [1, upperbound];
-        var query = "{gte:" + queryRange[0] + ",lte:" + queryRange[1] + "}";
-
-        $.ajax({
-          url: "http://www.euclidea.xyz/api/v1/game/numbers/solutions/records?&query=" + query
-        }).success(function(resp) {
-          if (resp.records) {
-            $.each(resp.records, function (index, record) { record.date = new Date(record.update_date); });
-            resp.records.sort(function(record1, record2) { return record2.date - record1.date;});
-            var tableLength = 0
-            $.each(resp.records, function (index, record) {
-              if (tableLength < topN)
-                $(".new-records-table").find('tbody')
-                  .append($('<tr>')
-                    .append($('<td>')
-                      .text(record.target + "#" + record.digits)
-                    ).append($('<td>')
-                      .text(record.digits_count)
-                    ).append($('<td>')
-                      .text(record.date)
-                    )
-                  );
-              tableLength ++;
-            });
-          } else {
-          }
-        });
-      }
-      loadRecords();
-    </script>
+  <script src="js/index.js"></script>
 </html>
