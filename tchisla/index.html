@@ -5,6 +5,8 @@
     <title>Tchisla</title>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="style/main.css" rel="stylesheet" type="text/css">
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="HandheldFriendly" content="True">
@@ -14,6 +16,8 @@
   </head>
   <body>
     <div class="introduction">
+      <img src="http://a1.mzstatic.com/us/r30/Purple71/v4/61/fd/20/61fd20a1-ec32-fb5e-f291-3a17a1a0e989/icon175x175.png">
+      </img>
       <h3>Introduction
       </h3>
       <p>
@@ -30,7 +34,7 @@
       <div>100 most recent records for target numbers from 1 to
       <input type="number" id="upperbound" min="1" max="10000" value="1000">
       </input>
-      <button type="button" id="reload-record" onclick = "loadRecords();">Reload</button>
+      <button type="button" class="btn btn-primary btn-sm" id="reload-record" onclick = "loadRecords();">Reload</button>
       </div>
       <table class="table table-striped new-records-table">
         <thead>
