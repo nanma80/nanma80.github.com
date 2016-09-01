@@ -61,7 +61,7 @@ singleRecordQuery = function() {
   $.ajax({
     url: "http://www.euclidea.xyz/api/v1/game/numbers/solutions/records?&query=" + query
   }).success(function(resp) {
-    if (resp.records) {
+    if (resp.records.length > 0) {
       $.each(resp.records, function (index, record) {
         record.date = new Date(record.update_date);
 
@@ -76,6 +76,17 @@ singleRecordQuery = function() {
             )
           );
       });
+    } else {
+      $(".single-record-table").find('tbody')
+          .prepend($('<tr>')
+            .append($('<td>')
+              .text(targetNumber + "#" + digit)
+            ).append($('<td>')
+              .text('-')
+            ).append($('<td>')
+              .text('-')
+            )
+          );
     }
   });
 };
