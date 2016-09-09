@@ -19,8 +19,9 @@ $("#digit").keyup(function(event){
 loadRecords = function() {
   var topN = 100;
   $(".new-records-table > tbody > tr").remove();
+  var lowerbound = parseInt($("#lowerbound").val(), 10);
   var upperbound = parseInt($("#upperbound").val(), 10);
-  var queryRange = [1, upperbound];
+  var queryRange = [lowerbound, upperbound];
   var query = "{gte:" + queryRange[0] + ",lte:" + queryRange[1] + "}";
 
   $.ajax({
