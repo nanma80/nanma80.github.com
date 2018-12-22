@@ -25,7 +25,7 @@ loadRecords = function() {
   var query = "{gte:" + queryRange[0] + ",lte:" + queryRange[1] + "}";
 
   $.ajax({
-    url: "http://www.euclidea.xyz/api/v1/game/numbers/solutions/records?&query=" + query
+    url: "https://cors-anywhere.herokuapp.com/http://www.euclidea.xyz/api/v1/game/numbers/solutions/records?&query=" + query,
   }).success(function(resp) {
     if (resp.records) {
       $.each(resp.records, function (index, record) { record.date = new Date(record.update_date); });
@@ -60,7 +60,7 @@ singleRecordQuery = function() {
   var query = "[" + targetNumber + "," + digit + "]";
 
   $.ajax({
-    url: "http://www.euclidea.xyz/api/v1/game/numbers/solutions/records?&query=" + query
+    url: "https://cors-anywhere.herokuapp.com/http://www.euclidea.xyz/api/v1/game/numbers/solutions/records?&query=" + query,
   }).success(function(resp) {
     if (resp.records.length > 0) {
       $.each(resp.records, function (index, record) {
@@ -94,7 +94,7 @@ singleRecordQuery = function() {
 
 loadContest = function() {
   $.ajax({
-    url: "http://www.euclidea.xyz/api/v1/game/numbers/challenges/now"
+    url: "https://cors-anywhere.herokuapp.com/http://www.euclidea.xyz/api/v1/game/numbers/challenges/now",
   }).success(function(resp) {
     $("#contest-number").text(resp.number);
     $("#contest-gold").text(resp.gold);
@@ -103,7 +103,7 @@ loadContest = function() {
 
     var query = "{gte:" + resp.number + ",lte:" + resp.number + "}";
     $.ajax({
-      url: "http://www.euclidea.xyz/api/v1/game/numbers/solutions/records?&query=" + query
+      url: "https://cors-anywhere.herokuapp.com/http://www.euclidea.xyz/api/v1/game/numbers/solutions/records?&query=" + query,
     }).success(function(contestNumberResp) {
       $(".contest-table > tbody > tr").remove();
       if (contestNumberResp.records) {
