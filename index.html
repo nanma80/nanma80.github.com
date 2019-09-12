@@ -24,8 +24,15 @@
     padding: 5px;
     width: 300px;
     height: 400px;
-    float: left;
+    /*float: left;*/
+    display: inline;
+    table-layout: fixed;
   }
+
+  td {
+    width: 300px;
+  }
+
   img {
     max-width: 290px;
     max-height: 290px;
@@ -78,7 +85,20 @@ to explore possibilities of non-associative "twisty" puzzles. We built a proof-o
  and the 
 <a href="https://github.com/nanma80/octonion"  target="_blank">repo</a>.
 </p>
+
+<p>
+I built a website to visualize the regular star polytopes in 2D, 3D, and 4D. Check it out 
+<a href="star"  target="_blank">here</a>. Below are some examples of the visualization.
+</p>
+<p>
+<img src="images/pov_whole_SmallStellatedDodecahedron.png">
+<img src="images/exploded_GreatDodecahedron.gif">
+<img src="images/pov_whole_polytope_52_3_5.png">
+<img src="images/polytope_5_3_52_layers_3_3.gif">
+</p>
+
 </div>
+
 
 <div id="link">
   <h2> My Puzzles
@@ -121,6 +141,15 @@ to explore possibilities of non-associative "twisty" puzzles. We built a proof-o
   <td><a href="clockwork/index.html">Clockwork Cube</a>: a Magic Cube on which the rotation of all the slices are correlated.</td>
   </tr>
   </table>
+</div>
+<br/>
+
+<div>
+  <h2> Deprecated Apps
+  </h2>
+
+  <p>The puzzles and visualization below were built many years ago using Java Applet. Unfortunately, it's not supported by modern browsers.
+  As of Sept 2019, I am able to start them using IE and setting http://nan.ma as a trusted website in the Java config. I don't have a plan to migrate them to new technology.</p>
 
   <table>
   <tr>
@@ -140,7 +169,7 @@ to explore possibilities of non-associative "twisty" puzzles. We built a proof-o
   </tr>
   </table>
 
-  <table>
+<!--   <table>
   <tr>
   <td><a href="http://sourceforge.net/projects/rubikssquare/"><img src="images/rubiksquare.jpg" alt="Rubik's Square" style="padding-left:40px;"></a></td>
   </tr>
@@ -148,7 +177,7 @@ to explore possibilities of non-associative "twisty" puzzles. We built a proof-o
   <td><a href="http://sourceforge.net/projects/rubikssquare/">Rubik's Square</a>: a 2D puzzle like the fifteen puzzle. But instead of sliding, only twisting is allowed.</td>
   </tr>
   </table>
-
+ -->
   <table>
   <tr>
   <td><a href="InsideH3/index.html"><img src="images/insideh3.png" alt="Inside H3"></a></td>
@@ -159,9 +188,6 @@ to explore possibilities of non-associative "twisty" puzzles. We built a proof-o
   </table>
 </div>
 
-<!--
-<p>If you have any question about puzzles, or any puzzle idea, please contact me at *******@gmail.com.</p>
--->
 </body>
 
 
