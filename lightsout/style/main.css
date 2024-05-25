@@ -115,6 +115,10 @@ td {
   margin: 5px;
   display:block; }
 
+.large-font {
+  font-size: 105%;
+}
+
 .explain {
   text-align:center;
   margin-left: auto;
