@@ -257,16 +257,38 @@ function draw() {
       const baseX = x * tileSize + dx;
       const baseY = y * tileSize + dy + gridOffsetY;
 
+      // Determine the color based on the original position of the tile
+      let originalPosition = null;
+      for (let oy = 0; oy < sizeY; oy++) {
+        for (let ox = 0; ox < sizeX; ox++) {
+          if (original[oy][ox] === grid[y][x]) {
+            originalPosition = { x: ox, y: oy };
+            break;
+          }
+        }
+        if (originalPosition) break;
+      }
+
+      const averageTileColor = 95;
+      const halfRangeTileColor = 40;
+      const supertileX = Math.floor(originalPosition.x / 2);
+      const supertileY = Math.floor(originalPosition.y / 2);
+      const supertileIndex = supertileY * Math.ceil(sizeX / 2) + supertileX;
+      const maxSupertiles = Math.ceil(sizeX / 2) * Math.ceil(sizeY / 2);
+      const grayValue = averageTileColor - halfRangeTileColor + Math.floor((halfRangeTileColor * 2 / maxSupertiles) * supertileIndex);
+      const tileColor = `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
+
       for (let ox = -repeat; ox <= repeat; ox++) {
         for (let oy = -repeat; oy <= repeat; oy++) {
           const tx = baseX + ox * sizeX * tileSize;
           const ty = baseY + oy * sizeY * tileSize;
-          ctx.fillStyle = "#555";
+          ctx.fillStyle = tileColor;
           ctx.fillRect(tx + 1, ty + 1, tileSize - 2, tileSize - 2);
           ctx.fillStyle = "#fff";
           ctx.font = `${tileSize * 0.45}px sans-serif`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
+          ctx.fillStyle = grid[y][x] === original[y][x] ? "#afa" : "#fff";
           ctx.fillText(grid[y][x], tx + tileSize / 2, ty + tileSize / 2);
         }
       }
