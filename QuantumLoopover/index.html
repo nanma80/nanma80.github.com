@@ -67,6 +67,25 @@ let wasScrambled = false;
 
 const selector = document.getElementById("gridSize");
 
+// Defer the creation of audioCtx until the first user interaction
+let audioCtx;
+
+// Ensure audioCtx is initialized immediately in unlockAudioContext
+function unlockAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  const unlock = () => {
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(err => console.warn('AudioContext resume failed:', err));
+    }
+    document.removeEventListener('touchstart', unlock);
+    document.removeEventListener('click', unlock);
+  };
+  document.addEventListener('touchstart', unlock, { once: true });
+  document.addEventListener('click', unlock, { once: true });
+}
+
 function resizeCanvas() {
   const maxW = window.innerWidth * 0.8;
   const maxH = (window.innerHeight - 5) * 0.8;
@@ -115,9 +134,18 @@ function isSolved() {
   return true;
 }
 
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-function beep() {
-  if (audioCtx.state === 'suspended') audioCtx.resume();
+// Ensure the AudioContext is fully resumed before creating the oscillator
+async function beep() {
+  await unlockAudioContext(); // Ensure AudioContext is unlocked and resumed before playing sound
+  if (!audioCtx) {
+    console.error('AudioContext is not initialized.');
+    return;
+  }
+  if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+  // Add a slight delay to ensure the AudioContext is stable
+  await new Promise(resolve => setTimeout(resolve, 10));
+
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
   osc.type = "triangle";
