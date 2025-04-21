@@ -45,13 +45,17 @@
   <button onclick="resetGrid()">Reset</button>
   <label for="gridSize">Grid:</label>
   <select id="gridSize" onchange="changeSize(this.value)">
-    <option value="4x4">4x4</option>
-    <option value="8x8">8x8</option>
-    <option value="6x6">6x6</option>
-    <option value="2x4">2x4</option>
-    <option value="2x6">2x6</option>
-    <option value="4x8">4x8</option>
-    <option value="4x6">4x6</option>
+    <option value="4x4x2x4">4x4</option>
+    <option value="8x8x2x4">8x8</option>
+    <option value="6x6x2x4">6x6</option>
+    <option value="2x4x2x4">2x4</option>
+    <option value="2x6x2x4">2x6</option>
+    <option value="4x8x2x4">4x8</option>
+    <option value="4x6x2x4">4x6</option>
+    <option value="6x6x3x6">6x6 (mod3)</option>
+    <option value="3x6x3x6">3x6 (mod3)</option>
+    <option value="9x9x3x9">9x9 (mod3)</option>
+    <option value="3x9x3x9">3x9 (mod3)</option>
   </select>
 </div>
 <canvas id="game" width="528" height="528"></canvas>
@@ -60,6 +64,8 @@ const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 const gridOffsetY = 0;
 let sizeX = 4, sizeY = 4; // Initialize separate dimensions for the board
+let modMovingSlices = 2; // which slices will move. Every modMovingSlices slice moves
+let modMovingSteps = 4; // how fast will each slice move
 let tileSize = 100;
 let grid = [];
 let original = [];
@@ -183,6 +189,18 @@ function handlePointerMove(x, y) {
   draw();
 }
 
+function positiveMod(number, mod) {
+  return ((number % mod) + mod) % mod;
+}
+
+function roundWithinHalfMod(number, mod) {
+  if (mod <= 2) {
+    return number;
+  }
+  const halfMod = Math.floor(mod/2);
+  return positiveMod(number + halfMod, mod) - halfMod;
+}
+
 canvas.addEventListener("mousedown", e => handlePointerStart(e.clientX, e.clientY));
 document.addEventListener("mousemove", e => handlePointerMove(e.clientX, e.clientY));
 document.addEventListener("mouseup", finalizeDragIfStuck);
@@ -201,24 +219,28 @@ function applyShift(type, index, amount) {
   const snapshot = grid.map(row => [...row]);
 
   if (type === 'row') {
-    const parity = index.row % 2;
+    const parity = index.row % modMovingSlices;
     for (let y = 0; y < sizeY; y++) {
-      if (y % 2 !== parity) continue;
-      const distance = Math.abs(y - index.row) / 2;
-      const dir = (distance % 2 === 0) ? amount : -amount;
+      if (y % modMovingSlices !== parity) continue;
+      const distance = y - index.row;
+      const factor = roundWithinHalfMod(roundWithinHalfMod(distance + 1, modMovingSteps), sizeX);
+      const dir = amount * factor;
+
       for (let x = 0; x < sizeX; x++) {
-        const newX = (x + dir + sizeX) % sizeX;
+        const newX = positiveMod(x + dir, sizeX);
         grid[y][newX] = snapshot[y][x];
       }
     }
   } else {
-    const parity = index.col % 2;
+    const parity = index.col % modMovingSlices;
     for (let x = 0; x < sizeX; x++) {
-      if (x % 2 !== parity) continue;
-      const distance = Math.abs(x - index.col) / 2;
-      const dir = (distance % 2 === 0) ? amount : -amount;
+      if (x % modMovingSlices !== parity) continue;
+      const distance = x - index.col;
+      const factor = roundWithinHalfMod(roundWithinHalfMod(distance + 1, modMovingSteps), sizeY);
+      const dir = amount * factor;
+
       for (let y = 0; y < sizeY; y++) {
-        const newY = (y + dir + sizeY) % sizeY;
+        const newY = positiveMod(y + dir, sizeY);
         grid[newY][x] = snapshot[y][x];
       }
     }
@@ -237,19 +259,20 @@ function draw() {
   ctx.rect(0, gridOffsetY, tileSize * sizeX, tileSize * sizeY);
   ctx.clip();
 
-  const repeat = 2;
+  const halfModMovingSteps = Math.floor(modMovingSteps/2);
+  const repeat = Math.max(3, halfModMovingSteps);
   for (let y = 0; y < sizeY; y++) {
     for (let x = 0; x < sizeX; x++) {
       let dx = 0, dy = 0;
       if (dragging && determined) {
-        if (dragType === 'row' && y % 2 === dragIndex.row % 2) {
-          const distance = Math.abs(y - dragIndex.row) / 2;
-          const factor = (distance % 2 === 0) ? 1 : -1;
+        if (dragType === 'row' && y % modMovingSlices === dragIndex.row % modMovingSlices) {
+          const distance = y - dragIndex.row;
+          const factor = roundWithinHalfMod(roundWithinHalfMod(distance + 1, modMovingSteps), sizeX);
           dx = factor * deltaX;
         }
-        if (dragType === 'column' && x % 2 === dragIndex.col % 2) {
-          const distance = Math.abs(x - dragIndex.col) / 2;
-          const factor = (distance % 2 === 0) ? 1 : -1;
+        if (dragType === 'column' && x % modMovingSlices === dragIndex.col % modMovingSlices) {
+          const distance = x - dragIndex.col;
+          const factor = roundWithinHalfMod(roundWithinHalfMod(distance + 1, modMovingSteps), sizeY);
           dy = factor * deltaY;
         }
       }
@@ -269,12 +292,13 @@ function draw() {
         if (originalPosition) break;
       }
 
+      const superTileSize = modMovingSlices == 4 ? 2 : modMovingSlices;
       const averageTileColor = 95;
       const halfRangeTileColor = 40;
-      const supertileX = Math.floor(originalPosition.x / 2);
-      const supertileY = Math.floor(originalPosition.y / 2);
-      const supertileIndex = supertileY * Math.ceil(sizeX / 2) + supertileX;
-      const maxSupertiles = Math.ceil(sizeX / 2) * Math.ceil(sizeY / 2);
+      const supertileX = Math.floor(originalPosition.x / superTileSize);
+      const supertileY = Math.floor(originalPosition.y / superTileSize);
+      const supertileIndex = supertileY * Math.ceil(sizeX / superTileSize) + supertileX;
+      const maxSupertiles = Math.ceil(sizeX / superTileSize) * Math.ceil(sizeY / superTileSize);
       const grayValue = averageTileColor - halfRangeTileColor + Math.floor((halfRangeTileColor * 2 / maxSupertiles) * supertileIndex);
       const tileColor = `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
 
@@ -299,10 +323,12 @@ function draw() {
 }
 
 function changeSize(newSize) {
-  const [newSizeX, newSizeY] = newSize.split('x').map(Number);
+  const [newSizeX, newSizeY, newModMovingSlices, newModMovingSteps] = newSize.split('x').map(Number);
   sizeX = newSizeX;
   sizeY = newSizeY;
-  selector.value = `${sizeX}x${sizeY}`;
+  modMovingSlices = newModMovingSlices;
+  modMovingSteps = newModMovingSteps;
+  selector.value = `${sizeX}x${sizeY}x${modMovingSlices}x${modMovingSteps}`;
   resizeCanvas();
   resetGrid();
 }
@@ -312,7 +338,7 @@ window.addEventListener("resize", () => {
   draw();
 });
 
-changeSize("4x4");
+changeSize("4x4x2x4");
 </script>
 
 <footer style="margin: 0px; font-size: 14px; color: #aaa;">
