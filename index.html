@@ -1,240 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Nan Ma's puzzle page</title>
-  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"/>
-  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <link rel="icon" href="images/apple-touch-icon.png">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi">
-
-  <meta property="og:title" content="Nan Ma's puzzle page"/>
-  <meta property="og:image" content="http://nanma80.github.io/lightsout/lightsout_og.png"/>  
-  <meta property="og:site_name" content="Nan Ma's puzzle page"/>
-  <meta property="og:description" content="Puzzles Nan Ma have solved and made"/>
-
-<style type = "text/css">
-  img {
-    padding: 5px;
-  } 
-  table {
-    padding: 5px;
-    width: 300px;
-    height: 400px;
-    /*float: left;*/
-    display: inline;
-    table-layout: fixed;
-  }
-
-  td {
-    width: 300px;
-  }
-
-  img {
-    max-width: 290px;
-    max-height: 290px;
-    vertical-align: middle;
-  }
-
-  .center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nan Ma's Puzzle Page</title>
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style/main.css">
+  <meta property="og:title" content="Nan Ma's Puzzle Page">
+  <meta property="og:image" content="http://nanma80.github.io/lightsout/lightsout_og.png">
+  <meta property="og:site_name" content="Nan Ma's Puzzle Page">
+  <meta property="og:description" content="Puzzles Nan Ma has solved and made">
 </head>
-<body style="font-family:Arial, Helvetica, sans-serif;line-height:25px">
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#latest-puzzle">Latest Puzzles</a></li>
+        <li><a href="#physical">Physical Puzzles</a></li>
+        <li><a href="#older-puzzles">Older Puzzles</a></li>
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#deprecated">Deprecated Apps</a></li>
+      </ul>
+    </nav>
+  </header>
 
+  <main>
+    <section id="latest-puzzle">
+      <h2>Latest Puzzles and Apps</h2>
+      <div class="grid">
+        <div class="card">
+          <a href="QuantumLoopover">
+            <img src="images/quantum_loopover.png" alt="Quantum Loopover">
+            <h3>Quantum Loopover</h3>
+          </a>
+          <p>A fork of Melinda Green's Quantum loopover puzzle.</p>
+        </div>
+        <div class="card">
+          <a href="lightsout">
+            <img src="images/lightsout.png" alt="Lights Out">
+            <h3>Lights Out 3D</h3>
+          </a>
+          <p>A puzzle similar to Lights Out in spirit but based on polyhedra. <em>Touch friendly</em>!</p>
+        </div>
+        <div class="card">
+          <a href="star">
+            <img src="images/pov_whole_polytope_52_3_5.png" alt="Star">
+            <h3>Regular Star Polytopes</h3>
+          </a>
+          <p>Visualization of regular star polytopes in 2D, 3D, 4D, and hyperbolic plane.</p>
+        </div>
+      </div>
+    </section>
 
-<div id="latest-puzzle">
-  <h2> Latest Puzzles and Apps
-  </h2>
-  <div class="center">
-    <table>
-      <tr>
-      <td><a href="QuantumLoopover"><img src="images/quantum_loopover.png" alt="Quantum loopover"></a></td>
-      </tr>
-      <tr>
-      <td><a href="QuantumLoopover">Quantum Loopover</a>: a fork of Melinda Green's Quantum loopover puzzle</td>
-      </tr>
-    </table>
+    <section id="physical">
+      <h2>Physical Puzzles and Models</h2>
+      <div class="grid">
+        <div class="card">
+          <a href="https://www.nothingyetdesigns.com/collections/nan-ma" target="_blank">
+            <img src="images/blasthedra.jpg" alt="Blast Hedra">
+            <h3>Blast-hedra</h3>
+          </a>
+          <p>A series of coordinate-motion puzzles.</p>
+        </div>
+        <div class="card">
+          <img src="images/12x12.jpg" alt="12 by 12">
+          <h3>12 x 12</h3>
+          <p>Twelve interlocking dodecahedra made by straws and paper clips.</p>
+        </div>
+        <div class="card">
+          <img src="images/pencils.jpg" alt="Stacked Pencils">
+          <h3>Pencil Models</h3>
+          <p>Models with icosahedral symmetry.</p>
+        </div>
+      </div>
+    </section>
 
-    <table>
-      <tr>
-      <td><a href="lightsout"><img src="images/lightsout.png" alt="Lights out"></a></td>
-      </tr>
-      <tr>
-      <td><a href="lightsout">Lights Out 3D</a>: a puzzle similar to Lights Out in spirit but based on polyhedra. <em>Touch friendly</em>!</td>
-      </tr>
-    </table>
+    <section id="older-puzzles">
+      <h2>Older Puzzles Only For Computers</h2>
+      <div class="grid">
+        <div class="card">
+          <a href="lollipop/index.html">
+            <img src="images/lollipop.png" alt="Lollipop">
+            <h3>Lollipop</h3>
+          </a>
+          <p>A 2D puzzle that contains all possible pieces twisted by all subsets of axes.</p>
+        </div>
+        <div class="card">
+          <a href="reflecube/index.html">
+            <img src="images/reflecube.png" alt="RefleCube">
+            <h3>RefleCube</h3>
+          </a>
+          <p>A Magic Cube allowing only reflection moves rather than twisting moves, or both.</p>
+        </div>
+        <div class="card">
+          <a href="clockwork/index.html">
+            <img src="images/clockwork.png" alt="Clockwork Cube">
+            <h3>Clockwork Cube</h3>
+          </a>
+          <p>A Magic Cube on which the rotation of all the slices are correlated.</p>
+        </div>
+      </div>
+    </section>
 
-    <table>
-      <tr>
-      <td><a href="star"><img src="images/pov_whole_polytope_52_3_5.png" alt="Star"></a></td>
-      </tr>
-      <tr>
-      <td><a href="star">Regular Star Polytopes</a>: visualization of regular star polytopes in 2D, 3D, 4D, and hyperbolic plane.</td>
-      </tr>
-      </table>
-  
-  </div>
-</div>
+    <section id="about">
+      <h2>About Me</h2>
+      <div class="about-container">
+        <p>My name is Nan Ma. On many online forums, I use the name "schuma" because I am a big fan of Michael Schumacher.</p>
+        <p>I am enthusiastic about all the puzzles similar to the Rubik's Cube, known as <em>Twisty Puzzles</em> on the <a href="http://twistypuzzles.com/forum">Twistypuzzles forum</a>. I have solved:</p>
+        <ul>
+          <li>All of the puzzles on gelatinbrain's <a href="http://users.skynet.be/moz071262/Applets/Magic%20Polyhedra/index.htm">Virtual Magic Polyhedra</a>. See the <a href="http://users.skynet.be/moz071262/Applets/Magic%20Polyhedra/ranking.htm">scoreboard</a>.</li>
+          <li>Many four-dimensional puzzles, including the tessaract <a href="http://www.superliminal.com/cube/cube.htm">MC4D</a>, <a href="http://www.gravitation3d.com/magic120cell/">120-cell</a>, 24-cell, and a simplified 600-cell using <a href="http://astr73.narod.ru/MPUlt/MPUlt.html">Magic Puzzle Ultimate</a>. I have solved 2x2x2x2 <a href="http://wiki.superliminal.com/wiki/Main_Page#Blindfolded_Solving">blindfolded</a>.</li>
+          <li>Puzzles with even higher dimensions up to <a href="http://astr73.narod.ru/MC7D/MC7D.html">7D</a>.</li>
+          <li>Puzzles in other topological spaces, including the hyperbolic space, projective plane, and Klein bottle, using <a href="http://www.gravitation3d.com/magictile/">MagicTile</a>.</li>
+          <li>The <a href="http://twistypuzzles.com/forum/viewtopic.php?f=1&t=22353">Complex 3x3x3</a>, a very neat generalization of the Rubik's Cube.</li>
+        </ul>
+        <p>I gave lectures on how to use group theory to construct algorithms to solve the puzzles listed above at UC Berkeley. <a href="http://www.youtube.com/watch?v=B-oePE5gizs">Here</a> is a recorded video.</p>
+        <p>I am an average speed cuber. My personal best is <a href="http://www.worldcubeassociation.org/results/p.php?i=2011MANA02">super-20</a>.</p>
+        <p>I'm also very interested in the game <a href="https://itunes.apple.com/us/app/tchisla-calculator-game-numbers/id1100623105?mt=8" target="_blank">Tchisla</a> and have built a <a href="tchisla">webpage</a> to help me explore the records.</p>
+        <p>In September 2018, I worked with <a href="https://github.com/roice3" target="_blank">Roice Nelson</a> to explore possibilities of non-associative "twisty" puzzles. We built a proof-of-concept puzzle based on integral octonions in Python. Check the <a href="octonion">introduction</a> and the <a href="https://github.com/nanma80/octonion" target="_blank">repo</a>.</p>
+      </div>
+    </section>
 
+    <section id="deprecated">
+      <h2>Deprecated Apps</h2>
+      <p>The puzzles and visualization below were built many years ago using Java Applet. Unfortunately, it's not supported by modern browsers. As of Sept 2019, I am able to start them using IE and setting http://nan.ma as a trusted website in the Java config. I don't have a plan to migrate them to new technology.</p>
+      <div class="grid">
+        <div class="card">
+          <a href="TwistyStar/index.html">
+            <img src="images/twistystar.png" alt="Twisty Star">
+            <h3>Twisty Star</h3>
+          </a>
+          <p>A puzzle based on the beautiful <a href="http://en.wikipedia.org/wiki/Compound_of_five_tetrahedra">compound of five tetrahedra</a>. It is related to the face-turning icosahedra.</p>
+        </div>
+        <div class="card">
+          <a href="ElevenCell/index.html">
+            <img src="images/11cell.png" alt="11-cell">
+            <h3>Magic 11-cell</h3>
+          </a>
+          <p>A puzzle based on the abstract regular polytope <a href="http://en.wikipedia.org/wiki/11-cell">11-cell</a>.</p>
+        </div>
+        <div class="card">
+          <a href="InsideH3/index.html">
+            <img src="images/insideh3.png" alt="Inside H3">
+            <h3>Inside H3</h3>
+          </a>
+          <p>Not really a puzzle. It's a visualization tool to simulate what you will see when navigating a spaceship in hyperbolic polytopes.</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<div id="physical">
-  <h2> Physical Puzzles and Models
-  </h2>
-  <div class="center">
-    <table>
-      <tr>
-      <td><a href="https://www.nothingyetdesigns.com/collections/nan-ma" target="_blank"><img src="images/blasthedra.jpg" alt="Blast hedra"></a></td>
-      </tr>
-      <tr>
-      <td><a href="https://www.nothingyetdesigns.com/collections/nan-ma" target="_blank">Blast-hedra</a>: a series of coordinate-motion puzzles</td>
-      </tr>
-    </table>
-
-    <table>
-      <tr>
-      <td><img src="images/12x12.jpg" alt="12 by 12"></td>
-      </tr>
-      <tr>
-      <td>12 x 12: Twelve interlocking dodecahedra made by straws and paper clips</td>
-      </tr>
-    </table>
-
-    <table>
-      <tr>
-      <td><img src="images/pencils.jpg" alt="stacked pencils"></td>
-      </tr>
-      <tr>
-      <td>Pencil models with icosahedral symmetry</td>
-      </tr>
-    </table>
-  </div>
-</div>
-
-
-<div id="link2">
-  <h2> Older Puzzles Only For Computers
-  </h2>
-  <div class="center">  
-  <table>
-  <tr>
-  <td><a href="lollipop/index.html"><img src="images/lollipop.png" alt="Lollipop"></a></td>
-  </tr>
-  <tr>
-  <td><a href="lollipop/index.html">Lollipop</a>: a 2D puzzle that contains all possible pieces twisted by all subsets of axes.</td>
-  </tr>
-  </table>
-
-  <table>
-  <tr>
-  <td><a href="reflecube/index.html"><img src="images/reflecube.png" alt="RefleCube"></a></td>
-  </tr>
-  <tr>
-  <td><a href="reflecube/index.html">RefleCube</a>: a Magic Cube allowing only reflection moves rather than twisting moves, or both.</td>
-  </tr>
-  </table>
-
-  <table>
-  <tr>
-  <td><a href="clockwork/index.html"><img src="images/clockwork.png" alt="Clockwork Cube"></a></td>
-  </tr>
-  <tr>
-  <td><a href="clockwork/index.html">Clockwork Cube</a>: a Magic Cube on which the rotation of all the slices are correlated.</td>
-  </tr>
-  </table>
-</div>
-</div>
-
-<div id="introduction">
-
-<h2> About Me
-</h2>
-<p>
-My name is Nan Ma. On many online forums I use the name "schuma" because I am a big fan of Michael Schumacher. 
-</p>
-
-<p>
-I am enthusastic about all the puzzles similar to the Rubik's Cube. They are called <em>Twisty Puzzles</em> on the <a href="http://twistypuzzles.com/forum">Twistypuzzles forum</a>. I have solved
-</p>
-<ul>
-<li>All of the puzzles on gelatinbrain's <a href="http://users.skynet.be/moz071262/Applets/Magic%20Polyhedra/index.htm">Virtual Magic Polyhedra</a>. See the <a href="http://users.skynet.be/moz071262/Applets/Magic%20Polyhedra/ranking.htm">scoreboard</a>.</li> 
-<li>Many four-dimensional puzzles, including the tessaract <a href="http://www.superliminal.com/cube/cube.htm">MC4D</a>, <a href="http://www.gravitation3d.com/magic120cell/">120-cell</a>, 24-cell, and a simplified 600-cell using <a href="http://astr73.narod.ru/MPUlt/MPUlt.html">Magic Puzzle Ultimate</a>. I have solved 2x2x2x2 <a href="http://wiki.superliminal.com/wiki/Main_Page#Blindfolded_Solving">blindfolded</a>. </li>
-<li>Puzzles with even higher dimensions up to <a href="http://astr73.narod.ru/MC7D/MC7D.html">7D</a></li>
-<li>Puzzles in other topological spaces, including the hyperbolic space, projective plane, and Klein bottle, using <a href="http://www.gravitation3d.com/magictile/">MagicTile</a>.</li>
-<li>The <a href="http://twistypuzzles.com/forum/viewtopic.php?f=1&t=22353">Complex 3x3x3</a>, a very neat generalization of the Rubik's Cube.</li>
-</ul>
-<p>
-I gave lectures on how to use group theory to construct algorithms to solve the puzzles listed above in UC Berkeley. <a href="http://www.youtube.com/watch?v=B-oePE5gizs">Here</a> is a recorded video.
-</p>
-
-<p>
-I am an average speed cuber. My personal best is <a href="http://www.worldcubeassociation.org/results/p.php?i=2011MANA02">super-20</a>.
-</p>
-
-<p>
-I'm also very interested in the game 
-  <a href="https://itunes.apple.com/us/app/tchisla-calculator-game-numbers/id1100623105?mt=8"  target="_blank">
-    Tchisla
-  </a>
-  and have built a <a href="tchisla">webpage</a> to help me explore the records.
-</p>
-
-<p>
-In September 2018, I worked with 
-<a href="https://github.com/roice3"  target="_blank">Roice Nelson</a>
-to explore possibilities of non-associative "twisty" puzzles. We built a proof-of-concept puzzle based on integral octonions in Python. Check the 
-<a href="octonion"  target="_blank">introduction</a>
- and the 
-<a href="https://github.com/nanma80/octonion"  target="_blank">repo</a>.
-</p>
-</div>
-
-
-<br/>
-
-<div>
-  <h2> Deprecated Apps
-  </h2>
-
-  <p>The puzzles and visualization below were built many years ago using Java Applet. Unfortunately, it's not supported by modern browsers.
-  As of Sept 2019, I am able to start them using IE and setting http://nan.ma as a trusted website in the Java config. I don't have a plan to migrate them to new technology.</p>
-
-  <table>
-  <tr>
-  <td><a href="TwistyStar/index.html"><img src="images/twistystar.png" alt="Twisty Star"></a></td>
-  </tr>
-  <tr>
-  <td><a href="TwistyStar/index.html">Twisty Star</a>: a puzzle based on the beautiful <a href="http://en.wikipedia.org/wiki/Compound_of_five_tetrahedra">compound of five tetrahedra</a>. It is related to the face-turning icosahedra.</td>
-  </tr>
-  </table>
-
-  <table>
-  <tr>
-  <td><a href="ElevenCell/index.html"><img src="images/11cell.png" alt="11-cell"></a></td>
-  </tr>
-  <tr>
-  <td><a href="ElevenCell/index.html">Magic 11-cell</a>: a puzzle based on the abstract regular polytope <a href="http://en.wikipedia.org/wiki/11-cell">11-cell</a>.</td>
-  </tr>
-  </table>
-
-  <table>
-  <tr>
-  <td><a href="InsideH3/index.html"><img src="images/insideh3.png" alt="Inside H3"></a></td>
-  </tr>
-  <tr>
-  <td><a href="InsideH3/index.html">Inside H3</a>: not really a puzzle. It's a visualization tool to simulate what you will see when navigating a spaceship in hyperbolic polytopes.</td>
-  </tr>
-  </table>
-</div>
-
+  <footer>
+    <p>&copy; 2025 Nan Ma. All rights reserved.</p>
+  </footer>
 </body>
-
-
 </html>

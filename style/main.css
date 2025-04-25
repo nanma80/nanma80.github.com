@@ -1,0 +1,139 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  padding: 1rem 0;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap; /* Ensure navigation wraps on smaller screens */
+}
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header nav ul li a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 2rem;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust for mobile */
+  gap: 1.5rem;
+}
+
+/* Adjust card size and layout for mobile */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  transition: transform 0.2s;
+  max-width: 100%; /* Ensure cards fit within mobile screens */
+  margin: 0 auto;
+}
+
+.card img {
+  max-height: 300px; /* Increase image height */
+  object-fit: cover;
+  width: 100%; /* Ensure image width matches card width */
+}
+
+.card h3 {
+  text-align: center;
+  padding: 1rem;
+  background: #f4f4f4;
+  color: #333;
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+.card p {
+  padding: 0 1rem 1rem;
+  color: #666;
+  text-align: center; /* Center-align text for better aesthetics */
+  width: 100%; /* Align text width to match image width */
+  font-size: 1rem;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #333;
+  color: #fff;
+  margin-top: 2rem;
+}
+
+/* Add indentation for list items in the About Me section */
+.about-container {
+  padding-left: 1rem;
+}
+
+.about-container ul {
+  list-style: disc inside;
+  margin-left: 1.5rem; /* Add indentation for list items */
+}
+
+.about-container p {
+  text-indent: 1.5rem; /* Add indentation for paragraphs */
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  header nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card img {
+    max-height: 150px;
+  }
+
+  .card h3 {
+    font-size: 1rem;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+  }
+}
