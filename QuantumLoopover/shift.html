@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!-- Fork of Melinda Green's original game from url=(0053)https://superliminal.com/misc/Quantum%20Loopover.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+  <title>Quantum Shift</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 16px 0 8px;
+    }
+    #controls {
+      margin-bottom: 10px;
+    }
+    button, select {
+      margin: 0 5px;
+      padding: 6px 14px;
+      font-size: 14px;
+      background: #333;
+      color: #fff;
+      border: 1px solid #666;
+      cursor: pointer;
+    }
+    canvas {
+      background: #222;
+      touch-action: none;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+<h1>Quantum Shift</h1>
+<div id="controls">
+  <button onclick="scramble()">Scramble</button>
+  <button onclick="resetGrid()">Reset</button>
+  <label for="gridSize">Grid:</label>
+  <select id="gridSize" onchange="changeSize(this.value)">
+    <option value="3">3x3</option>
+    <option value="4">4x4</option>
+    <option value="5">5x5</option>
+  </select>
+</div>
+<canvas id="game" width="720" height="720"></canvas>
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+const gridOffsetY = 0;
+let size = 3;
+let tileSize = 100;
+let grid = [];
+let original = [];
+let wasScrambled = false;
+
+const selector = document.getElementById("gridSize");
+
+function resizeCanvas() {
+  const maxW = window.innerWidth * 0.8;
+  const maxH = (window.innerHeight - 5) * 0.8;
+  tileSize = Math.floor(Math.min(maxW / size, maxH / size));
+  canvas.width = size * tileSize;
+  canvas.height = size * tileSize + gridOffsetY;
+}
+
+function makeLabelGrid() {
+  const labels = [];
+  let i = 1;
+  for (let y = 0; y < size; y++) {
+    const row = [];
+    for (let x = 0; x < size; x++) {
+      row.push(i++);
+    }
+    labels.push(row);
+  }
+  return labels;
+}
+
+function resetGrid() {
+  original = makeLabelGrid();
+  grid = original.map(row => [...row]);
+  wasScrambled = false;
+  draw();
+}
+
+function scramble() {
+  resetGrid();
+  for (let i = 0; i < 50; i++) {
+    const type = Math.random() < 0.5 ? "row" : "column";
+    const index = Math.floor(Math.random() * size);
+    const shift = Math.floor(Math.random() * (size - 1)) + 1;
+    const dir = Math.random() < 0.5 ? 1 : -1;
+    applyShift(type, { row: index, col: index }, dir * shift);
+  }
+  wasScrambled = true;
+  draw();
+}
+
+function isSolved() {
+  for (let y = 0; y < size; y++)
+    for (let x = 0; x < size; x++)
+      if (grid[y][x] !== original[y][x]) return false;
+  return true;
+}
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function beep() {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = "triangle";
+  osc.frequency.value = 660;
+  gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.25);
+}
+
+let dragging = false, dragType = null, dragIndex = null;
+let startX = 0, startY = 0, deltaX = 0, deltaY = 0, determined = false;
+
+function resetDragState() {
+  dragging = false;
+  dragType = null;
+  dragIndex = null;
+  deltaX = 0;
+  deltaY = 0;
+  determined = false;
+}
+
+function finalizeDragIfStuck() {
+  if (dragging && determined) {
+    const delta = dragType === 'row' ? deltaX : deltaY;
+    const shift = Math.round(delta / tileSize);
+    if (shift !== 0) applyShift(dragType, dragIndex, shift);
+  }
+  resetDragState();
+  draw();
+}
+
+function handlePointerStart(x, y) {
+  finalizeDragIfStuck();
+  const rect = canvas.getBoundingClientRect();
+  const localX = x - rect.left;
+  const localY = y - rect.top;
+  const row = Math.floor((localY - gridOffsetY) / tileSize);
+  const col = Math.floor(localX / tileSize);
+  if (row < 0 || row >= size || col < 0 || col >= size) return;
+  resetDragState();
+  startX = x;
+  startY = y;
+  dragIndex = { row, col };
+  dragging = true;
+}
+
+function handlePointerMove(x, y) {
+  if (!dragging) return;
+  deltaX = x - startX;
+  deltaY = y - startY;
+  if (!determined) {
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      dragType = 'row';
+      determined = true;
+    } else if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      dragType = 'column';
+      determined = true;
+    }
+  }
+  draw();
+}
+
+function positiveMod(number, mod) {
+  return ((number % mod) + mod) % mod;
+}
+
+function roundWithinHalfMod(number, mod) {
+  if (mod <= 2) {
+    return number;
+  }
+  const halfMod = Math.floor(mod/2);
+  return positiveMod(number + halfMod, mod) - halfMod;
+}
+
+canvas.addEventListener("mousedown", e => handlePointerStart(e.clientX, e.clientY));
+document.addEventListener("mousemove", e => handlePointerMove(e.clientX, e.clientY));
+document.addEventListener("mouseup", finalizeDragIfStuck);
+window.addEventListener("blur", finalizeDragIfStuck);
+canvas.addEventListener("touchstart", e => {
+  if (e.touches.length === 1) handlePointerStart(e.touches[0].clientX, e.touches[0].clientY);
+  e.preventDefault();
+});
+canvas.addEventListener("touchmove", e => {
+  if (e.touches.length === 1) handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+  e.preventDefault();
+});
+canvas.addEventListener("touchend", finalizeDragIfStuck);
+
+function applyShift(type, index, amount) {
+  const snapshot = grid.map(row => [...row]);
+
+  if (type === 'row') {
+    for (let y = 0; y < size; y++) {
+      const dir = roundWithinHalfMod(y - index.row + 1, size) * amount;
+      for (let x = 0; x < size; x++) {
+        const newX = positiveMod(x + dir, size);
+        grid[y][newX] = snapshot[y][x];
+      }
+    }
+  } else {
+    for (let x = 0; x < size; x++) {
+      const dir = roundWithinHalfMod(x - index.col + 1, size) * amount;
+      for (let y = 0; y < size; y++) {
+        const newY = positiveMod(y + dir, size);
+        grid[newY][x] = snapshot[y][x];
+      }
+    }
+  }
+
+  if (wasScrambled && isSolved()) {
+    beep();
+    wasScrambled = false;
+  }
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, gridOffsetY, tileSize * size, tileSize * size);
+  ctx.clip();
+
+  const repeat = 2;
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      let dx = 0, dy = 0;
+      if (dragging && determined) {
+        if (dragType === 'row') {
+          dx = roundWithinHalfMod(y - dragIndex.row + 1, size) * deltaX;
+        }
+        if (dragType === 'column') {
+          dy = roundWithinHalfMod(x - dragIndex.col + 1, size) * deltaY;
+        }
+      }
+
+      const baseX = x * tileSize + dx;
+      const baseY = y * tileSize + dy + gridOffsetY;
+
+      for (let ox = -repeat; ox <= repeat; ox++) {
+        for (let oy = -repeat; oy <= repeat; oy++) {
+          const tx = baseX + ox * size * tileSize;
+          const ty = baseY + oy * size * tileSize;
+          ctx.fillStyle = "#555";
+          ctx.fillRect(tx + 1, ty + 1, tileSize - 2, tileSize - 2);
+          ctx.fillStyle = "#fff";
+          ctx.font = `${tileSize * 0.45}px sans-serif`;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(grid[y][x], tx + tileSize / 2, ty + tileSize / 2);
+        }
+      }
+    }
+  }
+
+  ctx.restore();
+}
+
+function changeSize(newSize) {
+  size = parseInt(newSize);
+  selector.value = size.toString();
+  resizeCanvas();
+  resetGrid();
+}
+
+window.addEventListener("resize", () => {
+  resizeCanvas();
+  draw();
+});
+
+changeSize(3);
+</script>
+<footer style="margin: 0px; font-size: 14px; color: #aaa;">
+  <p>This is inspired by <a href="https://superliminal.com/misc/Quantum%20Loopover.html" target="_blank" style="color: #aaa; text-decoration: underline;">Melinda Green's original game</a></p>
+</footer>
+
+</body></html>
