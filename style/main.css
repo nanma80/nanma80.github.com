@@ -20,22 +20,57 @@ header {
   padding: 1rem 0;
 }
 
+/* Ensure header items fit into one row without wasting width */
 header nav ul {
-  list-style: none;
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap; /* Ensure navigation wraps on smaller screens */
+  flex-wrap: nowrap; /* Prevent wrapping */
+  justify-content: space-around; /* Distribute items evenly */
+  gap: 0; /* Remove unnecessary spacing */
+  list-style: none; /* Remove dots */
+  padding: 0; /* Remove padding */
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+}
+
+header nav ul li {
+  flex: 0 1 auto; /* Allow items to shrink or grow as needed */
+  text-align: center; /* Center-align text */
+  padding: 0 0.3rem; /* Add minimal padding for better spacing */
+}
+
+@media (min-width: 768px) {
+  header nav ul {
+    flex-wrap: nowrap; /* Fit all items into one row on larger screens */
+  }
+}
+
+@media (max-width: 768px) {
+  header nav ul li {
+    flex: 1 1 calc(33.33% - 1rem); /* Allow up to 3 items per row */
+  }
+}
+
+@media (max-width: 480px) {
+  header nav ul li {
+    flex: 1 1 calc(50% - 1rem); /* Allow up to 2 items per row on smaller screens */
+  }
 }
 
 header nav ul li a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
+  font-size: 0.8rem; /* Reduce font size to fit all items */
+  white-space: nowrap; /* Prevent text from wrapping */
 }
 
 header nav ul li a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  header nav ul li {
+    flex: 1 1 calc(50% - 1rem); /* Allow up to 2 items per row on smaller screens */
+  }
 }
 
 main {
@@ -69,10 +104,12 @@ h2 {
   margin: 0 auto;
 }
 
+/* Ensure images are not truncated and fit by width */
 .card img {
-  max-height: 300px; /* Increase image height */
-  object-fit: cover;
-  width: 100%; /* Ensure image width matches card width */
+  height: auto; /* Allow images to scale proportionally */
+  object-fit: contain; /* Ensure the entire image is visible */
+  width: 100%; /* Fit images to the width of the card */
+  max-width: 100%; /* Prevent overflow */
 }
 
 .card h3 {
@@ -135,5 +172,14 @@ footer {
 
   .card p {
     font-size: 0.9rem;
+  }
+
+  /* Reduce header size on phones */
+  header {
+    padding: 0.5rem 0; /* Reduce padding */
+  }
+
+  header nav ul li a {
+    font-size: 0.8rem; /* Further reduce font size */
   }
 }
