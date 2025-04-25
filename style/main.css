@@ -17,60 +17,36 @@ body {
 header {
   background: #333;
   color: #fff;
-  padding: 1rem 0;
+  padding: 0.3rem 0;
 }
 
-/* Ensure header items fit into one row without wasting width */
+/* Header navigation styles */
 header nav ul {
   display: flex;
-  flex-wrap: nowrap; /* Prevent wrapping */
-  justify-content: space-around; /* Distribute items evenly */
-  gap: 0; /* Remove unnecessary spacing */
-  list-style: none; /* Remove dots */
-  padding: 0; /* Remove padding */
-  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
 header nav ul li {
-  flex: 0 1 auto; /* Allow items to shrink or grow as needed */
-  text-align: center; /* Center-align text */
-  padding: 0 0.3rem; /* Add minimal padding for better spacing */
-}
-
-@media (min-width: 768px) {
-  header nav ul {
-    flex-wrap: nowrap; /* Fit all items into one row on larger screens */
-  }
-}
-
-@media (max-width: 768px) {
-  header nav ul li {
-    flex: 1 1 calc(33.33% - 1rem); /* Allow up to 3 items per row */
-  }
-}
-
-@media (max-width: 480px) {
-  header nav ul li {
-    flex: 1 1 calc(50% - 1rem); /* Allow up to 2 items per row on smaller screens */
-  }
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
 }
 
 header nav ul li a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
-  font-size: 0.8rem; /* Reduce font size to fit all items */
-  white-space: nowrap; /* Prevent text from wrapping */
-}
-
-header nav ul li a:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 600px) {
-  header nav ul li {
-    flex: 1 1 calc(50% - 1rem); /* Allow up to 2 items per row on smaller screens */
-  }
+  font-size: 0.7rem;
+  white-space: nowrap;
+  display: block;
+  padding: 0.2rem 0.1rem;
 }
 
 main {
@@ -90,6 +66,7 @@ h2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust for mobile */
   gap: 1.5rem;
+  padding: 0;
 }
 
 /* Adjust card size and layout for mobile */
@@ -137,49 +114,116 @@ footer {
   margin-top: 2rem;
 }
 
-/* Add indentation for list items in the About Me section */
+/* More compact About section styling */
 .about-container {
-  padding-left: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-section {
+  margin-bottom: 0.6rem;
+  background: #fff;
+  padding: 0.6rem;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.about-section h3 {
+  color: #666;
+  display: inline-block;
+  margin: 0 0.5rem 0.3rem 0;
+  font-size: 1rem;
+  border: none;
+  padding: 0;
+}
+
+.about-section h3::after {
+  content: ":";
 }
 
 .about-container ul {
-  list-style: disc inside;
-  margin-left: 1.5rem; /* Add indentation for list items */
+  list-style: none;
+  margin: 0;
+  padding-left: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.about-container li {
+  position: relative;
+  padding: 0.2rem 0 0.2rem 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.about-container li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #666;
 }
 
 .about-container p {
-  text-indent: 1.5rem; /* Add indentation for paragraphs */
+  margin-bottom: 0.3rem;
+  text-indent: 0;
+  line-height: 1.3;
 }
 
-/* Media Query for smaller screens */
+.about-container a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.about-container a:hover {
+  text-decoration: underline;
+}
+
+/* Remove duplicate media queries and consolidate header styles */
 @media (max-width: 600px) {
   body {
     font-size: 14px;
   }
 
-  header nav ul {
-    flex-direction: column;
-    align-items: center;
+  main {
+    padding: 1rem 2rem; /* Increased horizontal padding */
   }
 
-  .card img {
-    max-height: 150px;
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .card {
+    margin: 0;
   }
 
   .card h3 {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    padding: 1rem;
+    margin: 0;
   }
 
   .card p {
-    font-size: 0.9rem;
+    font-size: 1rem;
+    padding: 1rem;
+    margin: 0;
   }
 
-  /* Reduce header size on phones */
+  .about-section {
+    padding: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .about-container {
+    padding: 0 0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
   header {
-    padding: 0.5rem 0; /* Reduce padding */
+    padding: 0.5rem 0;
   }
-
+  
   header nav ul li a {
-    font-size: 0.8rem; /* Further reduce font size */
+    font-size: 1rem;
+    padding: 0.5rem 0.3rem;
   }
 }
